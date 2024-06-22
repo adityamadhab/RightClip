@@ -1,19 +1,35 @@
 import React from 'react';
 import CreatorNavbar from './CreatorNav';
 
-export default function SetUpStep2({ nextStep, prevStep }) {
+export default function SetUpStep2({ nextStep, prevStep, formData, setFormData }) {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
     return (
         <div className='h-screen overflow-hidden'>
-            <CreatorNavbar/>
+            <CreatorNavbar />
             <div className="h-screen flex">
                 <div className="w-2/3 flex items-center justify-center bg-white">
                     <div className="max-w-md w-full space-y-8 p-10">
-                        
+                        <div className="text-center">
+                            <h2 className="mb-12 text-2xl font-semibold text-gray-900">Share your socials</h2>
+                        </div>
                         <form className="mt-8 space-y-6" onSubmit={(e) => { e.preventDefault(); nextStep(); }}>
                             <div className="rounded-md shadow-sm space-y-4">
                                 <div>
                                     <label htmlFor="linkedin" className="block mb-1 text-sm font-medium text-black">Share your LinkedIn/Behance link</label>
-                                    <input id="linkedin" name="linkedin" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="LinkedIn/Behance link" />
+                                    <input
+                                        id="linkedin"
+                                        name="linkedin"
+                                        type="text"
+                                        required
+                                        className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        placeholder="LinkedIn/Behance link"
+                                        value={formData.linkedin || ''}
+                                        onChange={handleChange}
+                                    />
                                 </div>
                                 <div>
                                     <label htmlFor="resume" className="block mb-1 text-sm font-medium text-black">Upload Your Resume (PDF)</label>
@@ -30,7 +46,14 @@ export default function SetUpStep2({ nextStep, prevStep }) {
                                 </div>
                                 <div>
                                     <label htmlFor="job-function" className="block mb-1 text-sm font-medium text-black">What is your current job function</label>
-                                    <select id="job-function" name="job-function" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <select
+                                        id="job-function"
+                                        name="job-function"
+                                        required
+                                        className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        value={formData['job-function'] || ''}
+                                        onChange={handleChange}
+                                    >
                                         <option value="">Select job function</option>
                                         <option value="developer">Developer</option>
                                         <option value="designer">Designer</option>
@@ -39,7 +62,16 @@ export default function SetUpStep2({ nextStep, prevStep }) {
                                 </div>
                                 <div>
                                     <label htmlFor="contact-number" className="block mb-1 text-sm font-medium text-black">Contact number</label>
-                                    <input id="contact-number" name="contact-number" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Contact number" />
+                                    <input
+                                        id="contact-number"
+                                        name="contact-number"
+                                        type="text"
+                                        required
+                                        className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        placeholder="Contact number"
+                                        value={formData['contact-number'] || ''}
+                                        onChange={handleChange}
+                                    />
                                 </div>
                             </div>
                             <div className="flex justify-between">
