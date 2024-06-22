@@ -4,6 +4,11 @@ import { IndexPage } from './pages/IndexPage';
 import { CreatorSignIn } from './pages/Creator-Pages/CreatorSignIn';
 import Submission from './components/Creator-Components/Submission';
 import CompleteSetUp from './pages/Creator-Pages/CompleteSetUp';
+import BusinessSignUp from './pages/BusinessPages/BusinessSignUp';
+import { BusinessSignIn } from './pages/BusinessPages/BusinessSignIn';
+import axios from 'axios';
+
+axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
 function App() {
 
@@ -12,6 +17,8 @@ function App() {
       <Route index element={<IndexPage />} />
       <Route path='/creator/signup' element={<CompleteSetUp />} />
       <Route path='/creator/signin' element={<CreatorSignIn />} />
+      <Route path='/business/signup' element={<BusinessSignUp/>}/>
+      <Route path='/business/signin' element={<BusinessSignIn/>}/>
       <Route path='/test' element={<Submission/>}/>
     </Routes>
   )

@@ -50,12 +50,12 @@ function Navbar() {
             </button>
             {dropdownVisible && (
               <div className="absolute right-0 mt-64 w-72 bg-[#A3D5F2] border rounded-md shadow-lg z-10 p-4 mt w" style={{ backgroundImage: 'url(/path/to/your/background/image.png)', backgroundSize: 'cover' }}>
-                <a href="#" className="flex items-center px-4 py-2 hover:bg-white text-md text-blackrounded-md mb-2">
+                <Link to={'/business/signup'} className="flex items-center px-4 py-2 hover:bg-white text-md text-blackrounded-md mb-2">
                   <div className='bg-[#FFFFFF] h-14 w-14 rounded-xl flex items-center justify-center mr-4'>
                   <img src="/IndexPage-assests/business.png" alt="Business Icon" className="h-8 w-8" />
                   </div>
                   AS A BUSINESS
-                </a>
+                </Link>
                 <Link to={'/creator/signup'} className="flex items-center px-4 py-2 hover:bg-white text-md text-black rounded-md">
                 <div className='bg-[#FFFFFF] h-14 w-14 rounded-xl flex items-center justify-center mr-4'>
                   <img src="/IndexPage-assests/creator.png" alt="Business Icon" className="h-8 w-8" />
