@@ -1,5 +1,5 @@
+import BushRatMain from "../../components/Business-Components/Ratings-Components/BusRatMain";
 import BusSidebar from "../../components/Business-Components/Sidebar";
-import BushRatMain from "../../components/Ratings-Components/BusRatMain";
 
 export function Ratings() {
     return (
