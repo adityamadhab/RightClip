@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function BusDashNav() {
     return (
-        <div className="main--content bg-gray-200 w-full p-4">
-            <div className="header--wrapper bg-white rounded-lg p-4 mb-4 flex justify-between items-center">
+        <div className="border-b-2 border-[#E7CBA3] bg-white w-full mb-6">
+            <div className="bg-white mb-3 flex justify-between items-center">
                 <Link to={'/dashboard'} className="header--title cursor-pointer flex gap-4">
                     <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1">
                         <path d="M5.5249 17.6375V5.52499H13.8124V17.6375H5.5249Z" fill="black" />
