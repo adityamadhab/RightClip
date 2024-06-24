@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function BusDashNav() {
     return (
-        <div className="border-b-2 border-[#E7CBA3] bg-white w-full mb-6">
+        <div className="border-b-2 border-[#E7CBA3] bg-white w-[1200px] mb-6">
             <div className="bg-white mb-3 flex justify-between items-center">
                 <Link to={'/dashboard'} className="header--title cursor-pointer flex gap-4">
                     <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1">

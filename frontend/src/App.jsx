@@ -9,6 +9,8 @@ import { BusinessSignIn } from './pages/BusinessPages/BusinessSignIn';
 import axios from 'axios';
 import Sucess from './components/Business-Components/Sucess';
 import { BusDashborad } from './pages/BusinessPages/Dashborad';
+import { BusTemplates } from './pages/BusinessPages/Templates';
+import { Ratings } from './pages/BusinessPages/Ratings';
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
@@ -23,6 +25,8 @@ function App() {
       <Route path='/business/signin' element={<BusinessSignIn />} />
       <Route path='/business/success' element={<Sucess />} />
       <Route path='/business/dashboard' element={<BusDashborad />} />
+      <Route path='/business/templates' element={<BusTemplates />} />
+      <Route path='/business/ratings' element={<Ratings />} />
       <Route path='/test' element={<Submission />} />
     </Routes>
   )
