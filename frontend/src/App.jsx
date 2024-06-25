@@ -15,6 +15,11 @@ import { Rewards } from './pages/BusinessPages/Rewards';
 import { Notification } from './pages/BusinessPages/Notification';
 import { Inbox } from './pages/BusinessPages/Inbox';
 import { Logout } from './pages/BusinessPages/Logout';
+import { AdminSignIn } from './pages/AdminPages/AdminSignin';
+import { AdminDashborad } from './pages/AdminPages/DashBoard';
+import { Messaging } from './pages/AdminPages/Messaging';
+import { AdNotifications } from './pages/AdminPages/AdNotifications';
+import { AdminLogout } from './pages/AdminPages/AdminLogout';
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
@@ -31,10 +36,15 @@ function App() {
       <Route path='/business/dashboard' element={<BusDashborad />} />
       <Route path='/business/templates' element={<BusTemplates />} />
       <Route path='/business/ratings' element={<Ratings />} />
-      <Route path='/business/rewards' element={<Rewards/>} />
-      <Route path='/business/notification' element={<Notification/>} />
-      <Route path='/business/inbox' element={<Inbox/>} />
-      <Route path='/business/logout' element={<Logout/>} />
+      <Route path='/business/rewards' element={<Rewards />} />
+      <Route path='/business/notification' element={<Notification />} />
+      <Route path='/business/inbox' element={<Inbox />} />
+      <Route path='/business/logout' element={<Logout />} />
+      <Route path='/admin' element={<AdminSignIn />} />
+      <Route path='/admin/dashboard' element={<AdminDashborad />} />
+      <Route path='/admin/messaging' element={<Messaging />} />
+      <Route path='/admin/notification' element={<AdNotifications />} />
+      <Route path='/admin/logout' element={<AdminLogout />} />
       <Route path='/test' element={<Submission />} />
     </Routes>
   )
