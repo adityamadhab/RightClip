@@ -20,6 +20,9 @@ import { AdminDashborad } from './pages/AdminPages/DashBoard';
 import { Messaging } from './pages/AdminPages/Messaging';
 import { AdNotifications } from './pages/AdminPages/AdNotifications';
 import { AdminLogout } from './pages/AdminPages/AdminLogout';
+import { CreDashborad } from './pages/Creator-Pages/Dashboard';
+import { CreAssigment } from './pages/Creator-Pages/Assignment';
+import CreAssTimelines from './components/Creator-Components/Assignment/Timelines';
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
@@ -30,6 +33,9 @@ function App() {
       <Route index element={<IndexPage />} />
       <Route path='/creator/signup' element={<CompleteSetUp />} />
       <Route path='/creator/signin' element={<CreatorSignIn />} />
+      <Route path='/creator/dashboard' element={<CreDashborad/>} />
+      <Route path='/creator/assignment' element={<CreAssigment/>} />
+      <Route path='/creator/assignment/timelines' element={<CreAssTimelines/>} />
       <Route path='/business/signup' element={<BusinessSignUp />} />
       <Route path='/business/signin' element={<BusinessSignIn />} />
       <Route path='/business/success' element={<Sucess />} />
