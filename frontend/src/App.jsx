@@ -23,6 +23,10 @@ import { AdminLogout } from './pages/AdminPages/AdminLogout';
 import { CreDashborad } from './pages/Creator-Pages/Dashboard';
 import { CreAssigment } from './pages/Creator-Pages/Assignment';
 import CreAssTimelines from './components/Creator-Components/Assignment/Timelines';
+import { OngoingProject } from './pages/AdminPages/OngoingProject';
+import { CompletedProject } from './pages/AdminPages/CompletedProject';
+import { PendingProject } from './pages/AdminPages/PendingProject';
+import { PendingRequest } from './pages/AdminPages/PendingRequest';
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
@@ -48,6 +52,10 @@ function App() {
       <Route path='/business/logout' element={<Logout />} />
       <Route path='/admin' element={<AdminSignIn />} />
       <Route path='/admin/dashboard' element={<AdminDashborad />} />
+      <Route path='/admin/dashboard/ongoing' element={<OngoingProject />} />
+      <Route path='/admin/dashboard/completed' element={<CompletedProject />} />
+      <Route path='/admin/dashboard/pending' element={<PendingProject />} />
+      <Route path='/admin/creator/pending' element={<PendingRequest />} />
       <Route path='/admin/messaging' element={<Messaging />} />
       <Route path='/admin/notification' element={<AdNotifications />} />
       <Route path='/admin/logout' element={<AdminLogout />} />
