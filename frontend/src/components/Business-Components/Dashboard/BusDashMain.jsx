@@ -3,7 +3,7 @@ import BusDashCount from "./BusDashCount";
 import BusDashDetails from "./BusDashDetails";
 import BusDashNav from "./BusDashNav";
 
-export default function BushDashMain() {
+export default function BushDashMain({username}) {
     return (
         <div>
             <div className=" bg-white w-full p-4">
@@ -19,7 +19,7 @@ export default function BushDashMain() {
                     }}
                 >
                     <div className="flex items-center space-x-4">
-                        <div className="text-3xl text-white">Hi, user</div>
+                        <div className="text-3xl text-white">Hi, {username}</div>
                     </div>
                 </div>
                 <BusDashCount />

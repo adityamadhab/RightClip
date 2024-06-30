@@ -13,15 +13,14 @@ export function BusinessSignIn() {
         setErrors('');
 
         try {
-            const response = await axios.post('/api/business/signin', {
+            const response = await axios.post('/business/signin', {
                 email,
                 password,
             });
 
             if (response.status === 200) {
-                // Assuming the token is received in the response and saved in local storage
-                localStorage.setItem('token', response.data.token);
-                navigate('/business/dashboard'); // Redirect to the business dashboard
+                await localStorage.setItem('token', response.data.token);
+                navigate('/business/dashboard');
             }
         } catch (err) {
             if (err.response && err.response.data && err.response.data.msg) {

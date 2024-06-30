@@ -1,7 +1,20 @@
-import { Link } from "react-router-dom";
-import BusSidebar from "../../components/Business-Components/Sidebar";
+import React from 'react';
+import {  useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import BusSidebar from '../../components/Business-Components/Sidebar';
 
 export function Logout() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    };
+
+    const handleCancel = () => {
+        navigate('/business/dashboard');
+    };
+
     return (
         <div className="flex h-screen">
             <BusSidebar />
@@ -23,8 +36,16 @@ export function Logout() {
                             <p className="text-lg text-foreground">Are you sure you want to log out?</p>
                         </div>
                         <div className="flex justify-center gap-12 mt-6 space-x-4">
-                            <button className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">Yes</button>
-                            <button className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">No</button>
+                            <button 
+                                onClick={handleLogout} 
+                                className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">
+                                Yes
+                            </button>
+                            <button 
+                                onClick={handleCancel} 
+                                className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">
+                                No
+                            </button>
                         </div>
                     </div>
                 </div>

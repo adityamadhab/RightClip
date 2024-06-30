@@ -1,20 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const zod = require('zod');
-const Business = require('../models/Business');
+const Admin = require('../models/Admin');
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const authMiddleware = require('../middlewares/authMiddleware');
 
 const saltRounds = 10;
 
 const signupValidation = zod.object({
-    firstname: zod.string(),
-    lastname: zod.string(),
-    company: zod.string(),
-    noemployee: zod.number(),
-    phone: zod.string().min(10).max(15), // Assuming phone is a string
     email: zod.string().email(),
     password: zod.string().min(7)
 });
@@ -35,9 +29,9 @@ router.post('/signup', async (req, res) => {
             });
         }
 
-        const { firstname, lastname, company, noemployee, phone, email, password } = req.body;
+        const { email, password } = req.body;
 
-        const existingUser = await Business.findOne({ email });
+        const existingUser = await Admin.findOne({ email });
 
         if (existingUser) {
             return res.status(400).json({
@@ -47,12 +41,7 @@ router.post('/signup', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        const user = await Business.create({
-            firstname,
-            lastname,
-            company,
-            noemployee,
-            phone,
+        const user = await Admin.create({
             email,
             password: hashedPassword
         });
@@ -77,7 +66,7 @@ router.post('/signin', async (req, res) => {
 
         const { email, password } = req.body;
 
-        const user = await Business.findOne({ email });
+        const user = await Admin.findOne({ email });
 
         if (!user) {
             return res.status(401).json({
@@ -101,21 +90,5 @@ router.post('/signin', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
-router.get('/user', authMiddleware, async (req, res) => {
-    try {
-        const user = await Business.findById(req.user);
-
-        if (!user) {
-            return res.status(404).json({ msg: 'User not found' });
-        }
-
-        res.json(user);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
-
 
 module.exports = router;

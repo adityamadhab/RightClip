@@ -29,8 +29,7 @@ const businessSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     }
 });
 
