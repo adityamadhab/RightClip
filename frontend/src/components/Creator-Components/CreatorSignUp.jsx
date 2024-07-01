@@ -27,35 +27,35 @@ export default function CreatorSignUp({ formData, setFormData, nextStep }) {
                         <div className="rounded-md shadow-sm space-y-4">
                             <div className="flex space-x-4">
                                 <div className="w-1/2">
-                                    <label htmlFor="first-name" className="sr-only">First Name</label>
-                                    <input id="first-name" name="firstName" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
+                                    <label htmlFor="firstName" className="sr-only">First Name</label>
+                                    <input id="firstName" name="firstName" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="First Name" value={formData.firstName || ''} onChange={handleChange} />
                                 </div>
                                 <div className="w-1/2">
-                                    <label htmlFor="last-name" className="sr-only">Last Name</label>
-                                    <input id="last-name" name="lastName" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
+                                    <label htmlFor="lastName" className="sr-only">Last Name</label>
+                                    <input id="lastName" name="lastName" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Last Name" value={formData.lastName || ''} onChange={handleChange} />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="industry" className="sr-only">Industry</label>
-                                <input id="industry" name="industry" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Industry" value={formData.industry} onChange={handleChange} />
+                                <input id="industry" name="industry" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Industry" value={formData.industry || ''} onChange={handleChange} />
                             </div>
                             <div>
                                 <label htmlFor="experience" className="sr-only">Experience (in years)</label>
-                                <input id="experience" name="experience" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Experience (in years)" value={formData.experience} onChange={handleChange} />
+                                <input id="experience" name="experience" type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Experience (in years)" value={formData.experience || ''} onChange={handleChange} />
                             </div>
                             <div>
                                 <label htmlFor="email" className="sr-only">Email ID</label>
-                                <input id="email" name="email" type="email" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Email ID" value={formData.email} onChange={handleChange} />
+                                <input id="email" name="email" type="email" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Email ID" value={formData.email || ''} onChange={handleChange} />
                             </div>
                             <div className="flex">
                                 <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                     +91
                                 </span>
-                                <input id="phone" name="phone" type="text" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-r-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="0000000000" value={formData.phone} onChange={handleChange} />
+                                <input id="phone" name="phone" type="text" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-r-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="0000000000" value={formData.phone || ''} onChange={handleChange} />
                             </div>
                             <div>
                                 <label htmlFor="password" className="sr-only">Password</label>
-                                <input id="password" name="password" type="password" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Password" value={formData.password} onChange={handleChange} />
+                                <input id="password" name="password" type="password" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Password" value={formData.password || ''} onChange={handleChange} />
                             </div>
                         </div>
                         <div>
@@ -64,7 +64,7 @@ export default function CreatorSignUp({ formData, setFormData, nextStep }) {
                             </button>
                         </div>
                         <div className="flex items-center justify-center text-sm">
-                            <p className="text-gray-600">Already have an account? <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500"><Link to={'/creator/signin'}>LOG IN</Link></a></p>
+                            <p className="text-gray-600">Already have an account?  <Link to={'/creator/signin'} className="font-medium text-indigo-600 hover:text-indigo-500" >LOG IN</Link></p>
                         </div>
                     </form>
                 </div>

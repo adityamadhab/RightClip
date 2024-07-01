@@ -1,46 +1,53 @@
 import React, { useState } from 'react';
 import CreatorSignUp from '../../components/Creator-Components/CreatorSignUp';
-import SetUpStep1 from '../../components/Creator-Components/SetUpStep1';
 import SetUpStep2 from '../../components/Creator-Components/SetUpStep2';
 import SetUpStep3 from '../../components/Creator-Components/SetUpStep3';
-import SetUpStep4 from '../../components/Creator-Components/SetUpStep4';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function CompleteSetUp() {
+    const navigate = useNavigate();
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        industry: '',
+        experience: '',
+        email: '',
+        phone: '',
+        password: '',
+        linkedin: '',
+        resume: '',
+        jobFunction: '',
+        bio: '',
+        workSample: '',
+    });
+    const [error, setError] = useState('');
 
-    const nextStep = () => {
-        setStep(prevStep => prevStep + 1);
-    };
+    const nextStep = () => setStep(prev => prev + 1);
+    const prevStep = () => setStep(prev => prev - 1);
 
-    const prevStep = () => {
-        setStep(prevStep => prevStep - 1);
-    };
-
-    const handleSubmit = () => {
-        console.log('Final Form Data:', formData);
-    };
-
-    const renderStep = () => {
-        switch (step) {
-            case 1:
-                return <CreatorSignUp nextStep={nextStep} formData={formData} setFormData={setFormData} />;
-            case 2:
-                return <SetUpStep1 nextStep={nextStep} prevStep={prevStep} formData={formData} setFormData={setFormData} />;
-            case 3:
-                return <SetUpStep2 nextStep={nextStep} prevStep={prevStep} formData={formData} setFormData={setFormData} />;
-            case 4:
-                return <SetUpStep3 nextStep={nextStep} prevStep={prevStep} formData={formData} setFormData={setFormData} />;
-            case 5:
-                return <SetUpStep4 nextStep={handleSubmit} prevStep={prevStep} formData={formData} setFormData={setFormData} />;
-            default:
-                return <CreatorSignUp nextStep={nextStep} formData={formData} setFormData={setFormData} />;
+    const handleSubmit = async () => {
+        try {
+            await axios.post('/creator/signup', formData);
+            navigate('/creator/submit');
+        } catch (error) {
+            console.error('Error signing up:', error.response ? error.response.data : error.message);
+            const errorMessage = error.response?.data?.message || 'An unexpected error occurred. Please try again.';
+            setError(errorMessage);
         }
     };
 
     return (
         <div>
-            {renderStep()}
+            {error && (
+                <div className="text-red-500 text-center mb-4">
+                    {error}
+                </div>
+            )}
+            {step === 1 && <CreatorSignUp formData={formData} setFormData={setFormData} nextStep={nextStep} />}
+            {step === 2 && <SetUpStep2 formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep} />}
+            {step === 3 && <SetUpStep3 formData={formData} setFormData={setFormData} nextStep={handleSubmit} prevStep={prevStep} />}
         </div>
     );
 }

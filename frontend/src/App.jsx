@@ -40,6 +40,7 @@ function App() {
       <Route path='/creator/dashboard' element={<CreDashborad/>} />
       <Route path='/creator/assignment' element={<CreAssigment/>} />
       <Route path='/creator/assignment/timelines' element={<CreAssTimelines/>} />
+      <Route path='/creator/submit' element={<Submission />} />
       <Route path='/business/signup' element={<BusinessSignUp />} />
       <Route path='/business/signin' element={<BusinessSignIn />} />
       <Route path='/business/success' element={<Sucess />} />
@@ -59,7 +60,7 @@ function App() {
       <Route path='/admin/messaging' element={<Messaging />} />
       <Route path='/admin/notification' element={<AdNotifications />} />
       <Route path='/admin/logout' element={<AdminLogout />} />
-      <Route path='/test' element={<Submission />} />
+      
     </Routes>
   )
 }
