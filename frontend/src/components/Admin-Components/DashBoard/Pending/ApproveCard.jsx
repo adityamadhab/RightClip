@@ -2,10 +2,10 @@ import React from 'react';
 
 const ApproveCard = ({ category, projectName, industry, preference, creatorCategory, onApprove, onDecline }) => {
     return (
-        <div className="p-6 w-[450px] mx-auto bg-card text-card-foreground rounded-lg">
+        <div className="p-6 w-[550px] mx-auto bg-card text-card-foreground rounded-lg">
             <div>
                 <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-muted-foreground">Category</div>
+                    <div className="w-1/3 text-muted-foreground">Company/Business</div>
                     <div className="w-2/3 text-foreground">{category}</div>
                 </div>
                 <div className="mb-4 flex items-center">

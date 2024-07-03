@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/Business');
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const authMiddleware = async (req, res, next) => {
+const projectAuth = async (req, res, next) => {
     try {
         const token = req.headers.authorization;
 
@@ -11,10 +12,13 @@ const authMiddleware = async (req, res, next) => {
 
         const decoded = await jwt.verify(token, JWT_SECRET);
 
-        console.log(decoded); // Log the decoded token to check its structure
+        const user = await User.findById(decoded.user);
 
-        req.user = decoded.user;
+        if (!user) {
+            return res.status(401).json({ msg: 'User not found, authorization denied' });
+        }
 
+        req.user = user;
         next();
     } catch (err) {
         console.log(err.message);
@@ -22,4 +26,4 @@ const authMiddleware = async (req, res, next) => {
     }
 };
 
-module.exports = authMiddleware;
+module.exports = projectAuth;
