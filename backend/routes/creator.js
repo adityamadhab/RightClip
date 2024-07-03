@@ -5,6 +5,7 @@ const Creator = require('../models/Creator');
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 const saltRounds = 10;
 
@@ -12,7 +13,7 @@ const signupValidation = zod.object({
     firstName: zod.string(),
     lastName: zod.string(),
     industry: zod.string(),
-    experience: zod.string(), 
+    experience: zod.string(),
     phone: zod.string().min(10).max(15),
     email: zod.string().email(),
     password: zod.string().min(7),
@@ -94,6 +95,72 @@ router.post('/signin', async (req, res) => {
         const token = jwt.sign({ user: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         return res.json({ token, user });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/user', authMiddleware, async (req, res) => {
+    try {
+        const user = await Creator.findById(req.user);
+
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/non-approved', async (req, res) => {
+    try {
+        const nonApprovedCreators = await Creator.find({ approval: false });
+        res.json(nonApprovedCreators);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/approved', async (req, res) => {
+    try {
+        const ApprovedCreators = await Creator.find({ approval: true });
+        res.json(ApprovedCreators);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const creator = await Creator.findById(req.params.id).select('-password');
+        if (!creator) {
+            return res.status(404).json({ msg: 'Creator not found' });
+        }
+        res.json(creator);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+router.put('/approve/:id', async (req, res) => {
+    try {
+        const creator = await Creator.findById(req.params.id);
+
+        if (!creator) {
+            return res.status(404).json({ msg: 'Creator not found' });
+        }
+
+        creator.approval = true;
+        await creator.save();
+
+        res.json({ msg: 'Creator approved successfully', creator });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

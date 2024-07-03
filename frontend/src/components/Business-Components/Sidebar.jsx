@@ -24,7 +24,7 @@ export default function BusSidebar() {
                     </Link>
                 </li>
                 <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
-                    <Link to='/create-project' className="text-white text-base no-underline flex items-center gap-3">
+                    <Link to='/business/createproject' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M22.7502 16.3333V13.9167C22.7502 12.031 22.7502 11.0882 22.1644 10.5024C21.5786 9.91666 20.6358 9.91666 18.7502 9.91666H16.2403C15.4228 9.91666 15.0141 9.91666 14.6466 9.76442C14.279 9.61217 13.99 9.32314 13.4119 8.74508L12.2551 7.58823C11.677 7.01017 11.388 6.72114 11.0204 6.5689C10.6529 6.41666 10.2441 6.41666 9.42664 6.41666H8.0835C6.19788 6.41666 5.25507 6.41666 4.66928 7.00244C4.0835 7.58823 4.0835 8.53104 4.0835 10.4167V17.5833C4.0835 19.4689 4.0835 20.4117 4.66928 20.9975C5.25507 21.5833 6.19788 21.5833 8.0835 21.5833H17.5002" stroke="#222222" />
                             <path d="M19.8335 21.5833H22.7502M22.7502 21.5833H25.6668M22.7502 21.5833V24.5M22.7502 21.5833V18.6667" stroke="#222222" />

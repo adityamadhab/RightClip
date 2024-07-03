@@ -27,6 +27,10 @@ import { OngoingProject } from './pages/AdminPages/OngoingProject';
 import { CompletedProject } from './pages/AdminPages/CompletedProject';
 import { PendingProject } from './pages/AdminPages/PendingProject';
 import { PendingRequest } from './pages/AdminPages/PendingRequest';
+import { CreLogout } from './pages/Creator-Pages/CreLogout';
+import { AdCreCV } from './pages/AdminPages/AdCreCV';
+import { AssignCreator } from './pages/AdminPages/AssignCreator';
+import { BusProject } from './pages/BusinessPages/BusProject';
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
@@ -41,10 +45,12 @@ function App() {
       <Route path='/creator/assignment' element={<CreAssigment/>} />
       <Route path='/creator/assignment/timelines' element={<CreAssTimelines/>} />
       <Route path='/creator/submit' element={<Submission />} />
+      <Route path='/creator/logout' element={<CreLogout />} />
       <Route path='/business/signup' element={<BusinessSignUp />} />
       <Route path='/business/signin' element={<BusinessSignIn />} />
       <Route path='/business/success' element={<Sucess />} />
       <Route path='/business/dashboard' element={<BusDashborad />} />
+      <Route path='/business/createproject' element={<BusProject />} />
       <Route path='/business/templates' element={<BusTemplates />} />
       <Route path='/business/ratings' element={<Ratings />} />
       <Route path='/business/rewards' element={<Rewards />} />
@@ -57,6 +63,8 @@ function App() {
       <Route path='/admin/dashboard/completed' element={<CompletedProject />} />
       <Route path='/admin/dashboard/pending' element={<PendingProject />} />
       <Route path='/admin/creator/pending' element={<PendingRequest />} />
+      <Route path='/admin/creator/pending/:id' element={<AdCreCV />} />
+      <Route path='/admin/creator/assign' element={<AssignCreator />} />
       <Route path='/admin/messaging' element={<Messaging />} />
       <Route path='/admin/notification' element={<AdNotifications />} />
       <Route path='/admin/logout' element={<AdminLogout />} />

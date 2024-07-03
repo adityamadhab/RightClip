@@ -61,7 +61,7 @@ export default function AdminSidebar() {
                                 <path d="M18 14L18 22" stroke="#222222" stroke-linecap="round" />
                                 <path d="M22 18L14 18" stroke="#222222" stroke-linecap="round" />
                             </svg>
-                            <Link to='/admin/creator' className="text-sm text-black">Creator</Link>
+                            <Link to='/admin/creator/assign' className="text-sm text-black">Creator</Link>
                         </div>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d={creatorDropdown ? "M6 15L12 9L18 15" : "M18 9L12 15L6 9"} stroke="#222222" />
@@ -70,7 +70,7 @@ export default function AdminSidebar() {
                     {creatorDropdown && (
                         <ul className="mt-2 ml-10">
                             <li className='p-2 my-1 rounded-lg transition duration-500 ease-in-out hover:bg-[#E7CBA3]'>
-                                <Link to='/create-project/assign' className="text-black text-sm no-underline">Assign Creator</Link>
+                                <Link to='/admin/creator/assign' className="text-black text-sm no-underline">Assign Creator</Link>
                             </li>
                             <li className='p-2 my-1 rounded-lg transition duration-500 ease-in-out hover:bg-[#E7CBA3]'>
                                 <Link to='/admin/creator/pending' className="text-black text-sm no-underline">Pending Requests</Link>

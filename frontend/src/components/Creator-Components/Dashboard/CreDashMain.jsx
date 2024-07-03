@@ -1,7 +1,7 @@
 import CreDashCount from "./CreDashCount";
 import CreDashNav from "./CreDashNav";
 
-export default function CreDashMain() {
+export default function CreDashMain({username}) {
     return (
         <div>
             <div className=" bg-white w-full p-4">
@@ -17,7 +17,7 @@ export default function CreDashMain() {
                     }}
                 >
                     <div className="flex items-center space-x-4">
-                        <div className="text-3xl text-white">Hi, creator</div>
+                        <div className="text-3xl text-white">Hi, {username}</div>
                     </div>
                 </div>
                 <CreDashCount />

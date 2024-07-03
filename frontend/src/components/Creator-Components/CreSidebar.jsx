@@ -40,7 +40,7 @@ export default function CreSidebar() {
                     </Link>
                 </li>
                 <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/messaging' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/admin/messaging' className="text-white text-base no-underline flex items-center gap-3">
+                    <Link to='/creator/messaging' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9 7L13 7" stroke="#222222" stroke-linecap="round" />
                             <path d="M9 15L12 15" stroke="#222222" stroke-linecap="round" />
@@ -54,7 +54,7 @@ export default function CreSidebar() {
                     </Link>
                 </li>
                 <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/wallet' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/admin/wallet' className="text-white text-base no-underline flex items-center gap-3">
+                    <Link to='/creator/wallet' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9 9V3L18 3C18.9428 3 19.4142 3 19.7071 3.29289C20 3.58579 20 4.05719 20 5V9H9Z" stroke="#222222" stroke-linecap="round" />
                             <path d="M9 21V15H20V19C20 19.9428 20 20.4142 19.7071 20.7071C19.4142 21 18.9428 21 18 21H9Z" stroke="#222222" stroke-linecap="round" />
@@ -65,7 +65,7 @@ export default function CreSidebar() {
                     </Link>
                 </li>
                 <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/notifications' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/admin/notification' className="text-white text-base no-underline flex items-center gap-3">
+                    <Link to='/creator/notification' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" className='w-5 h-5'>
                             <path d="M7.25382 10.0906C7.60746 6.90786 10.2977 4.5 13.5 4.5V4.5C16.7023 4.5 19.3925 6.90786 19.7462 10.0906L20.0295 12.6401C20.057 12.8884 20.0708 13.0125 20.0883 13.1349C20.2271 14.1091 20.5445 15.0492 21.0244 15.9082C21.0847 16.0162 21.149 16.1233 21.2775 16.3375L21.9278 17.4213C22.6225 18.5792 22.9699 19.1582 22.7891 19.6168C22.7549 19.7035 22.7088 19.7851 22.652 19.859C22.3518 20.25 21.6766 20.25 20.3262 20.25H6.67376C5.32342 20.25 4.64824 20.25 4.34803 19.859C4.29125 19.7851 4.24509 19.7035 4.21089 19.6168C4.03008 19.1582 4.37745 18.5792 5.0722 17.4213L5.72249 16.3375C5.85103 16.1233 5.9153 16.0162 5.9756 15.9082C6.45554 15.0492 6.77289 14.1091 6.91172 13.1349C6.92916 13.0125 6.94296 12.8884 6.97055 12.6401L7.25382 10.0906Z" stroke="#222222" />
                             <path d="M10.24 20.7066C10.4323 21.5438 10.856 22.2837 11.4454 22.8113C12.0349 23.339 12.757 23.625 13.5 23.625C14.243 23.625 14.9651 23.339 15.5546 22.8113C16.144 22.2837 16.5677 21.5438 16.76 20.7066" stroke="#222222" stroke-linecap="round" />
@@ -74,7 +74,7 @@ export default function CreSidebar() {
                     </Link>
                 </li>
                 <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/logout' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/admin/logout' className="text-white text-base no-underline flex items-center gap-3">
+                    <Link to='/creator/logout' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M2 12L1.60957 11.6877L1.35969 12L1.60957 12.3123L2 12ZM11 12.5C11.2761 12.5 11.5 12.2761 11.5 12C11.5 11.7239 11.2761 11.5 11 11.5V12.5ZM5.60957 6.68765L1.60957 11.6877L2.39043 12.3123L6.39043 7.31235L5.60957 6.68765ZM1.60957 12.3123L5.60957 17.3123L6.39043 16.6877L2.39043 11.6877L1.60957 12.3123ZM2 12.5H11V11.5H2V12.5Z" fill="#222222" />
                             <path d="M10 8.13193V7.38851C10 5.77017 10 4.961 10.474 4.4015C10.9479 3.84201 11.7461 3.70899 13.3424 3.44293L15.0136 3.1644C18.2567 2.62388 19.8782 2.35363 20.9391 3.25232C22 4.15102 22 5.79493 22 9.08276V14.9172C22 18.2051 22 19.849 20.9391 20.7477C19.8782 21.6464 18.2567 21.3761 15.0136 20.8356L13.3424 20.5571C11.7461 20.291 10.9479 20.158 10.474 19.5985C10 19.039 10 18.2298 10 16.6115V16.066" stroke="#222222" />
