@@ -11,8 +11,6 @@ const authMiddleware = async (req, res, next) => {
 
         const decoded = await jwt.verify(token, JWT_SECRET);
 
-        console.log(decoded); // Log the decoded token to check its structure
-
         req.user = decoded.user;
 
         next();

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import CreSidebar from "../CreSidebar";
 import CreDashCount from "../Dashboard/CreDashCount";
 import CreAssInsideNav from "./AssInsideNav";
@@ -6,20 +7,16 @@ import CreAssNav from "./CreAssNav";
 import TimelineNav from "./TimeLineNav";
 import SubmitCard from './SubmitCard';
 
-const projectData = [
-    { id: 1, name: "Project - Lorem ipsum dolor sit amet." },
-    { id: 2, name: "Project - Lorem ipsum dolor sit amet." },
-    { id: 3, name: "Project - Lorem ipsum dolor sit amet." },
-    { id: 4, name: "Project - Lorem ipsum dolor sit amet." },
-];
-
-const ProjectItem = ({ name, onSubmit }) => (
+const ProjectItem = ({ name, clientName, onSubmit }) => (
     <div className="h-[60px] w-[1100px] bg-white rounded-xl flex justify-between">
         <div className="flex gap-4 justify-center items-center ml-4">
             <svg width="25" height="22" viewBox="0 0 32 32" fill="gray" xmlns="http://www.w3.org/2000/svg" className="rounded-md">
                 <rect width="32" height="32" rx="16" fill="gray" />
             </svg>
-            <p className="text-sm">{name}</p>
+            <div>
+                <p className="text-sm">{name}</p>
+                <p className="text-xs text-gray-500">{clientName}</p>
+            </div>
         </div>
         <div className="flex gap-4 justify-center items-center mr-4">
             <button
@@ -34,8 +31,28 @@ const ProjectItem = ({ name, onSubmit }) => (
 
 export default function CreAssTimelines() {
     const [showSubmissionCard, setShowSubmissionCard] = useState(false);
+    const [projects, setProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState(null);
 
-    const handleOpenSubmissionCard = () => {
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await axios.get('/project/creator-projects', {
+                    headers: {
+                        Authorization: localStorage.getItem('token'),
+                    },
+                });
+                setProjects(response.data);
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        };
+
+        fetchProjects();
+    }, []);
+
+    const handleOpenSubmissionCard = (project) => {
+        setSelectedProject(project);
         setShowSubmissionCard(true);
     };
 
@@ -46,7 +63,7 @@ export default function CreAssTimelines() {
     return (
         <div className="flex">
             <CreSidebar />
-            <div className=" bg-white w-full p-4">
+            <div className="bg-white w-full p-4">
                 <CreAssNav />
                 <CreDashCount />
                 <CreAssInsideNav />
@@ -62,17 +79,22 @@ export default function CreAssTimelines() {
                         </select>
                     </div>
                     <div className="p-10 flex flex-col gap-2">
-                        {projectData.map(project => (
-                            <ProjectItem
-                                key={project.id}
-                                name={project.name}
-                                onSubmit={handleOpenSubmissionCard}
-                            />
-                        ))}
+                        {projects.length > 0 ? (
+                            projects.map(project => (
+                                <ProjectItem
+                                    key={project._id}
+                                    name={project.projectName}
+                                    clientName={project.clientName}
+                                    onSubmit={() => handleOpenSubmissionCard(project)}
+                                />
+                            ))
+                        ) : (
+                            <div className="text-center text-gray-500">NO PROJECTS FOR SUBMISSION</div>
+                        )}
                     </div>
                 </div>
             </div>
-            {showSubmissionCard && <SubmitCard onClose={handleCloseSubmissionCard} />}
+            {showSubmissionCard && <SubmitCard project={selectedProject} onClose={handleCloseSubmissionCard} />}
         </div>
     );
 }

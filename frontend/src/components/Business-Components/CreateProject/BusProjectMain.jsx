@@ -75,30 +75,26 @@ const ProjectDetailsForm = () => {
                                 />
                             </div>
                             <div>
-                                <select
+                                <input
+                                    type="text"
                                     name="industry"
                                     required
                                     value={formData.industry}
                                     onChange={handleChange}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                >
-                                    <option value="">Choose your industry</option>
-                                    <option value="Industry 1">Industry 1</option>
-                                    <option value="Industry 2">Industry 2</option>
-                                </select>
+                                    placeholder="Enter your industry"
+                                />
                             </div>
                             <div>
-                                <select
+                                <input
+                                    type="text"
                                     name="preferences"
                                     required
                                     value={formData.preferences}
                                     onChange={handleChange}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                >
-                                    <option value="">Add your preferences</option>
-                                    <option value="Preference 1">Preference 1</option>
-                                    <option value="Preference 2">Preference 2</option>
-                                </select>
+                                    placeholder="Add your preferences"
+                                />
                             </div>
                             <div>
                                 <input
@@ -112,17 +108,15 @@ const ProjectDetailsForm = () => {
                                 />
                             </div>
                             <div>
-                                <select
+                                <input
+                                    type="text"
                                     name="creatorCategory"
                                     required
                                     value={formData.creatorCategory}
                                     onChange={handleChange}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                >
-                                    <option value="">Choose Creator category</option>
-                                    <option value="Category 1">Category 1</option>
-                                    <option value="Category 2">Category 2</option>
-                                </select>
+                                    placeholder="Choose Creator category"
+                                />
                             </div>
                         </div>
                         <div>
