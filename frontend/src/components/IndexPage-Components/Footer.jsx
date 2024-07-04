@@ -5,6 +5,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
     return (
@@ -45,9 +46,9 @@ export default function Footer() {
                     <hr className="border-1 mt-4 border-black" />
 
                     <div className="mt-4 flex flex-wrap justify-start gap-y-4 gap-x-12 px-2">
-                        <p className="text-sm font-md text-black capitalize">
+                        <Link to={'/admin'} className="text-sm font-md text-black capitalize cursor-pointer">
                             Developed By Aditya Madhab (Sane Infotech)
-                        </p>
+                        </Link>
                         <p className="text-sm font-md text-black capitalize">Privacy Policy</p>
                         <p className="text-sm font-md text-black capitalize">Terms and conditions</p>
                     </div>
