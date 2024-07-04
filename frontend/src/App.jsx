@@ -32,7 +32,7 @@ import { AdCreCV } from './pages/AdminPages/AdCreCV';
 import { AssignCreator } from './pages/AdminPages/AssignCreator';
 import { BusProject } from './pages/BusinessPages/BusProject';
 
-axios.defaults.baseURL = "http://localhost:3000/api/v1";
+axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
 
 function App() {
 
