@@ -21,6 +21,21 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    assignedCreator: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Creator' 
+    },
+    projectFile: {
+        type: String
+    },
+    assigned: {
+        type: Boolean,
+        default: false
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    },
     creatorCategory: {
         type: String,
         required: true

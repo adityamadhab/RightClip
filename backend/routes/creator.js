@@ -167,4 +167,14 @@ router.put('/approve/:id', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const creators = await Creator.find().select('-password');
+        res.json(creators);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;

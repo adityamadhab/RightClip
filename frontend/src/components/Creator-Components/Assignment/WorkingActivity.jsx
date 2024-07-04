@@ -1,11 +1,5 @@
-import React from 'react';
-
-const projectData = [
-    { id: 1, name: "Project - Lorem ipsum dolor sit amet." },
-    { id: 2, name: "Project - Lorem ipsum dolor sit amet." },
-    { id: 3, name: "Project - Lorem ipsum dolor sit amet." },
-    { id: 4, name: "Project - Lorem ipsum dolor sit amet." },
-];
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const ProjectItem = ({ name }) => (
     <div className="h-[60px] w-[1100px] bg-white rounded-xl flex justify-between">
@@ -18,11 +12,38 @@ const ProjectItem = ({ name }) => (
     </div>
 );
 
-export default function WorkingActivity() {
+export default function WorkingActivity({ creatorId }) {
+    const [projects, setProjects] = useState([]);
+    const [filter, setFilter] = useState('all');
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await axios.get(`/project/creator/${creatorId}`, {
+                    headers: {
+                        Authorization: localStorage.getItem('token'),
+                    },
+                });
+                setProjects(response.data);
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        };
+        fetchProjects();
+    }, [creatorId]);
+
+    const handleFilterChange = (event) => {
+        setFilter(event.target.value);
+    };
+
     return (
         <div className="bg-[#FFEADD] flex flex-col rounded-xl">
             <div className="flex justify-start ml-8">
-                <select className="mt-4 w-[300px] text-sm p-2 rounded-md">
+                <select 
+                    className="mt-4 w-[300px] text-sm p-2 rounded-md" 
+                    value={filter} 
+                    onChange={handleFilterChange}
+                >
                     <option value="all">This month</option>
                     <option value="today">Today</option>
                     <option value="yesterday">Yesterday</option>
@@ -31,8 +52,8 @@ export default function WorkingActivity() {
                 </select>
             </div>
             <div className="p-10 flex flex-col gap-2">
-                {projectData.map(project => (
-                    <ProjectItem key={project.id} name={project.name} />
+                {projects.map(project => (
+                    <ProjectItem key={project._id} name={project.projectName} />
                 ))}
             </div>
         </div>

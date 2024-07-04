@@ -3,8 +3,10 @@ import axios from 'axios';
 import AdDashNav from '../AdDashNav';
 import PenInsideNav from './PenInsideNav';
 import ApproveCard from './ApproveCard';
+import { useNavigate } from 'react-router-dom';
 
 export default function PendingMain() {
+    const navigate = useNavigate();
     const [showApproveCard, setShowApproveCard] = useState(false);
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
@@ -33,8 +35,7 @@ export default function PendingMain() {
     };
 
     const handleApprove = () => {
-        console.log('Approved and Assigned');
-        handleCloseApproveCard();
+        navigate('/admin/creator/assign')
     };
 
     const handleDecline = () => {
