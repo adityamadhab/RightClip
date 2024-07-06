@@ -24,7 +24,7 @@ export default function WorkingActivity() {
             try {
                 const response = await axios.get('/project/creator-projects', {
                     headers: {
-                        Authorization: localStorage.getItem('token'),
+                        Authorization: localStorage.getItem('CreToken'),
                     },
                 });
                 setProjects(response.data);

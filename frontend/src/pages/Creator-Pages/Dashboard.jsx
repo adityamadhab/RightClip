@@ -11,7 +11,7 @@ export function CreDashborad() {
       try {
         const response = await axios.get('/creator/user', {
           headers: {
-            Authorization: localStorage.getItem('token'),
+            Authorization: localStorage.getItem('CreToken'),
           },
         });
         setUsername(response.data.firstName);

@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function BusSidebar() {
     const navigate = useNavigate();
+    const location = useLocation();
+
     return (
         <div className="sticky top-0 left-0 bottom-0 w-[344px] h-screen py-0 px-4 text-white bg-[#8FD8CF] transition-all duration-500">
             <div className="logo p-[16px] mt-6">
                 <img src="/Business-assests/sidelogo.png" alt="RightCliq Creator Logo" className="h-[33px]" />
             </div>
             <ul className="menu h-[88vh] relative list-none p-0">
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/dashboard' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/dashboard' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M4.0625 12.9688V4.0625H10.1563V12.9688H4.0625Z" fill="black" />
@@ -23,7 +25,7 @@ export default function BusSidebar() {
                         <span className="overflow-hidden text-sm text-black">Dashboard</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/createproject' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/createproject' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M22.7502 16.3333V13.9167C22.7502 12.031 22.7502 11.0882 22.1644 10.5024C21.5786 9.91666 20.6358 9.91666 18.7502 9.91666H16.2403C15.4228 9.91666 15.0141 9.91666 14.6466 9.76442C14.279 9.61217 13.99 9.32314 13.4119 8.74508L12.2551 7.58823C11.677 7.01017 11.388 6.72114 11.0204 6.5689C10.6529 6.41666 10.2441 6.41666 9.42664 6.41666H8.0835C6.19788 6.41666 5.25507 6.41666 4.66928 7.00244C4.0835 7.58823 4.0835 8.53104 4.0835 10.4167V17.5833C4.0835 19.4689 4.0835 20.4117 4.66928 20.9975C5.25507 21.5833 6.19788 21.5833 8.0835 21.5833H17.5002" stroke="#222222" />
@@ -32,7 +34,16 @@ export default function BusSidebar() {
                         <span className="overflow-hidden text-sm text-black">Create Project</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/order' ? 'bg-white' : ''} hover:bg-white`}>
+                    <Link to='/business/order' className="text-white text-base no-underline flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-black">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                        </svg>
+
+                        <span className="overflow-hidden text-sm text-black">Orders</span>
+                    </Link>
+                </li>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/templates' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/templates' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9 9V3L18 3C18.9428 3 19.4142 3 19.7071 3.29289C20 3.58579 20 4.05719 20 5V9H9Z" stroke="#222222" stroke-linecap="round" />
@@ -43,7 +54,7 @@ export default function BusSidebar() {
                         <span className="overflow-hidden text-sm text-black">Templates</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/inbox' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/inbox' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <rect x="4.5" y="6.75" width="18" height="13.5" rx="2" stroke="#222222" />
@@ -53,7 +64,7 @@ export default function BusSidebar() {
                         <span className="overflow-hidden text-sm text-black">Inbox</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/ratings' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/ratings' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9.14386 6.62758C9.93046 4.66658 10.3238 3.68608 11.0001 3.68608C11.6764 3.68608 12.0697 4.66658 12.8563 6.62758L12.893 6.7189C13.3373 7.82676 13.5595 8.3807 14.0124 8.71739C14.4652 9.05407 15.0597 9.10731 16.2486 9.21379L16.4636 9.23304C18.4094 9.4073 19.3823 9.49443 19.5905 10.1134C19.7986 10.7324 19.0761 11.3897 17.6311 12.7044L17.1488 13.1432C16.4173 13.8087 16.0515 14.1415 15.8811 14.5776C15.8493 14.659 15.8228 14.7423 15.8019 14.8271C15.6899 15.2818 15.797 15.7645 16.0112 16.73L16.0778 17.0305C16.4715 18.8048 16.6684 19.692 16.3247 20.0747C16.1963 20.2177 16.0293 20.3206 15.8439 20.3712C15.3477 20.5066 14.6433 19.9326 13.2343 18.7845C12.3091 18.0306 11.8465 17.6537 11.3154 17.5689C11.1065 17.5355 10.8937 17.5355 10.6847 17.5689C10.1536 17.6537 9.69106 18.0306 8.76589 18.7845C7.35694 19.9326 6.65246 20.5066 6.15626 20.3712C5.97084 20.3206 5.80393 20.2177 5.67551 20.0747C5.33183 19.692 5.52866 18.8048 5.92234 17.0305L5.98902 16.73C6.20322 15.7645 6.31033 15.2818 6.19827 14.8271C6.17737 14.7423 6.15093 14.659 6.11913 14.5776C5.94866 14.1415 5.58291 13.8087 4.8514 13.1432L4.36912 12.7044C2.92408 11.3897 2.20155 10.7324 2.40973 10.1134C2.61791 9.49443 3.59082 9.4073 5.53663 9.23304L5.75157 9.21379C6.94049 9.10731 7.53494 9.05407 7.98779 8.71739C8.44064 8.3807 8.66284 7.82676 9.10723 6.71889L9.14386 6.62758Z" stroke="black" />
@@ -61,7 +72,7 @@ export default function BusSidebar() {
                         <span className="overflow-hidden text-sm text-black">Ratings & Review</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/rewards' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/rewards' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M19.9375 24.7708H9.0625" stroke="#222222" stroke-linecap="round" />
@@ -74,7 +85,7 @@ export default function BusSidebar() {
                         <span className="overflow-hidden text-sm text-black">Rewards</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/notification' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/notification' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" className='w-5 h-5'>
                             <path d="M7.25382 10.0906C7.60746 6.90786 10.2977 4.5 13.5 4.5V4.5C16.7023 4.5 19.3925 6.90786 19.7462 10.0906L20.0295 12.6401C20.057 12.8884 20.0708 13.0125 20.0883 13.1349C20.2271 14.1091 20.5445 15.0492 21.0244 15.9082C21.0847 16.0162 21.149 16.1233 21.2775 16.3375L21.9278 17.4213C22.6225 18.5792 22.9699 19.1582 22.7891 19.6168C22.7549 19.7035 22.7088 19.7851 22.652 19.859C22.3518 20.25 21.6766 20.25 20.3262 20.25H6.67376C5.32342 20.25 4.64824 20.25 4.34803 19.859C4.29125 19.7851 4.24509 19.7035 4.21089 19.6168C4.03008 19.1582 4.37745 18.5792 5.0722 17.4213L5.72249 16.3375C5.85103 16.1233 5.9153 16.0162 5.9756 15.9082C6.45554 15.0492 6.77289 14.1091 6.91172 13.1349C6.92916 13.0125 6.94296 12.8884 6.97055 12.6401L7.25382 10.0906Z" stroke="#222222" />
@@ -83,7 +94,7 @@ export default function BusSidebar() {
                         <span className="overflow-hidden text-sm text-black">Notifications</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/logout' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/business/logout' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M2 12L1.60957 11.6877L1.35969 12L1.60957 12.3123L2 12ZM11 12.5C11.2761 12.5 11.5 12.2761 11.5 12C11.5 11.7239 11.2761 11.5 11 11.5V12.5ZM5.60957 6.68765L1.60957 11.6877L2.39043 12.3123L6.39043 7.31235L5.60957 6.68765ZM1.60957 12.3123L5.60957 17.3123L6.39043 16.6877L2.39043 11.6877L1.60957 12.3123ZM2 12.5H11V11.5H2V12.5Z" fill="#222222" />

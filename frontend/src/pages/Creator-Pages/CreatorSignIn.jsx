@@ -14,7 +14,7 @@ export function CreatorSignIn() {
       const response = await axios.post('/creator/signin', { email, password });
 
       if (response.data.user.approval) {
-        await localStorage.setItem('token', response.data.token);
+        await localStorage.setItem('CreToken', response.data.token);
         navigate('/creator/dashboard');
       } else {
         navigate('/creator/submit');

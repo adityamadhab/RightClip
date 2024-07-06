@@ -30,14 +30,96 @@ router.post('/create', authMiddleware, async (req, res) => {
     }
 });
 
+router.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await Project.findByIdAndDelete(id);
+        res.status(200).send({ message: 'Project deleted successfully' });
+    } catch (error) {
+        res.status(500).send({ message: 'Error deleting project', error });
+    }
+});
+
 router.get('/get', async (req, res) => {
     try {
-        const projects = await Project.find({ assigned: false });
+        const projects = await Project.find({ assigned: false, review: false });
         res.status(200).json(projects);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
+
+router.get('/ongoing', async (req, res) => {
+    try {
+        const projects = await Project.find({ assigned: true, review: false }).populate('assignedCreator', 'firstName lastName');
+
+        const projectStatuses = projects.map(project => ({
+            projectId: project._id,
+            projectName: project.projectName,
+            company: project.company,
+            assignedCreator: project.assignedCreator 
+                ? `${project.assignedCreator.firstName} ${project.assignedCreator.lastName}`
+                : null,
+            assigned: project.assigned,
+            completed: project.completed,
+            review: project.review,
+            projectLink: project.projectLink
+        }));
+
+        res.status(200).json(projectStatuses);
+    } catch (error) {
+        console.error('Error fetching review projects:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.get('/completed', async (req, res) => {
+    try {
+        const projects = await Project.find({ completed: true, review: true }).populate('assignedCreator', 'firstName lastName');
+
+        const projectStatuses = projects.map(project => ({
+            projectId: project._id,
+            projectName: project.projectName,
+            company: project.company,
+            assignedCreator: project.assignedCreator 
+                ? `${project.assignedCreator.firstName} ${project.assignedCreator.lastName}`
+                : null,
+            assigned: project.assigned,
+            completed: project.completed,
+            review: project.review,
+            projectLink: project.projectLink
+        }));
+
+        res.status(200).json(projectStatuses);
+    } catch (error) {
+        console.error('Error fetching review projects:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.get('/review', async (req, res) => {
+    try {
+        const projects = await Project.find({ review: true, completed: false }).populate('assignedCreator', 'firstName lastName');
+
+        const projectStatuses = projects.map(project => ({
+            projectId: project._id,
+            projectName: project.projectName,
+            assignedCreator: project.assignedCreator 
+                ? `${project.assignedCreator.firstName} ${project.assignedCreator.lastName}`
+                : null,
+            assigned: project.assigned,
+            completed: project.completed,
+            review: project.review,
+            projectLink: project.projectLink
+        }));
+
+        res.status(200).json(projectStatuses);
+    } catch (error) {
+        console.error('Error fetching review projects:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
 
 router.put('/assign', async (req, res) => {
     const { projectId, creatorId } = req.body;
@@ -68,7 +150,7 @@ router.get('/creator-projects', creatorMiddleware, async (req, res) => {
     try {
         const creatorId = req.user;
 
-        const projects = await Project.find({ assignedCreator: creatorId, completed: false });
+        const projects = await Project.find({ assignedCreator: creatorId, completed: false, review: false });
 
         if (!projects.length) {
             return res.status(404).json({ msg: 'No projects found for this creator' });
@@ -126,18 +208,11 @@ router.get('/client/dashboard-counts', authMiddleware, async (req, res) => {
 
 router.get('/admin/project-counts', async (req, res) => {
     try {
-
-        // Ongoing projects count
         const ongoingProjects = await Project.countDocuments({ assigned: true, completed: false });
-        console.log('Ongoing Projects:', ongoingProjects);  // Debugging line
 
-        // Completed pieces count
         const completedPieces = await Project.countDocuments({ completed: true });
-        console.log('Completed Pieces:', completedPieces);  // Debugging line
 
-        // Pending approvals count
         const pendingApprovals = await Project.countDocuments({ approvalStatus: 'pending' });
-        console.log('Pending Approvals:', pendingApprovals);  // Debugging line
 
         res.json({
             ongoingProjects,
@@ -150,6 +225,37 @@ router.get('/admin/project-counts', async (req, res) => {
     }
 });
 
+router.get('/client/project-status', authMiddleware, async (req, res) => {
+    try {
+        const clientId = req.user.company;
+
+        if (!clientId) {
+            return res.status(400).send({ error: "Client ID is required." });
+        }
+
+        const projects = await Project.find({ company: clientId }).populate('assignedCreator', 'firstName lastName');
+
+        const projectStatuses = projects.map(project => ({
+            projectName: project.projectName,
+            assignedCreator: project.assignedCreator 
+                ? `${project.assignedCreator.firstName} ${project.assignedCreator.lastName}`
+                : null,
+            assigned: project.assigned,
+            completed: project.completed,
+            review: project.review,
+            projectLink: project.projectLink,
+            approvalStatus: project.approvalStatus,
+            arrivingSoon: project.arrivingSoon
+        }));
+
+        res.status(200).json(projectStatuses);
+    } catch (error) {
+        console.error('Error fetching project statuses:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 
 router.post('/upload', creatorMiddleware, async (req, res) => {
     try {
@@ -161,10 +267,49 @@ router.post('/upload', creatorMiddleware, async (req, res) => {
         }
 
         project.projectLink = projectLink;
+        project.review = true;
+        project.completed = false;
+        await project.save();
+
+        res.status(200).json({ message: 'Project link uploaded successfully, pending admin review', project });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+router.put('/admin/approve', async (req, res) => {
+    try {
+        const { projectId } = req.body;
+
+        const project = await Project.findById(projectId);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        project.review = true;
         project.completed = true;
         await project.save();
 
-        res.status(200).json({ message: 'Project link uploaded successfully', project });
+        res.status(200).json({ message: 'Project approved and marked as completed', project });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+router.put('/admin/decline', async (req, res) => {
+    try {
+        const { projectId } = req.body;
+
+        const project = await Project.findById(projectId);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        project.review = false;
+        project.completed = false;
+        await project.save();
+
+        res.status(200).json({ message: 'Project declined and ready for re-upload', project });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }

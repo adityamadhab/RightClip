@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BusDashNav from '../Dashboard/BusDashNav';
 import SuccessPopup from './SucessPopup';
@@ -13,6 +13,33 @@ const ProjectDetailsForm = () => {
     });
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
+    useEffect(() => {
+        const token = localStorage.getItem('BusToken');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+
+        const fetchCompanyName = async () => {
+            try {
+                const response = await axios.get('/business/user', {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                const { company } = response.data;
+                setFormData((prevData) => ({
+                    ...prevData,
+                    company
+                }));
+            } catch (error) {
+                console.error('Error fetching company name:', error);
+            }
+        };
+
+        fetchCompanyName();
+    }, []);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -22,7 +49,7 @@ const ProjectDetailsForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('BusToken');
 
         if (!token) {
             console.error('No token found');
@@ -48,7 +75,7 @@ const ProjectDetailsForm = () => {
             projectName: '',
             industry: '',
             preferences: '',
-            company: '',
+            company: formData.company, // Keep the company name
             creatorCategory: ''
         });
     };
@@ -56,65 +83,74 @@ const ProjectDetailsForm = () => {
     return (
         <div className='bg-white w-full p-4'>
             <BusDashNav />
-            <div className="w-full flex justify-between mt-8">
+            <div className="w-full flex justify-between">
                 <div className="max-w-2xl w-full p-10 flex flex-col gap-4">
                     <div className="text-center mb-8">
                         <h2 className="mt-6 text-3xl font-extrabold text-gray-900 text-left">Project Details</h2>
                     </div>
-                    <form className="space-y-8" onSubmit={handleSubmit}>
-                        <div className="rounded-md shadow-sm space-y-8">
+                    <form className="space-y-3" onSubmit={handleSubmit}>
+                        <div className="rounded-md shadow-sm space-y-3">
                             <div>
+                                <label htmlFor="projectName" className="block text-sm font-medium text-gray-700">Project Name</label>
                                 <input
                                     type="text"
                                     name="projectName"
+                                    id="projectName"
                                     required
                                     value={formData.projectName}
                                     onChange={handleChange}
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Give your project name"
                                 />
                             </div>
                             <div>
+                                <label htmlFor="industry" className="block text-sm font-medium text-gray-700">Industry</label>
                                 <input
                                     type="text"
                                     name="industry"
+                                    id="industry"
                                     required
                                     value={formData.industry}
                                     onChange={handleChange}
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Enter your industry"
                                 />
                             </div>
                             <div>
+                                <label htmlFor="preferences" className="block text-sm font-medium text-gray-700">Preferences</label>
                                 <input
                                     type="text"
                                     name="preferences"
+                                    id="preferences"
                                     required
                                     value={formData.preferences}
                                     onChange={handleChange}
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Add your preferences"
                                 />
                             </div>
                             <div>
+                                <label htmlFor="company" className="block text-sm font-medium text-gray-700">Company</label>
                                 <input
                                     type="text"
                                     name="company"
-                                    required
+                                    id="company"
                                     value={formData.company}
-                                    onChange={handleChange}
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Choose/Type your company"
+                                    readOnly
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl bg-gray-100 cursor-not-allowed focus:outline-none sm:text-sm"
+                                    placeholder="Company Name"
                                 />
                             </div>
                             <div>
+                                <label htmlFor="creatorCategory" className="block text-sm font-medium text-gray-700">Creator Category</label>
                                 <input
                                     type="text"
                                     name="creatorCategory"
+                                    id="creatorCategory"
                                     required
                                     value={formData.creatorCategory}
                                     onChange={handleChange}
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Choose Creator category"
                                 />
                             </div>
@@ -124,7 +160,7 @@ const ProjectDetailsForm = () => {
                                 type="submit"
                                 className="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-2xl text-white bg-blue-900 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                Submit
+                                Place Order
                             </button>
                         </div>
                     </form>

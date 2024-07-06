@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/Admin-Components/AdminSidebar";
-import AssignMain from "../../components/Admin-Components/Creator/AssignMain";
+import PendingMain from "../../components/Admin-Components/DashBoard/Pending/PendingMain";
 import { useEffect } from "react";
+import ReviewMain from "../../components/Admin-Components/DashBoard/Review/ReviewMain";
 
-export function AssignCreator() {
+export function ReviewProjects() {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export function AssignCreator() {
         <div>
             <div className="flex">
                 <AdminSidebar />
-                <AssignMain />
+                <ReviewMain />
             </div>
         </div>
     )

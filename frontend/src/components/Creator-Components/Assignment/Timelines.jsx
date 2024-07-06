@@ -33,13 +33,14 @@ export default function CreAssTimelines() {
     const [showSubmissionCard, setShowSubmissionCard] = useState(false);
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
                 const response = await axios.get('/project/creator-projects', {
                     headers: {
-                        Authorization: localStorage.getItem('token'),
+                        Authorization: localStorage.getItem('CreToken'),
                     },
                 });
                 setProjects(response.data);
@@ -58,6 +59,18 @@ export default function CreAssTimelines() {
 
     const handleCloseSubmissionCard = () => {
         setShowSubmissionCard(false);
+        setSelectedProject(null);
+        setMessage('');
+    };
+
+    const handleProjectSubmitSuccess = () => {
+        setMessage('PROJECT SUBMITTED SUCCESSFULLY');
+        const updatedProjects = projects.filter(p => p._id !== selectedProject._id);
+        setProjects(updatedProjects);
+        setTimeout(() => {
+            setMessage('');
+            handleCloseSubmissionCard();
+        }, 2000);
     };
 
     return (
@@ -92,9 +105,19 @@ export default function CreAssTimelines() {
                             <div className="text-center text-gray-500">NO PROJECTS FOR SUBMISSION</div>
                         )}
                     </div>
+                    {message && (
+                        <div className="text-center text-green-500 mb-4">{message}</div>
+                    )}
                 </div>
             </div>
-            {showSubmissionCard && <SubmitCard project={selectedProject} onClose={handleCloseSubmissionCard} />}
+            {showSubmissionCard && (
+                <SubmitCard
+                    project={selectedProject}
+                    onClose={handleCloseSubmissionCard}
+                    onSubmitSuccess={handleProjectSubmitSuccess}
+                    message={message}
+                />
+            )}
         </div>
     );
 }

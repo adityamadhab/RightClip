@@ -19,7 +19,7 @@ export function BusinessSignIn() {
             });
 
             if (response.status === 200) {
-                await localStorage.setItem('token', response.data.token);
+                await localStorage.setItem('BusToken', response.data.token);
                 navigate('/business/dashboard');
             }
         } catch (err) {

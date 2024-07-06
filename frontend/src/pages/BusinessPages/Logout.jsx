@@ -6,8 +6,8 @@ import BusSidebar from '../../components/Business-Components/Sidebar';
 export function Logout() {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
+    const handleLogout = async () => {
+        await localStorage.removeItem('BusToken');
         navigate('/');
     };
 

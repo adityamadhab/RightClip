@@ -11,7 +11,7 @@ export function BusDashborad() {
             try {
                 const response = await axios.get('/business/user', {
                     headers: {
-                        Authorization: localStorage.getItem("token")
+                        Authorization: localStorage.getItem("BusToken")
                     }
                 });
                 setUsername(response.data.firstname);

@@ -35,12 +35,17 @@ export default function PendingMain() {
     };
 
     const handleApprove = () => {
-        navigate('/admin/creator/assign')
+        navigate('/admin/creator/assign');
     };
 
-    const handleDecline = () => {
-        console.log('Declined');
-        handleCloseApproveCard();
+    const handleDecline = async () => {
+        try {
+            await axios.delete(`/project/delete/${selectedProject._id}`);
+            setProjects((prevProjects) => prevProjects.filter(project => project.id !== selectedProject.id));
+            handleCloseApproveCard();
+        } catch (error) {
+            console.error('Error deleting project:', error);
+        }
     };
 
     return (
@@ -49,22 +54,26 @@ export default function PendingMain() {
                 <AdDashNav />
                 <PenInsideNav />
                 <div className="p-10 flex flex-col gap-6">
-                    {projects.map((project) => (
-                        <div key={project.id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex justify-between items-center px-4">
-                            <div className="flex gap-4 items-center">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="32" height="32" rx="16" fill="white" />
-                                </svg>
-                                <p className="text-sm">{project.clientName} requested a project: {project.projectName}</p>
+                    {projects.length === 0 ? (
+                        <p className="text-center text-gray-500">NO PENDING PROJECTS</p>
+                    ) : (
+                        projects.map((project) => (
+                            <div key={project.id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex justify-between items-center px-4">
+                                <div className="flex gap-4 items-center">
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="32" height="32" rx="16" fill="white" />
+                                    </svg>
+                                    <p className="text-sm">{project.clientName} requested a project: {project.projectName}</p>
+                                </div>
+                                <button
+                                    className="bg-[#ABCAF8] rounded-lg w-[100px] p-2 text-sm"
+                                    onClick={() => handleReviewClick(project)}
+                                >
+                                    Review
+                                </button>
                             </div>
-                            <button
-                                className="bg-[#ABCAF8] rounded-lg w-[100px] p-2 text-sm"
-                                onClick={() => handleReviewClick(project)}
-                            >
-                                Review
-                            </button>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
             </div>
 

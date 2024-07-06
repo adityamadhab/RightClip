@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function SubmitCard({ onClose, project }) {
+function SubmitCard({ onClose, project, onSubmitSuccess, message }) {
   const [projectLink, setProjectLink] = useState('');
 
   const handleSubmit = async (e) => {
@@ -10,11 +10,11 @@ function SubmitCard({ onClose, project }) {
     try {
       await axios.post('/project/upload', { projectId: project._id, projectLink }, {
         headers: {
-          Authorization: localStorage.getItem('token'),
+          Authorization: localStorage.getItem('CreToken'),
         },
       });
       console.log('Project submitted successfully');
-      onClose();
+      onSubmitSuccess();
     } catch (error) {
       console.error('Error submitting project:', error);
     }
@@ -27,6 +27,9 @@ function SubmitCard({ onClose, project }) {
           <h2 className="text-lg font-semibold">Submit Project</h2>
           <button onClick={onClose} className="text-black font-bold">X</button>
         </div>
+        {message && (
+          <div className="text-center text-green-500 mb-4">{message}</div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">

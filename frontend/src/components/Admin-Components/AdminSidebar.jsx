@@ -20,7 +20,7 @@ export default function AdminSidebar() {
                 <img src="/Business-assests/sidelogo.png" alt="RightCliq Creator Logo" className="h-[33px]" />
             </div>
             <ul className="menu h-[88vh] relative list-none p-0">
-                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white ${dashboardDropdown ? 'bg-white' : ''}`}>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname.startsWith('/admin/dashboard') ? 'bg-white' : ''} hover:bg-white ${dashboardDropdown ? 'bg-white' : ''}`}>
                     <div className="flex items-center justify-between cursor-pointer" onClick={toggleDashboardDropdown}>
                         <div className="flex items-center gap-3">
                             <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
@@ -44,6 +44,9 @@ export default function AdminSidebar() {
                                 <Link to='/admin/dashboard/ongoing' className="text-black text-sm no-underline">Ongoing Projects</Link>
                             </li>
                             <li className='p-2 my-1 rounded-lg transition duration-500 ease-in-out hover:bg-[#E7CBA3]'>
+                                <Link to='/admin/dashboard/review' className="text-black text-sm no-underline">Review Projects</Link>
+                            </li>
+                            <li className='p-2 my-1 rounded-lg transition duration-500 ease-in-out hover:bg-[#E7CBA3]'>
                                 <Link to='/admin/dashboard/completed' className="text-black text-sm no-underline">Completed Projects</Link>
                             </li>
                             <li className='p-2 my-1 rounded-lg transition duration-500 ease-in-out hover:bg-[#E7CBA3]'>
@@ -52,7 +55,7 @@ export default function AdminSidebar() {
                         </ul>
                     )}
                 </li>
-                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white ${creatorDropdown ? 'bg-white' : ''}`}>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname.startsWith('/admin/creator') ? 'bg-white' : ''} hover:bg-white ${creatorDropdown ? 'bg-white' : ''}`}>
                     <div className="flex items-center justify-between cursor-pointer" onClick={toggleCreatorDropdown}>
                         <div className="flex items-center gap-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
@@ -78,7 +81,7 @@ export default function AdminSidebar() {
                         </ul>
                     )}
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/messaging' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/admin/messaging' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9 7L13 7" stroke="#222222" stroke-linecap="round" />
@@ -91,7 +94,7 @@ export default function AdminSidebar() {
                         <span className="overflow-hidden text-sm text-black">Messaging</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/wallet' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/admin/wallet' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9 9V3L18 3C18.9428 3 19.4142 3 19.7071 3.29289C20 3.58579 20 4.05719 20 5V9H9Z" stroke="#222222" stroke-linecap="round" />
@@ -102,7 +105,7 @@ export default function AdminSidebar() {
                         <span className="overflow-hidden text-sm text-black">Wallet</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/notification' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/admin/notification' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" className='w-5 h-5'>
                             <path d="M7.25382 10.0906C7.60746 6.90786 10.2977 4.5 13.5 4.5V4.5C16.7023 4.5 19.3925 6.90786 19.7462 10.0906L20.0295 12.6401C20.057 12.8884 20.0708 13.0125 20.0883 13.1349C20.2271 14.1091 20.5445 15.0492 21.0244 15.9082C21.0847 16.0162 21.149 16.1233 21.2775 16.3375L21.9278 17.4213C22.6225 18.5792 22.9699 19.1582 22.7891 19.6168C22.7549 19.7035 22.7088 19.7851 22.652 19.859C22.3518 20.25 21.6766 20.25 20.3262 20.25H6.67376C5.32342 20.25 4.64824 20.25 4.34803 19.859C4.29125 19.7851 4.24509 19.7035 4.21089 19.6168C4.03008 19.1582 4.37745 18.5792 5.0722 17.4213L5.72249 16.3375C5.85103 16.1233 5.9153 16.0162 5.9756 15.9082C6.45554 15.0492 6.77289 14.1091 6.91172 13.1349C6.92916 13.0125 6.94296 12.8884 6.97055 12.6401L7.25382 10.0906Z" stroke="#222222" />
@@ -111,7 +114,7 @@ export default function AdminSidebar() {
                         <span className="overflow-hidden text-sm text-black">Notifications</span>
                     </Link>
                 </li>
-                <li className='p-3 my-2 rounded-lg transition duration-500 ease-in-out hover:bg-white'>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/logout' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/admin/logout' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M2 12L1.60957 11.6877L1.35969 12L1.60957 12.3123L2 12ZM11 12.5C11.2761 12.5 11.5 12.2761 11.5 12C11.5 11.7239 11.2761 11.5 11 11.5V12.5ZM5.60957 6.68765L1.60957 11.6877L2.39043 12.3123L6.39043 7.31235L5.60957 6.68765ZM1.60957 12.3123L5.60957 17.3123L6.39043 16.6877L2.39043 11.6877L1.60957 12.3123ZM2 12.5H11V11.5H2V12.5Z" fill="#222222" />

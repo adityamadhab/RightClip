@@ -11,7 +11,7 @@ export default function AdDashCount() {
     useEffect(() => {
         const fetchDashboardCounts = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('AdminToken');
                 if (!token) {
                     console.error('Authorization token not found');
                     return;
@@ -39,7 +39,7 @@ export default function AdDashCount() {
                 <div className="text-2xl font-bold">{dashboardCounts.ongoingProjects}</div>
             </div>
             <div className="bg-[#FFA4A5] p-4 rounded-lg h-[174px] flex flex-col justify-between">
-                <div className="text-lg">Completed Pieces</div>
+                <div className="text-lg">Completed Projects</div>
                 <div className="text-2xl font-bold">{dashboardCounts.completedPieces}</div>
             </div>
             <div className="bg-[#FFC098] p-4 rounded-lg h-[174px] flex flex-col justify-between">

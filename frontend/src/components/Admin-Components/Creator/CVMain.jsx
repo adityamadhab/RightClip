@@ -14,7 +14,7 @@ export default function CVMain() {
             try {
                 const response = await axios.get(`/creator/${id}`, {
                     headers: {
-                        Authorization: localStorage.getItem('token'),
+                        Authorization: localStorage.getItem('AdminToken'),
                     },
                 });
                 setCreator(response.data);
@@ -29,7 +29,7 @@ export default function CVMain() {
         try {
             await axios.put(`/creator/approve/${id}`, {}, {
                 headers: {
-                    Authorization: localStorage.getItem('token'),
+                    Authorization: localStorage.getItem('AdminToken'),
                 },
             });
             setCreator((prevCreator) => ({

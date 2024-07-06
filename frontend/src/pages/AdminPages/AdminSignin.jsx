@@ -19,7 +19,7 @@ export function AdminSignIn() {
             });
 
             if (response.status === 200) {
-                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('AdminToken', response.data.token);
                 navigate('/admin/dashboard');
             }
         } catch (err) {

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdDashNav from '../AdDashNav';
 
-export default function OngoingMain() {
+export default function CompletedMain() {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await axios.get('/project/ongoing');
+                const response = await axios.get('/project/completed');
                 setProjects(response.data);
             } catch (error) {
                 console.error('Error fetching projects:', error);
@@ -39,7 +39,7 @@ export default function OngoingMain() {
                                         <p className="text-sm font-semibold">Project Name: {project.projectName} by {project.company}</p>
                                     </div>
                                     <div>
-                                        <p className="text-sm font-semibold">Assigned Creator: {project.assignedCreator}</p>
+                                        <p className="text-sm font-semibold">Done by: Creator {project.assignedCreator}</p>
                                     </div>
                                 </div>
                             </div>

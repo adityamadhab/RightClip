@@ -12,7 +12,7 @@ export default function BusDashCount() {
     useEffect(() => {
         const fetchDashboardCounts = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('BusToken');
                 if (!token) {
                     console.error('Authorization token not found');
                     return;

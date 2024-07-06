@@ -10,7 +10,7 @@ export default function CreDashCount() {
     useEffect(() => {
         const fetchProjectCounts = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const token = localStorage.getItem('CreToken');
                 if (!token) {
                     console.error('Authorization token not found');
                     return;

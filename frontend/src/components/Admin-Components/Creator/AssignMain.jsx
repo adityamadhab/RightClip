@@ -8,13 +8,14 @@ export default function AssignMain() {
     const [showAssignPopup, setShowAssignPopup] = useState(false);
     const [selectedCreator, setSelectedCreator] = useState(null);
     const [selectedProject, setSelectedProject] = useState('');
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const fetchCreators = async () => {
             try {
                 const response = await axios.get('/creator/approved', {
                     headers: {
-                        Authorization: localStorage.getItem('token'),
+                        Authorization: localStorage.getItem('AdminToken'),
                     },
                 });
                 setCreators(response.data);
@@ -44,6 +45,7 @@ export default function AssignMain() {
         setShowAssignPopup(false);
         setSelectedCreator(null);
         setSelectedProject('');
+        setMessage('');
     };
 
     const handleAssignProject = async () => {
@@ -53,13 +55,16 @@ export default function AssignMain() {
                 projectId: selectedProject,
             }, {
                 headers: {
-                    Authorization: localStorage.getItem('token'),
+                    Authorization: localStorage.getItem('AdminToken'),
                 },
             });
-            console.log('Project assigned successfully');
-            handleCloseAssignPopup();
+            setMessage('PROJECT ASSIGNED SUCCESSFULLY');
+            setTimeout(() => {
+                handleCloseAssignPopup();
+            }, 2000);
         } catch (error) {
             console.error('Error assigning project:', error);
+            setMessage('Error assigning project');
         }
     };
 
@@ -100,6 +105,7 @@ export default function AssignMain() {
                                 <option key={project._id} value={project._id}>{project.projectName} by {project.company}</option>
                             ))}
                         </select>
+                        {message && <p className="text-center text-green-500 mb-4">{message}</p>}
                         <button className="bg-green-500 text-white px-4 py-2 rounded-lg mr-2" onClick={handleAssignProject}>
                             Assign
                         </button>

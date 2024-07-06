@@ -1,7 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/Admin-Components/AdminSidebar";
+import { useEffect } from "react";
 
 export function AdminLogout() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('AdminToken');
+        if (!token) {
+            navigate('/');
+        }
+    }, []);
+
     return (
         <div className="flex h-screen">
             <AdminSidebar/>

@@ -32,6 +32,10 @@ const projectSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    review: {
+        type: Boolean,
+        default: false
+    },
     completed: {
         type: Boolean,
         default: false

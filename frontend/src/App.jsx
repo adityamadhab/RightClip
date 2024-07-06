@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css'
 import { IndexPage } from './pages/IndexPage';
 import { CreatorSignIn } from './pages/Creator-Pages/CreatorSignIn';
@@ -31,10 +31,29 @@ import { CreLogout } from './pages/Creator-Pages/CreLogout';
 import { AdCreCV } from './pages/AdminPages/AdCreCV';
 import { AssignCreator } from './pages/AdminPages/AssignCreator';
 import { BusProject } from './pages/BusinessPages/BusProject';
+import { useEffect } from 'react';
+import { ReviewProjects } from './pages/AdminPages/ReviewProjects';
+import { OrderPage } from './pages/BusinessPages/OrderPage';
 
-axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
+axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const busToken = localStorage.getItem('BusToken');
+    const creToken = localStorage.getItem('CreToken');
+    const adminToken = localStorage.getItem('AdminToken');
+    
+    if (busToken) {
+      navigate('/business/dashboard');
+    } else if (creToken) {
+      navigate('/creator/dashboard');
+    } else if (adminToken) {
+      navigate('/admin/dashboard');
+    }
+  }, []);
+  
 
   return (
     <Routes>
@@ -50,6 +69,7 @@ function App() {
       <Route path='/business/signin' element={<BusinessSignIn />} />
       <Route path='/business/success' element={<Sucess />} />
       <Route path='/business/dashboard' element={<BusDashborad />} />
+      <Route path='/business/order' element={<OrderPage />} />
       <Route path='/business/createproject' element={<BusProject />} />
       <Route path='/business/templates' element={<BusTemplates />} />
       <Route path='/business/ratings' element={<Ratings />} />
@@ -62,6 +82,7 @@ function App() {
       <Route path='/admin/dashboard/ongoing' element={<OngoingProject />} />
       <Route path='/admin/dashboard/completed' element={<CompletedProject />} />
       <Route path='/admin/dashboard/pending' element={<PendingProject />} />
+      <Route path='/admin/dashboard/review' element={<ReviewProjects />} />
       <Route path='/admin/creator/pending' element={<PendingRequest />} />
       <Route path='/admin/creator/pending/:id' element={<AdCreCV />} />
       <Route path='/admin/creator/assign' element={<AssignCreator />} />
