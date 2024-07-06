@@ -35,7 +35,7 @@ import { useEffect } from 'react';
 import { ReviewProjects } from './pages/AdminPages/ReviewProjects';
 import { OrderPage } from './pages/BusinessPages/OrderPage';
 
-axios.defaults.baseURL = "http://localhost:3000/api/v1";
+axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
 
 function App() {
   const navigate = useNavigate();
