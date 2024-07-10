@@ -13,6 +13,12 @@ export default function CreAssInsideNav() {
                     <p className="text-sm">Working Activity</p>
                 </Link>
                 <Link 
+                    to={'/creator/assignment/accept'} 
+                    className={`text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] cursor-pointer ${location.pathname === '/creator/assignment/accept' ? 'bg-[#ABCAF8]' : 'bg-white'}`}
+                >
+                    <p className="text-sm">Accept Assignment</p>
+                </Link>
+                <Link 
                     to={'/creator/assignment/timelines'} 
                     className={`text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] cursor-pointer ${location.pathname === '/creator/assignment/timelines' ? 'bg-[#ABCAF8]' : 'bg-white'}`}
                 >

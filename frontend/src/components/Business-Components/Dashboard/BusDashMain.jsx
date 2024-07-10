@@ -1,6 +1,5 @@
 import { BusFooter } from "../BusFooter";
 import BusDashCount from "./BusDashCount";
-import BusDashDetails from "./BusDashDetails";
 import BusDashNav from "./BusDashNav";
 
 export default function BushDashMain({username}) {
@@ -23,23 +22,6 @@ export default function BushDashMain({username}) {
                     </div>
                 </div>
                 <BusDashCount />
-                <div class="p-4">
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-[300px]">
-                            <p>Active Assignments</p>
-                            <p>(0)</p>
-                        </div>
-                        <div class="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-[300px]">
-                            <p>Completed Assignments</p>
-                            <p>(0)</p>
-                        </div>
-                        <div class="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-[300px]">
-                            <p>Cancelled Assignments</p>
-                            <p>(0)</p>
-                        </div>
-                    </div>
-                </div>
-                <BusDashDetails />
             </div>
             <BusFooter />
         </div>

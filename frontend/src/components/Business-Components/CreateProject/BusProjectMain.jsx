@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BusDashNav from '../Dashboard/BusDashNav';
 import SuccessPopup from './SucessPopup';
+import CategoryTemplates from './CategoryTemplates';
 
 const ProjectDetailsForm = () => {
     const [formData, setFormData] = useState({
         projectName: '',
         industry: '',
-        preferences: '',
+        requirements: '',
         company: '',
-        creatorCategory: ''
+        projectCategory: ''
     });
+    const [industries, setIndustries] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     useEffect(() => {
@@ -37,7 +40,35 @@ const ProjectDetailsForm = () => {
             }
         };
 
+        const fetchIndustries = async () => {
+            try {
+                const response = await axios.get('/industry/industry-types', {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                setIndustries(response.data);
+            } catch (error) {
+                console.error('Error fetching industries:', error);
+            }
+        };
+
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('/category/project-categories', {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
         fetchCompanyName();
+        fetchIndustries();
+        fetchCategories();
     }, []);
 
     const handleChange = (e) => {
@@ -74,9 +105,9 @@ const ProjectDetailsForm = () => {
         setFormData({
             projectName: '',
             industry: '',
-            preferences: '',
-            company: formData.company, // Keep the company name
-            creatorCategory: ''
+            requirements: '',
+            company: formData.company,
+            projectCategory: ''
         });
     };
 
@@ -104,32 +135,6 @@ const ProjectDetailsForm = () => {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="industry" className="block text-sm font-medium text-gray-700">Industry</label>
-                                <input
-                                    type="text"
-                                    name="industry"
-                                    id="industry"
-                                    required
-                                    value={formData.industry}
-                                    onChange={handleChange}
-                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Enter your industry"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="preferences" className="block text-sm font-medium text-gray-700">Preferences</label>
-                                <input
-                                    type="text"
-                                    name="preferences"
-                                    id="preferences"
-                                    required
-                                    value={formData.preferences}
-                                    onChange={handleChange}
-                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Add your preferences"
-                                />
-                            </div>
-                            <div>
                                 <label htmlFor="company" className="block text-sm font-medium text-gray-700">Company</label>
                                 <input
                                     type="text"
@@ -142,17 +147,49 @@ const ProjectDetailsForm = () => {
                                 />
                             </div>
                             <div>
-                                <label htmlFor="creatorCategory" className="block text-sm font-medium text-gray-700">Creator Category</label>
+                                <label htmlFor="industry" className="block text-sm font-medium text-gray-700">Industry</label>
+                                <select
+                                    name="industry"
+                                    id="industry"
+                                    required
+                                    value={formData.industry}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-2xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                >
+                                    <option value="" disabled>Select your industry</option>
+                                    {industries.map(industry => (
+                                        <option key={industry._id} value={industry.name}>{industry.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label htmlFor="requirements" className="block text-sm font-medium text-gray-700">Requirements</label>
                                 <input
                                     type="text"
-                                    name="creatorCategory"
-                                    id="creatorCategory"
+                                    name="requirements"
+                                    id="requirements"
                                     required
-                                    value={formData.creatorCategory}
+                                    value={formData.requirements}
                                     onChange={handleChange}
                                     className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Choose Creator category"
+                                    placeholder="Describe Your Requirements"
                                 />
+                            </div>
+                            <div>
+                                <label htmlFor="projectCategory" className="block text-sm font-medium text-gray-700">Project Category</label>
+                                <select
+                                    name="projectCategory"
+                                    id="projectCategory"
+                                    required
+                                    value={formData.projectCategory}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-2xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                >
+                                    <option value="" disabled>Select project category</option>
+                                    {categories.map(category => (
+                                        <option key={category._id} value={category.name}>{category.name}</option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                         <div>
@@ -165,34 +202,7 @@ const ProjectDetailsForm = () => {
                         </div>
                     </form>
                 </div>
-                <div className="w-1/3 bg-[#FFEADD] hidden lg:flex items-center justify-center p-4 rounded-xl">
-                    <div className="grid mt-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-                        <div className="rounded-xl h-[140px] w-[160px] bg-white overflow-hidden flex-row">
-                            <img src="/Templetes-assests/c1.png" alt="Demo Category" className="h-[100px] w-[360px] object-cover border-t-2 rounded-xl" />
-                            <h2 className="text-sm p-2 h-[40px] text-center">Demo Category</h2>
-                        </div>
-                        <div className="rounded-xl h-[140px] w-[160px] bg-white overflow-hidden flex-row">
-                            <img src="/Templetes-assests/c1.png" alt="Demo Category" className="h-[100px] w-[360px] object-cover border-t-2 rounded-xl" />
-                            <h2 className="text-sm p-2 h-[40px] text-center">Demo Category</h2>
-                        </div>
-                        <div className="rounded-xl h-[140px] w-[160px] bg-white overflow-hidden flex-row">
-                            <img src="/Templetes-assests/c1.png" alt="Demo Category" className="h-[100px] w-[360px] object-cover border-t-2 rounded-xl" />
-                            <h2 className="text-sm p-2 h-[40px] text-center">Demo Category</h2>
-                        </div>
-                        <div className="rounded-xl h-[140px] w-[160px] bg-white overflow-hidden flex-row">
-                            <img src="/Templetes-assests/c1.png" alt="Demo Category" className="h-[100px] w-[360px] object-cover border-t-2 rounded-xl" />
-                            <h2 className="text-sm p-2 h-[40px] text-center">Demo Category</h2>
-                        </div>
-                        <div className="rounded-xl h-[140px] w-[160px] bg-white overflow-hidden flex-row">
-                            <img src="/Templetes-assests/c1.png" alt="Demo Category" className="h-[100px] w-[360px] object-cover border-t-2 rounded-xl" />
-                            <h2 className="text-sm p-2 h-[40px] text-center">Demo Category</h2>
-                        </div>
-                        <div className="rounded-xl h-[140px] w-[160px] bg-white overflow-hidden flex-row">
-                            <img src="/Templetes-assests/c1.png" alt="Demo Category" className="h-[100px] w-[360px] object-cover border-t-2 rounded-xl" />
-                            <h2 className="text-sm p-2 h-[40px] text-center">Demo Category</h2>
-                        </div>
-                    </div>
-                </div>
+                <CategoryTemplates selectedCategory={formData.projectCategory} />
             </div>
             {showSuccessPopup && <SuccessPopup onClose={handleClosePopup} />}
         </div>

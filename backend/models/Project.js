@@ -9,11 +9,15 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    preferences: {
+    requirements: {
         type: String,
         required: true
     },
     company: {
+        type: String,
+        required: true
+    },
+    projectCategory: {
         type: String,
         required: true
     },
@@ -28,6 +32,14 @@ const projectSchema = new mongoose.Schema({
     projectLink: {
         type: String
     },
+    creatorApproval: {
+        type: Boolean,
+        default: false
+    },
+    businessApproval: {
+        type: Boolean,
+        default: false
+    },
     assigned: {
         type: Boolean,
         default: false
@@ -40,9 +52,9 @@ const projectSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    creatorCategory: {
-        type: String,
-        required: true
+    cancelled: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

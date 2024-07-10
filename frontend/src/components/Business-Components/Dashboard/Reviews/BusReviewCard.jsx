@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ReviewCard = ({ templateImage, projectName, company, creatorName, requirements, projectLink, projectCategory, onApprove, onDecline, message }) => {
+const BusReviewCard = ({ templateImage, projectName, company, creatorName, requirements, projectLink, projectCategory, onApprove, onDecline, message }) => {
     return (
         <div className="p-6 w-[550px] mx-auto bg-card text-card-foreground rounded-lg">
             {message && (
@@ -61,4 +61,4 @@ const ReviewCard = ({ templateImage, projectName, company, creatorName, requirem
     );
 }
 
-export default ReviewCard;
+export default BusReviewCard;

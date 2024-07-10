@@ -40,11 +40,11 @@ export default function PendingMain() {
 
     const handleDecline = async () => {
         try {
-            await axios.delete(`/project/delete/${selectedProject._id}`);
-            setProjects((prevProjects) => prevProjects.filter(project => project.id !== selectedProject.id));
+            await axios.put('/project/admin/cancel', { projectId: selectedProject._id });
+            setProjects((prevProjects) => prevProjects.filter(project => project._id !== selectedProject._id));
             handleCloseApproveCard();
         } catch (error) {
-            console.error('Error deleting project:', error);
+            console.error('Error declining project:', error);
         }
     };
 
@@ -58,7 +58,7 @@ export default function PendingMain() {
                         <p className="text-center text-gray-500">NO PENDING PROJECTS</p>
                     ) : (
                         projects.map((project) => (
-                            <div key={project.id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex justify-between items-center px-4">
+                            <div key={project._id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex justify-between items-center px-4">
                                 <div className="flex gap-4 items-center">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="16" fill="white" />
@@ -87,8 +87,8 @@ export default function PendingMain() {
                             category={selectedProject.company}
                             projectName={selectedProject.projectName}
                             industry={selectedProject.industry}
-                            preference={selectedProject.preferences}
-                            creatorCategory={selectedProject.creatorCategory}
+                            preference={selectedProject.requirements}
+                            creatorCategory={selectedProject.projectCategory}
                             onApprove={handleApprove}
                             onDecline={handleDecline}
                         />

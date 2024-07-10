@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdDashNav from '../AdDashNav';
-import ReviewCard from './ReviewCard';
+import BusDashNav from '../BusDashNav';
+import BusReviewCard from './BusReviewCard';
 
-export default function ReviewMain() {
+export default function BusReviewMain() {
     const [showApproveCard, setShowApproveCard] = useState(false);
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
@@ -11,7 +11,11 @@ export default function ReviewMain() {
 
     const fetchProjects = async () => {
         try {
-            const response = await axios.get('/project/review');
+            const response = await axios.get('/project/client/review-projects', {
+                headers: {
+                    Authorization: localStorage.getItem('BusToken')
+                }
+            });
             setProjects(response.data);
         } catch (error) {
             console.error('Error fetching projects:', error);
@@ -34,7 +38,14 @@ export default function ReviewMain() {
 
     const handleApprove = async (projectId) => {
         try {
-            await axios.put('/project/admin/approve', { projectId });
+            await axios.put('/project/business/approve', 
+                { projectId },
+                {
+                    headers: {
+                        Authorization: localStorage.getItem('BusToken')
+                    }
+                }
+            );
             setMessage('PROJECT APPROVED');
             fetchProjects();
             setTimeout(() => {
@@ -48,7 +59,14 @@ export default function ReviewMain() {
 
     const handleDecline = async (projectId) => {
         try {
-            await axios.put('/project/admin/decline', { projectId });
+            await axios.put('/project/business/decline', 
+                { projectId },
+                {
+                    headers: {
+                        Authorization: localStorage.getItem('BusToken')
+                    }
+                }
+            );
             setMessage('PROJECT DECLINED');
             fetchProjects();
             setTimeout(() => {
@@ -63,9 +81,9 @@ export default function ReviewMain() {
     return (
         <div>
             <div className="bg-white w-full p-4">
-                <AdDashNav />
+                <BusDashNav />
                 <div className="flex justify-between p-4">
-                    <h2>Review Projects</h2>
+                    <h2>Review Assignments</h2>
                 </div>
                 <div className="p-10 flex flex-col gap-6">
                     {projects.length === 0 ? (
@@ -104,7 +122,7 @@ export default function ReviewMain() {
                         <button className="absolute top-2 right-2 text-gray-600" onClick={handleCloseApproveCard}>
                             &times;
                         </button>
-                        <ReviewCard
+                        <BusReviewCard
                             templateImage={selectedProject.templateImage}
                             projectName={selectedProject.projectName}
                             company={selectedProject.company}

@@ -34,8 +34,19 @@ import { BusProject } from './pages/BusinessPages/BusProject';
 import { useEffect } from 'react';
 import { ReviewProjects } from './pages/AdminPages/ReviewProjects';
 import { OrderPage } from './pages/BusinessPages/OrderPage';
+import { OrderSetup } from './pages/AdminPages/OrderSetup';
+import AcceptAss from './components/Creator-Components/Assignment/AcceptAss';
+import { ActiveAssigmnets } from './pages/BusinessPages/ActiveAssignments';
+import { PendingAssigmnets } from './pages/BusinessPages/PendingAssignments';
+import { BusReviewPage } from './pages/BusinessPages/BusReviewPage';
+import { CompletedAssigmnets } from './pages/BusinessPages/CompletedAssignments';
+import { UnderConstruction } from './components/IndexPage-Components/UnderConstruction';
+import OTPVerification from './pages/BusinessPages/OtpVerficationPage';
+import { BusForgotPassword } from './pages/BusinessPages/BusinessForgetPass';
+import CreOTPVerification from './pages/Creator-Pages/CreOtpVerification';
+import { CreForgotPassword } from './pages/Creator-Pages/CreForgotPassPage';
 
-axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
+axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
 function App() {
   const navigate = useNavigate();
@@ -44,7 +55,7 @@ function App() {
     const busToken = localStorage.getItem('BusToken');
     const creToken = localStorage.getItem('CreToken');
     const adminToken = localStorage.getItem('AdminToken');
-    
+
     if (busToken) {
       navigate('/business/dashboard');
     } else if (creToken) {
@@ -53,22 +64,32 @@ function App() {
       navigate('/admin/dashboard');
     }
   }, []);
-  
+
 
   return (
     <Routes>
       <Route index element={<IndexPage />} />
+      <Route path='/underconstruction' element={<UnderConstruction />} />
       <Route path='/creator/signup' element={<CompleteSetUp />} />
       <Route path='/creator/signin' element={<CreatorSignIn />} />
-      <Route path='/creator/dashboard' element={<CreDashborad/>} />
-      <Route path='/creator/assignment' element={<CreAssigment/>} />
-      <Route path='/creator/assignment/timelines' element={<CreAssTimelines/>} />
+      <Route path='/creator/verify-otp' element={<CreOTPVerification />} />
+      <Route path='/creator/forgot-password' element={<CreForgotPassword />} />
       <Route path='/creator/submit' element={<Submission />} />
+      <Route path='/creator/dashboard' element={<CreDashborad />} />
+      <Route path='/creator/assignment' element={<CreAssigment />} />
+      <Route path='/creator/assignment/accept' element={<AcceptAss />} />
+      <Route path='/creator/assignment/timelines' element={<CreAssTimelines />} />
       <Route path='/creator/logout' element={<CreLogout />} />
       <Route path='/business/signup' element={<BusinessSignUp />} />
       <Route path='/business/signin' element={<BusinessSignIn />} />
+      <Route path='/business/forgot-password' element={<BusForgotPassword />} />
+      <Route path='/business/verify-otp' element={<OTPVerification />} />
       <Route path='/business/success' element={<Sucess />} />
       <Route path='/business/dashboard' element={<BusDashborad />} />
+      <Route path='/business/dashboard/active' element={<ActiveAssigmnets />} />
+      <Route path='/business/dashboard/pending' element={<PendingAssigmnets />} />
+      <Route path='/business/dashboard/review' element={<BusReviewPage />} />
+      <Route path='/business/dashboard/completed' element={<CompletedAssigmnets />} />
       <Route path='/business/order' element={<OrderPage />} />
       <Route path='/business/createproject' element={<BusProject />} />
       <Route path='/business/templates' element={<BusTemplates />} />
@@ -79,6 +100,7 @@ function App() {
       <Route path='/business/logout' element={<Logout />} />
       <Route path='/admin' element={<AdminSignIn />} />
       <Route path='/admin/dashboard' element={<AdminDashborad />} />
+      <Route path='/admin/ordersetup' element={<OrderSetup />} />
       <Route path='/admin/dashboard/ongoing' element={<OngoingProject />} />
       <Route path='/admin/dashboard/completed' element={<CompletedProject />} />
       <Route path='/admin/dashboard/pending' element={<PendingProject />} />
@@ -89,7 +111,6 @@ function App() {
       <Route path='/admin/messaging' element={<Messaging />} />
       <Route path='/admin/notification' element={<AdNotifications />} />
       <Route path='/admin/logout' element={<AdminLogout />} />
-      
     </Routes>
   )
 }

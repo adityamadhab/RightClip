@@ -81,6 +81,19 @@ export default function AdminSidebar() {
                         </ul>
                     )}
                 </li>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/ordersetup' ? 'bg-white' : ''} hover:bg-white`}>
+                    <Link to='/admin/ordersetup' className="text-white text-base no-underline flex items-center gap-3">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
+                            <path d="M9 7L13 7" stroke="#222222" stroke-linecap="round" />
+                            <path d="M9 15L12 15" stroke="#222222" stroke-linecap="round" />
+                            <path d="M9 11L15 11" stroke="#222222" stroke-linecap="round" />
+                            <path d="M19 11V9C19 6.17157 19 4.75736 18.1213 3.87868C17.2426 3 15.8284 3 13 3H11C8.17157 3 6.75736 3 5.87868 3.87868C5 4.75736 5 6.17157 5 9V15C5 17.8284 5 19.2426 5.87868 20.1213C6.75736 21 8.17157 21 11 21H12" stroke="#222222" stroke-linecap="round" />
+                            <circle cx="17.5" cy="17.5" r="2.5" stroke="#222222" stroke-linecap="round" />
+                            <path d="M21 21L19.5 19.5" stroke="#222222" stroke-linecap="round" />
+                        </svg>
+                        <span className="overflow-hidden text-sm text-black">Order Setup</span>
+                    </Link>
+                </li>
                 <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/messaging' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/admin/messaging' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>

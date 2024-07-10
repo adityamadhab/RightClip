@@ -28,6 +28,9 @@ export default function CreDashMain({username}) {
                         <Link to={'/creator/assignment'} class="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
                             <p className="text-sm">Working Activity</p>
                         </Link>
+                        <Link to={'/creator/assignment/accept'} class="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
+                            <p className="text-sm">Accept Assignment</p>
+                        </Link>
                         <Link to={'/creator/assignment/timelines'} class="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
                             <p className="text-sm">Timelines(deadlines)</p>
                         </Link>

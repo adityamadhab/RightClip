@@ -16,7 +16,7 @@ export default function BusinessSignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        
+
         try {
             const response = await axios.post('/business/signup', {
                 firstname,
@@ -29,7 +29,7 @@ export default function BusinessSignUp() {
             });
 
             if (response.status === 201) {
-                navigate('/business/success');
+                navigate('/business/verify-otp', { state: { email } });
             }
         } catch (err) {
             if (err.response && err.response.data && err.response.data.errors) {
@@ -49,7 +49,7 @@ export default function BusinessSignUp() {
                             <img src="/Business-assests/logo.png" alt="Logo" className="mx-auto h-[80px]" />
                         </Link>
                         <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Get Started</h2>
-                        <p className="mt-2 text-sm text-gray-600">Expand your business at RightClip</p>
+                        <p className="mt-2 text-sm text-gray-600">Start your journey at RightCliq</p>
                     </div>
                     {errors.length > 0 && (
                         <div className="text-red-500 text-center">

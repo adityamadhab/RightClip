@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useState } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
-export function BusinessSignIn() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState('');
+export default function OTPVerification() {
+    const [otp, setOtp] = useState('');
+    const location = useLocation();
+    const [email] = useState(location.state?.email || ''); // Retrieve email state but keep it uneditable
+    const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors('');
+        setErrors([]);
 
         try {
-            const response = await axios.post('/business/signin', {
-                email,
-                password,
-            });
+            const response = await axios.post('/business/verify-otp', { email, otp });
 
             if (response.status === 200) {
-                await localStorage.setItem('BusToken', response.data.token);
-                navigate('/business/dashboard');
+                navigate('/business/success');
             }
         } catch (err) {
             if (err.response && err.response.data && err.response.data.msg) {
-                setErrors(err.response.data.msg);
+                setErrors([err.response.data.msg]);
             } else {
-                setErrors('An unexpected error occurred. Please try again.');
+                setErrors(['An unexpected error occurred. Please try again.']);
             }
         }
     };
@@ -39,11 +36,14 @@ export function BusinessSignIn() {
                         <Link to={'/'}>
                             <img src="/Business-assests/logo.png" alt="Logo" className="mx-auto mb-4 h-[80px]" />
                         </Link>
-                        <h2 className="mt-6 text-2xl text-gray-900">Log In To Your Account</h2>
+                        <h2 className="mt-6 text-2xl text-gray-900">Verify OTP</h2>
+                        <p className="mt-2 text-sm text-gray-600">Please enter the OTP sent to your email</p>
                     </div>
-                    {errors && (
+                    {errors.length > 0 && (
                         <div className="text-red-500 text-center">
-                            <p>{errors}</p>
+                            {errors.map((error, index) => (
+                                <p key={index}>{error}</p>
+                            ))}
                         </div>
                     )}
                     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -53,25 +53,22 @@ export function BusinessSignIn() {
                                     id="email"
                                     name="email"
                                     type="email"
-                                    autoComplete="email"
-                                    required
+                                    readOnly
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Email ID"
+                                    placeholder="Email"
                                 />
                             </div>
                             <div>
                                 <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
+                                    id="otp"
+                                    name="otp"
+                                    type="text"
                                     required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={otp}
+                                    onChange={(e) => setOtp(e.target.value)}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Password"
+                                    placeholder="OTP"
                                 />
                             </div>
                         </div>
@@ -80,24 +77,8 @@ export function BusinessSignIn() {
                                 type="submit"
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-2xl text-white bg-blue-900 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                LOG IN
+                                Verify OTP
                             </button>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <div className="text-sm">
-                                <div className="font-medium text-black cursor-pointer hover:text-indigo-500">
-                                    <Link to={'/business/forgot-password'}>Forgot password?</Link>
-                                </div>
-                            </div>
-                            <div className="text-sm">
-                                <Link to={'/business/signup'} className="font-medium text-black cursor-pointer hover:text-indigo-500">
-                                    Don't have an account?
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                            <Link to={'/underconstruction'} className="font-medium text-black cursor-pointer hover:text-indigo-500">T&C</Link>
-                            <Link to={'/underconstruction'} className="font-medium text-black cursor-pointer hover:text-indigo-500">Privacy</Link>
                         </div>
                     </form>
                 </div>

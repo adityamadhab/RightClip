@@ -29,8 +29,10 @@ export default function CompleteSetUp() {
 
     const handleSubmit = async () => {
         try {
-            await axios.post('/creator/signup', formData);
-            navigate('/creator/submit');
+            const response = await axios.post('/creator/signup', formData);
+            if (response.status === 201) {
+                navigate('/creator/verify-otp', { state: { email: formData.email } });
+            }
         } catch (error) {
             console.error('Error signing up:', error.response ? error.response.data : error.message);
             const errorMessage = error.response?.data?.message || 'An unexpected error occurred. Please try again.';

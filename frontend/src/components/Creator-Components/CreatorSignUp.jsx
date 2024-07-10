@@ -21,7 +21,7 @@ export default function CreatorSignUp({ formData, setFormData, nextStep }) {
                             <img src="/Creator-assests/logo.png" alt="Logo" className="mx-auto mb-4" />
                         </Link>
                         <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Get Started</h2>
-                        <p className="mt-2 text-sm text-gray-600">Start your journey at RightClip</p>
+                        <p className="mt-2 text-sm text-gray-600">Start your journey at RightCliq</p>
                     </div>
                     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                         <div className="rounded-md shadow-sm space-y-4">

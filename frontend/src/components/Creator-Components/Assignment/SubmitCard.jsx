@@ -45,6 +45,58 @@ function SubmitCard({ onClose, project, onSubmitSuccess, message }) {
             </select>
           </div>
           <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+              Company
+            </label>
+            <select
+              id="projectName"
+              value={project.company}
+              disabled
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value={project._id}>{project.company}</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+              Industry
+            </label>
+            <select
+              id="projectName"
+              value={project.industry}
+              disabled
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value={project._id}>{project.industry}</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+              Requirements
+            </label>
+            <select
+              id="projectName"
+              value={project.requirements}
+              disabled
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value={project._id}>{project.projectName}</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+              Project Category
+            </label>
+            <select
+              id="projectName"
+              value={project.projectCategory}
+              disabled
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value={project._id}>{project.projectCategory}</option>
+            </select>
+          </div>
+          <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectLink">
               Project link
             </label>
@@ -59,14 +111,14 @@ function SubmitCard({ onClose, project, onSubmitSuccess, message }) {
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
             >
               Submit
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
             >
               Close
             </button>

@@ -74,15 +74,17 @@ export function CreatorSignIn() {
             </div>
             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <a href="#" className="font-medium text-black hover:text-indigo-500">Forgot password?</a>
+                <div className="font-medium text-black cursor-pointer hover:text-indigo-500">
+                  <Link to={'/creator/forgot-password'}>Forgot password?</Link>
+                </div>
               </div>
               <div className="text-sm">
                 <Link to={'/creator/signup'} className="font-medium text-black hover:text-indigo-500">Don't have an account?</Link>
               </div>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <a href="#" className="font-medium text-black hover:text-indigo-500">T&C</a>
-              <a href="#" className="font-medium text-black hover:text-indigo-500">Privacy</a>
+              <Link to={'/underconstruction'} className="font-medium text-black cursor-pointer hover:text-indigo-500">T&C</Link>
+              <Link to={'/underconstruction'} className="font-medium text-black cursor-pointer hover:text-indigo-500">Privacy</Link>
             </div>
           </form>
         </div>

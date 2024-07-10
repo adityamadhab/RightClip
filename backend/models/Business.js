@@ -30,7 +30,9 @@ const businessSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    otp: { type: String },
+    otpExpiration: { type: Date }
 });
 
 const businessModel = mongoose.model("Business", businessSchema);

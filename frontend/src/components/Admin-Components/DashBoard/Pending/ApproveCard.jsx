@@ -17,11 +17,11 @@ const ApproveCard = ({ category, projectName, industry, preference, creatorCateg
                     <div className="w-2/3 text-foreground">{industry}</div>
                 </div>
                 <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-muted-foreground">Preference</div>
+                    <div className="w-1/3 text-muted-foreground">Requirements</div>
                     <div className="w-2/3 text-foreground">{preference}</div>
                 </div>
                 <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-muted-foreground">Creator category</div>
+                    <div className="w-1/3 text-muted-foreground">Project category</div>
                     <div className="w-2/3 text-foreground">{creatorCategory}</div>
                 </div>
                 <div className="flex justify-between mt-8">

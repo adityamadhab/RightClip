@@ -13,7 +13,9 @@ const creatorSchema = new mongoose.Schema({
     jobFunction: { type: String, required: true },
     bio: { type: String, required: true },
     workSample: { type: String, required: true },
-    approval: { type: Boolean, default: false }
+    approval: { type: Boolean, default: false },
+    otp: { type: String },
+    otpExpiration: { type: Date }
 });
 
 module.exports = mongoose.model('Creator', creatorSchema);
