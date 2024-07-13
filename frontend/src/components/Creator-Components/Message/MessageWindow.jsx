@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
-import BusSidebar from "../Sidebar";
-import BusNotiNav from "./BusInboxNav";
-import ChatList from "./ChatList";
+import CreSidebar from "../CreSidebar";
+import CreMessageNav from "./CreMessageNav";
+import MessageList from "./MessageList";
 import axios from 'axios';
 
-export function ChatWindow() {
-    const { creatorId } = useParams();
+export function MessageWindow() {
+    const { businessId } = useParams();
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const messagesEndRef = useRef(null);
 
     const handleSendMessage = async () => {
         try {
-            const token = localStorage.getItem('BusToken');
-            const response = await axios.post(`/message/business-to-creator/${creatorId}`,
+            const token = localStorage.getItem('CreToken'); 
+            const response = await axios.post(`/message/creator-to-business/${businessId}`,
                 { message },
                 {
                     headers: {
@@ -32,11 +32,11 @@ export function ChatWindow() {
 
     const fetchMessages = async () => {
         try {
-            const token = localStorage.getItem('BusToken');
-            const response = await axios.get(`/message/get-messages/${creatorId}/Creator`,
+            const token = localStorage.getItem('CreToken');
+            const response = await axios.get(`/message/get-messages/${businessId}/Business`,
                 {
                     headers: {
-                        Authorization: token,
+                        Authorization: token
                     },
                 }
             );
@@ -48,10 +48,9 @@ export function ChatWindow() {
 
     useEffect(() => {
         fetchMessages();
-    }, [creatorId]);
+    }, [businessId]);
 
     useEffect(() => {
-        // Scroll to the bottom of the message list
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
@@ -59,18 +58,18 @@ export function ChatWindow() {
 
     return (
         <div className="flex">
-            <BusSidebar />
+            <CreSidebar />
             <div className="min-h-screen flex-grow">
                 <div className="bg-white w-full p-4 flex-grow">
-                    <BusNotiNav />
+                    <CreMessageNav />
                     <div className="flex flex-grow gap-2">
-                        <ChatList />
+                        <MessageList />
                         <div className="flex flex-col flex-grow bg-[#FFEADD] p-4 rounded-lg h-[600px]">
                             <div className="flex-grow overflow-auto no-scrollbar">
                                 <div className="flex flex-col space-y-4">
                                     {messages.map((msg, index) => (
-                                        <div key={index} className={`flex ${msg.senderType === 'Business' ? 'justify-end' : 'justify-start'}`}>
-                                            <div className={`${msg.senderType === 'Business' ? 'bg-teal-500 text-white' : 'bg-white text-black'} p-2 rounded max-w-md overflow-x-auto`}>
+                                        <div key={index} className={`flex ${msg.senderType === 'Creator' ? 'justify-end' : 'justify-start'}`}>
+                                            <div className={`${msg.senderType === 'Creator' ? 'bg-teal-500 text-white' : 'bg-white text-black'} p-2 rounded max-w-full overflow-x-auto`}>
                                                 <p>{msg.message}</p>
                                             </div>
                                         </div>

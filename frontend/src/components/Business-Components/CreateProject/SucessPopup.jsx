@@ -14,11 +14,11 @@ const SuccessPopup = ({ onClose }) => {
                 <img src="/Business-assests/sidelogo.png" alt="Success" className="mb-4" />
                 <h2 className="text-xl font-bold">CONGRATES</h2>
                 <p className="mb-4">Your order has been placed</p>
-                <Link to={'/business/order'}
+                <Link to={'/business/dashboard/pending'}
                     onClick={onClose}
                     className="mt-4 py-2 px-4 bg-blue-900 text-white rounded-xl hover:bg-blue-600"
                 >
-                    Go to My Order
+                    Go to Assignments
                 </Link>
             </div>
         </div>

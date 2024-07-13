@@ -1,5 +1,7 @@
 import { BusFooter } from "../BusFooter";
 import BusRewNav from "./BusRewNav";
+import { UnderConstruction } from "../../IndexPage-Components/UnderConstruction";
+import logo from '../../../../public/Business-assests/logo.png'
 
 const Card = ({ src }) => (
     <div className="rounded-xl h-[230px] w-[250px] bg-white overflow-hidden flex flex-col border shadow-lg">
@@ -12,29 +14,31 @@ const Card = ({ src }) => (
 
 export default function BusRewMain() {
     const cards = [
-        { src: "/rewards.png"},
-        { src: "/rewards.png"},
-        { src: "/rewards.png"},
-        { src: "/rewards.png"},
-        { src: "/rewards.png"},
-        { src: "/rewards.png"},
-        { src: "/rewards.png"},
-        { src: "/rewards.png"},
+        { src: "/rewards.png" },
+        { src: "/rewards.png" },
+        { src: "/rewards.png" },
+        { src: "/rewards.png" },
+        { src: "/rewards.png" },
+        { src: "/rewards.png" },
+        { src: "/rewards.png" },
+        { src: "/rewards.png" },
     ];
 
     return (
         <div>
             <div className="bg-white w-full p-4">
-                <BusRewNav/>
-                <div className="p-14">
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {cards.map((card, index) => (
-                            <Card key={index} src={card.src} />
-                        ))}
+                <BusRewNav />
+                <div className="flex justify-center items-center h-[550px]">
+                    <div className="w-full max-w-7xl mx-auto xl:px-20 md:px-10 px-4">
+                        <div className="my-10 py-5 text-center">
+                            <img src={logo} alt="Company Logo" className="mx-auto mb-4 h-[50px]" />
+                            <h1 className="text-sm sm:text-xl font-semibold">Developer is working on this Page</h1>
+                            <p className="text-sm">Have patience</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <BusFooter/>
+            <BusFooter />
         </div>
     );
 }

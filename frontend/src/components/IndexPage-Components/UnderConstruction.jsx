@@ -3,7 +3,7 @@ import logo from '../../../public/IndexPage-assests/logo.png'
 
 export function UnderConstruction() {
     return (
-        <div className="flex justify-center items-center min-h-screen">
+        <div className="flex justify-center items-center">
             <div className="w-full max-w-7xl mx-auto xl:px-20 md:px-10 px-4">
                 <div className="my-10 py-5 text-center">
                     <img src={logo} alt="Company Logo" className="mx-auto mb-4 h-[50px]" />

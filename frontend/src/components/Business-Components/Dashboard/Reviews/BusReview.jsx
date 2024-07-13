@@ -38,7 +38,7 @@ export default function BusReviewMain() {
 
     const handleApprove = async (projectId) => {
         try {
-            await axios.put('/project/business/approve', 
+            await axios.put('/project/business/approve',
                 { projectId },
                 {
                     headers: {
@@ -59,7 +59,7 @@ export default function BusReviewMain() {
 
     const handleDecline = async (projectId) => {
         try {
-            await axios.put('/project/business/decline', 
+            await axios.put('/project/business/decline',
                 { projectId },
                 {
                     headers: {
@@ -82,8 +82,9 @@ export default function BusReviewMain() {
         <div>
             <div className="bg-white w-full p-4">
                 <BusDashNav />
-                <div className="flex justify-between p-4">
+                <div className="flex flex-col justify-between gap-2 p-4">
                     <h2>Review Assignments</h2>
+                    <p className="text-[13px] text-gray-500">(P.S - PLEASE DO PAY YOUR PROJECT PAYMENT TO GET THE COMPLETE LIST.)</p>
                 </div>
                 <div className="p-10 flex flex-col gap-6">
                     {projects.length === 0 ? (

@@ -39,8 +39,8 @@ export default function CreSidebar() {
                         </span>
                     </Link>
                 </li>
-                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/messaging' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/creator/messaging' className="text-white text-base no-underline flex items-center gap-3">
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname.startsWith('/creator/inbox') ? 'bg-white' : ''} hover:bg-white`}>
+                    <Link to='/creator/inbox' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9 7L13 7" stroke="#222222" stroke-linecap="round" />
                             <path d="M9 15L12 15" stroke="#222222" stroke-linecap="round" />
@@ -53,15 +53,15 @@ export default function CreSidebar() {
                         <span className="overflow-hidden text-sm text-black">Messaging</span>
                     </Link>
                 </li>
-                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/wallet' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/creator/wallet' className="text-white text-base no-underline flex items-center gap-3">
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/payment' ? 'bg-white' : ''} hover:bg-white`}>
+                    <Link to='/creator/payment' className="text-white text-base no-underline flex items-center gap-3">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
                             <path d="M9 9V3L18 3C18.9428 3 19.4142 3 19.7071 3.29289C20 3.58579 20 4.05719 20 5V9H9Z" stroke="#222222" stroke-linecap="round" />
                             <path d="M9 21V15H20V19C20 19.9428 20 20.4142 19.7071 20.7071C19.4142 21 18.9428 21 18 21H9Z" stroke="#222222" stroke-linecap="round" />
                             <rect x="9" y="15" width="6" height="11" transform="rotate(-90 9 15)" stroke="#222222" stroke-linecap="round" />
                             <path d="M6 21C5.05719 21 4.58579 21 4.29289 20.7071C4 20.4142 4 19.9428 4 19L4 5C4 4.05719 4 3.58579 4.29289 3.29289C4.58579 3 5.05719 3 6 3H9L9 21H6Z" stroke="#222222" stroke-linecap="round" />
                         </svg>
-                        <span className="overflow-hidden text-sm text-black">Wallet</span>
+                        <span className="overflow-hidden text-sm text-black">Payments</span>
                     </Link>
                 </li>
                 <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/notifications' ? 'bg-white' : ''} hover:bg-white`}>

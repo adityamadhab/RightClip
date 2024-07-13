@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 
-export default function ChatList() {
+export default function MessageList() {
     const [creators, setCreators] = useState([]);
     const location = useLocation();
     const currentChat = location.pathname.split('/').pop();
@@ -10,9 +10,9 @@ export default function ChatList() {
     useEffect(() => {
         const fetchCreators = async () => {
             try {
-                const response = await axios.get('/project/business/assigned-creators', {
+                const response = await axios.get('/project/creator/assigned-businesses', {
                     headers: {
-                        Authorization: localStorage.getItem('BusToken')
+                        Authorization: localStorage.getItem('CreToken')
                     }
                 });
                 setCreators(response.data);
@@ -26,22 +26,22 @@ export default function ChatList() {
 
     return (
         <div className="border border-[#8FD8CF] rounded-lg h-[600px] w-[300px] p-4">
-            <Link to={'/business/inbox'}>
+            <Link to={'/creator/inbox'}>
                 <h2 className="font-bold mb-4">CHAT LIST</h2>
             </Link>
             <ul className="space-y-2">
                 {creators.map((creator) => (
                     <Link
-                        to={`/business/inbox/${creator.creatorId}`}
-                        key={creator.creatorId}
-                        className={`bg-white p-2 rounded-xl flex items-center space-x-2 border border-blue-400 cursor-pointer ${currentChat === creator.creatorId ? 'bg-teal-400' : ''}`}
+                        to={`/creator/inbox/${creator.businessId}`}
+                        key={creator.businessId}
+                        className={`bg-white p-2 rounded-xl flex items-center space-x-2 border border-blue-400 cursor-pointer ${currentChat === creator.businessId ? 'bg-teal-400' : ''}`}
                     >
                         <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
                         <div className="flex-grow text-sm">
-                            <h4 className={`text-sm ${currentChat === creator.creatorId ? 'text-black' : 'text-gray-500'}`}>
-                                {creator.firstName} {creator.lastName}
+                            <h4 className={`text-sm ${currentChat === creator.businessId ? 'text-black' : 'text-gray-500'}`}>
+                                {creator.companyName}
                             </h4>
-                            <p className={`text-sm ${currentChat === creator.creatorId ? 'text-white' : 'text-gray-500'}`}>Assigned for: {creator.projects.join(', ')}</p>
+                            <p className={`text-sm ${currentChat === creator.businessId ? 'text-white' : 'text-gray-500'}`}>Business for: {creator.projects.join(', ')}</p>
                         </div>
                     </Link>
                 ))}

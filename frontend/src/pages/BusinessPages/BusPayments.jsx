@@ -1,12 +1,12 @@
-import BushRatMain from "../../components/Business-Components/Ratings-Components/BusRatMain";
+import PaymentsMain from "../../components/Business-Components/Payments/PaymentsMain";
 import BusSidebar from "../../components/Business-Components/Sidebar";
 
-export function Ratings() {
+export function BusPayments() {
     return (
         <div>
             <div className="flex">
                 <BusSidebar />
-                <BushRatMain />
+                <PaymentsMain />
             </div>
         </div>
     )

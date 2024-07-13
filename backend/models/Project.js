@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
+    companyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     projectName: {
         type: String,
         required: true
@@ -31,6 +35,21 @@ const projectSchema = new mongoose.Schema({
     },
     projectLink: {
         type: String
+    },
+    paymentId: {
+        type: String
+    },
+    paymentDone: {
+        type: Boolean,
+        default: false
+    },
+    crePayDetails: {
+        type: Boolean,
+        default: false
+    },
+    CrePaymentDone: {
+        type: Boolean,
+        default: false
     },
     creatorApproval: {
         type: Boolean,

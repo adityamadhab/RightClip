@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ReviewCard = ({ templateImage, projectName, company, creatorName, requirements, projectLink, projectCategory, onApprove, onDecline, message }) => {
+    const [isAccepting, setIsAccepting] = useState(false);
+
+    const handleApprove = async () => {
+        setIsAccepting(true);
+        try {
+            await onApprove();
+        } finally {
+            setIsAccepting(false);
+        }
+    };
+
     return (
         <div className="p-6 w-[550px] mx-auto bg-card text-card-foreground rounded-lg">
             {message && (
@@ -44,9 +55,10 @@ const ReviewCard = ({ templateImage, projectName, company, creatorName, requirem
                     <button
                         className="bg-[#ABCAF8] text-primary-foreground px-4 py-2 rounded-md"
                         type="submit"
-                        onClick={onApprove}
+                        onClick={handleApprove}
+                        disabled={isAccepting}
                     >
-                        Approve
+                        {isAccepting ? 'Accepting...' : 'Approve'}
                     </button>
                     <button
                         className="bg-[#ABCAF8] text-destructive-foreground px-4 py-2 rounded-md"

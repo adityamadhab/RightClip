@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function AdminSidebar() {
     const [dashboardDropdown, setDashboardDropdown] = useState(false);
     const [creatorDropdown, setCreatorDropdown] = useState(false);
+    const [paymentDropdown, setPaymentDropdown] = useState(false);
     const navigate = useNavigate();
 
     const toggleDashboardDropdown = () => {
@@ -12,6 +13,10 @@ export default function AdminSidebar() {
 
     const toggleCreatorDropdown = () => {
         setCreatorDropdown(!creatorDropdown);
+    };
+
+    const togglePaymentDropdown = () => {
+        setPaymentDropdown(!paymentDropdown);
     };
 
     return (
@@ -94,29 +99,31 @@ export default function AdminSidebar() {
                         <span className="overflow-hidden text-sm text-black">Order Setup</span>
                     </Link>
                 </li>
-                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/messaging' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/admin/messaging' className="text-white text-base no-underline flex items-center gap-3">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
-                            <path d="M9 7L13 7" stroke="#222222" stroke-linecap="round" />
-                            <path d="M9 15L12 15" stroke="#222222" stroke-linecap="round" />
-                            <path d="M9 11L15 11" stroke="#222222" stroke-linecap="round" />
-                            <path d="M19 11V9C19 6.17157 19 4.75736 18.1213 3.87868C17.2426 3 15.8284 3 13 3H11C8.17157 3 6.75736 3 5.87868 3.87868C5 4.75736 5 6.17157 5 9V15C5 17.8284 5 19.2426 5.87868 20.1213C6.75736 21 8.17157 21 11 21H12" stroke="#222222" stroke-linecap="round" />
-                            <circle cx="17.5" cy="17.5" r="2.5" stroke="#222222" stroke-linecap="round" />
-                            <path d="M21 21L19.5 19.5" stroke="#222222" stroke-linecap="round" />
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname.startsWith('/admin/payment') ? 'bg-white' : ''} hover:bg-white ${paymentDropdown ? 'bg-white' : ''}`}>
+                    <div className="flex items-center justify-between cursor-pointer" onClick={togglePaymentDropdown}>
+                        <div className="flex items-center gap-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
+                                <circle cx="12" cy="8" r="4" stroke="#222222" stroke-linecap="round" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2759 16C13.8972 15.5613 12.3896 15.4073 10.9067 15.5538C9.26616 15.7157 7.71472 16.2397 6.45048 17.0712C5.18613 17.9028 4.25374 19.0137 3.80174 20.2789C3.70884 20.5389 3.84433 20.825 4.10438 20.9179C4.36442 21.0108 4.65054 20.8754 4.74345 20.6153C5.11048 19.588 5.88515 18.64 7 17.9067C8.11495 17.1734 9.508 16.6967 11.0049 16.5489C11.5548 16.4946 12.1076 16.4858 12.6536 16.521C13.009 16.1974 13.4814 16 14 16L15.2759 16Z" fill="#222222" />
+                                <path d="M18 14L18 22" stroke="#222222" stroke-linecap="round" />
+                                <path d="M22 18L14 18" stroke="#222222" stroke-linecap="round" />
+                            </svg>
+                            <Link to='/admin/payment/business' className="text-sm text-black">Payments</Link>
+                        </div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d={paymentDropdown ? "M6 15L12 9L18 15" : "M18 9L12 15L6 9"} stroke="#222222" />
                         </svg>
-                        <span className="overflow-hidden text-sm text-black">Messaging</span>
-                    </Link>
-                </li>
-                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/wallet' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/admin/wallet' className="text-white text-base no-underline flex items-center gap-3">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
-                            <path d="M9 9V3L18 3C18.9428 3 19.4142 3 19.7071 3.29289C20 3.58579 20 4.05719 20 5V9H9Z" stroke="#222222" stroke-linecap="round" />
-                            <path d="M9 21V15H20V19C20 19.9428 20 20.4142 19.7071 20.7071C19.4142 21 18.9428 21 18 21H9Z" stroke="#222222" stroke-linecap="round" />
-                            <rect x="9" y="15" width="6" height="11" transform="rotate(-90 9 15)" stroke="#222222" stroke-linecap="round" />
-                            <path d="M6 21C5.05719 21 4.58579 21 4.29289 20.7071C4 20.4142 4 19.9428 4 19L4 5C4 4.05719 4 3.58579 4.29289 3.29289C4.58579 3 5.05719 3 6 3H9L9 21H6Z" stroke="#222222" stroke-linecap="round" />
-                        </svg>
-                        <span className="overflow-hidden text-sm text-black">Wallet</span>
-                    </Link>
+                    </div>
+                    {paymentDropdown && (
+                        <ul className="mt-2 ml-10">
+                            <li className='p-2 my-1 rounded-lg transition duration-500 ease-in-out hover:bg-[#E7CBA3]'>
+                                <Link to='/admin/payment/business' className="text-black text-sm no-underline">Business Payments</Link>
+                            </li>
+                            <li className='p-2 my-1 rounded-lg transition duration-500 ease-in-out hover:bg-[#E7CBA3]'>
+                                <Link to='/admin/payment/creator' className="text-black text-sm no-underline">Creator Payments</Link>
+                            </li>
+                        </ul>
+                    )}
                 </li>
                 <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/notification' ? 'bg-white' : ''} hover:bg-white`}>
                     <Link to='/admin/notification' className="text-white text-base no-underline flex items-center gap-3">

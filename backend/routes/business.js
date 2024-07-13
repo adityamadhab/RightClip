@@ -25,9 +25,6 @@ const signinValidation = zod.object({
     password: zod.string().min(7)
 });
 
-console.log('Email:', process.env.EMAIL);
-console.log('Email Password:', process.env.EMAIL_PASSWORD);
-
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -46,7 +43,20 @@ async function sendOTPEmail(email, otp) {
             from: process.env.EMAIL,
             to: email,
             subject: 'Your RightCliq OTP Code',
-            text: `Your OTP code is ${otp}`
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+                    <h2 style="text-align: center; color: #333;">Welcome to RightCliq</h2>
+                    <p style="font-size: 16px; color: #333;">Hello,</p>
+                    <p style="font-size: 16px; color: #333;">Your OTP code is:</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <span style="font-size: 24px; font-weight: bold; color: #4CAF50;">${otp}</span>
+                    </div>
+                    <p style="font-size: 16px; color: #333;">Please use this code to complete your authentication. This code is valid for 5 minutes.</p>
+                    <p style="font-size: 16px; color: #333;">If you did not request this OTP, please ignore this email or contact our support team.</p>
+                    <p style="font-size: 16px; color: #333;">Thank you,</p>
+                    <p style="font-size: 16px; color: #333;">The RightCliq Team</p>
+                </div>
+            `
         });
         console.log(`OTP email sent to ${email}`);
     } catch (error) {
@@ -54,7 +64,8 @@ async function sendOTPEmail(email, otp) {
     }
 }
 
-let tempUsers = {}; // Temporary store for user data
+
+let tempUsers = {};
 
 async function checkOTP(req, res, next) {
     const { email, otp } = req.body;
@@ -94,7 +105,7 @@ router.post('/signup', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const otp = generateOTP();
-        const otpExpiration = Date.now() + 10 * 60 * 1000; // 10 minutes from now
+        const otpExpiration = Date.now() + 5 * 60 * 1000;
 
         tempUsers[email] = {
             firstname,
@@ -169,7 +180,7 @@ router.post('/signin', async (req, res) => {
             });
         }
 
-        const token = jwt.sign({ user: user._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ user: user._id, type: 'Business' }, process.env.JWT_SECRET);
 
         return res.json({ token, user });
     } catch (err) {

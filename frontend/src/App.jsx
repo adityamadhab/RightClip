@@ -9,8 +9,6 @@ import { BusinessSignIn } from './pages/BusinessPages/BusinessSignIn';
 import axios from 'axios';
 import Sucess from './components/Business-Components/Sucess';
 import { BusDashborad } from './pages/BusinessPages/Dashborad';
-import { BusTemplates } from './pages/BusinessPages/Templates';
-import { Ratings } from './pages/BusinessPages/Ratings';
 import { Rewards } from './pages/BusinessPages/Rewards';
 import { Notification } from './pages/BusinessPages/Notification';
 import { Inbox } from './pages/BusinessPages/Inbox';
@@ -33,7 +31,6 @@ import { AssignCreator } from './pages/AdminPages/AssignCreator';
 import { BusProject } from './pages/BusinessPages/BusProject';
 import { useEffect } from 'react';
 import { ReviewProjects } from './pages/AdminPages/ReviewProjects';
-import { OrderPage } from './pages/BusinessPages/OrderPage';
 import { OrderSetup } from './pages/AdminPages/OrderSetup';
 import AcceptAss from './components/Creator-Components/Assignment/AcceptAss';
 import { ActiveAssigmnets } from './pages/BusinessPages/ActiveAssignments';
@@ -45,6 +42,13 @@ import OTPVerification from './pages/BusinessPages/OtpVerficationPage';
 import { BusForgotPassword } from './pages/BusinessPages/BusinessForgetPass';
 import CreOTPVerification from './pages/Creator-Pages/CreOtpVerification';
 import { CreForgotPassword } from './pages/Creator-Pages/CreForgotPassPage';
+import { ChatWindow } from './components/Business-Components/Inbox/ChatWindow';
+import { MessagingPage } from './pages/Creator-Pages/Messaging';
+import { MessageWindow } from './components/Creator-Components/Message/MessageWindow';
+import { BusPayments } from './pages/BusinessPages/BusPayments';
+import { BusinessPayments } from './pages/AdminPages/BusinessPayments';
+import { CrePaymentsPage } from './pages/Creator-Pages/CrePayments';
+import { CreatorPayments } from './pages/AdminPages/CreatorPayments';
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
@@ -79,6 +83,9 @@ function App() {
       <Route path='/creator/assignment' element={<CreAssigment />} />
       <Route path='/creator/assignment/accept' element={<AcceptAss />} />
       <Route path='/creator/assignment/timelines' element={<CreAssTimelines />} />
+      <Route path='/creator/inbox' element={<MessagingPage />} />
+      <Route path='/creator/inbox/:businessId' element={<MessageWindow />} />
+      <Route path='/creator/payment' element={<CrePaymentsPage />} />
       <Route path='/creator/logout' element={<CreLogout />} />
       <Route path='/business/signup' element={<BusinessSignUp />} />
       <Route path='/business/signin' element={<BusinessSignIn />} />
@@ -90,13 +97,12 @@ function App() {
       <Route path='/business/dashboard/pending' element={<PendingAssigmnets />} />
       <Route path='/business/dashboard/review' element={<BusReviewPage />} />
       <Route path='/business/dashboard/completed' element={<CompletedAssigmnets />} />
-      <Route path='/business/order' element={<OrderPage />} />
+      <Route path='/business/payment' element={<BusPayments />} />
       <Route path='/business/createproject' element={<BusProject />} />
-      <Route path='/business/templates' element={<BusTemplates />} />
-      <Route path='/business/ratings' element={<Ratings />} />
       <Route path='/business/rewards' element={<Rewards />} />
       <Route path='/business/notification' element={<Notification />} />
       <Route path='/business/inbox' element={<Inbox />} />
+      <Route path='/business/inbox/:creatorId' element={<ChatWindow />} />
       <Route path='/business/logout' element={<Logout />} />
       <Route path='/admin' element={<AdminSignIn />} />
       <Route path='/admin/dashboard' element={<AdminDashborad />} />
@@ -108,6 +114,8 @@ function App() {
       <Route path='/admin/creator/pending' element={<PendingRequest />} />
       <Route path='/admin/creator/pending/:id' element={<AdCreCV />} />
       <Route path='/admin/creator/assign' element={<AssignCreator />} />
+      <Route path='/admin/payment/business' element={<BusinessPayments />} />
+      <Route path='/admin/payment/creator' element={<CreatorPayments />} />
       <Route path='/admin/messaging' element={<Messaging />} />
       <Route path='/admin/notification' element={<AdNotifications />} />
       <Route path='/admin/logout' element={<AdminLogout />} />

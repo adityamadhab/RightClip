@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import logo from '../../../public/Creator-assests/logo.png'
 
 export default function CreOTPVerification() {
     const [otp, setOtp] = useState('');
@@ -34,7 +35,7 @@ export default function CreOTPVerification() {
                 <div className="max-w-md w-full space-y-8 p-10">
                     <div className="text-center">
                         <Link to={'/'}>
-                            <img src="/Business-assets/logo.png" alt="Logo" className="mx-auto mb-4 h-[80px]" />
+                            <img src={logo} alt="Logo" className="mx-auto mb-4 h-[80px]" />
                         </Link>
                         <h2 className="mt-6 text-2xl text-gray-900">Verify OTP</h2>
                         <p className="mt-2 text-sm text-gray-600">Please enter the OTP sent to your email</p>

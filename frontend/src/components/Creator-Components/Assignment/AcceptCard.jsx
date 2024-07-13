@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const AcceptCard = ({ project, onClose, onSubmitSuccess, message }) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isDeclining, setIsDeclining] = useState(false);
+
     const handleApprove = async () => {
+        setIsLoading(true);
         try {
-            const response = await axios.put('/project/creator/aceept',
+            const response = await axios.put(
+                '/project/creator/accept',
                 { projectId: project._id },
                 {
                     headers: {
@@ -17,12 +22,17 @@ const AcceptCard = ({ project, onClose, onSubmitSuccess, message }) => {
             }
         } catch (error) {
             console.error('Error accepting project:', error);
+            onClose('Error accepting project');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleDecline = async () => {
+        setIsDeclining(true);
         try {
-            const response = await axios.put('/project/creator/decline',
+            const response = await axios.put(
+                '/project/creator/decline',
                 { projectId: project._id },
                 {
                     headers: {
@@ -35,6 +45,9 @@ const AcceptCard = ({ project, onClose, onSubmitSuccess, message }) => {
             }
         } catch (error) {
             console.error('Error declining project:', error);
+            onClose('Error declining project');
+        } finally {
+            setIsDeclining(false);
         }
     };
 
@@ -45,7 +58,7 @@ const AcceptCard = ({ project, onClose, onSubmitSuccess, message }) => {
             )}
             <button
                 className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-                onClick={onClose}
+                onClick={() => onClose('')}
             >
                 &#x2715;
             </button>
@@ -75,15 +88,17 @@ const AcceptCard = ({ project, onClose, onSubmitSuccess, message }) => {
                         className="bg-[#ABCAF8] text-black px-4 py-2 rounded-md"
                         type="submit"
                         onClick={handleApprove}
+                        disabled={isLoading}
                     >
-                        Accept
+                        {isLoading ? 'Accepting...' : 'Accept'}
                     </button>
                     <button
                         className="bg-[#ABCAF8] text-black px-4 py-2 rounded-md"
                         type="button"
                         onClick={handleDecline}
+                        disabled={isDeclining}
                     >
-                        Decline
+                        {isDeclining ? 'Declining...' : 'Decline'}
                     </button>
                 </div>
             </div>

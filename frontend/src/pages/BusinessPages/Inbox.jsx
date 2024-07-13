@@ -9,5 +9,5 @@ export function Inbox() {
                 <BusInboxMain/>
             </div>
         </div>
-    )
+    ) 
 }
