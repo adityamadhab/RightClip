@@ -11,11 +11,13 @@ export default function BusinessSignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
+        setLoading(true);
 
         try {
             const response = await axios.post('/business/signup', {
@@ -37,6 +39,8 @@ export default function BusinessSignUp() {
             } else {
                 setErrors(['An unexpected error occurred. Please try again.']);
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -70,6 +74,7 @@ export default function BusinessSignUp() {
                                         onChange={(e) => setFirstname(e.target.value)}
                                         className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="First Name"
+                                        disabled={loading}
                                     />
                                 </div>
                                 <div className="w-1/2">
@@ -82,6 +87,7 @@ export default function BusinessSignUp() {
                                         onChange={(e) => setLastname(e.target.value)}
                                         className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Last Name"
+                                        disabled={loading}
                                     />
                                 </div>
                             </div>
@@ -94,6 +100,7 @@ export default function BusinessSignUp() {
                                     onChange={(e) => setCompany(e.target.value)}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Company Name"
+                                    disabled={loading}
                                 />
                             </div>
                             <div>
@@ -105,6 +112,7 @@ export default function BusinessSignUp() {
                                     onChange={(e) => setNoemployee(e.target.value)}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Number of Employees"
+                                    disabled={loading}
                                 />
                             </div>
                             <div>
@@ -117,6 +125,7 @@ export default function BusinessSignUp() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Email ID"
+                                    disabled={loading}
                                 />
                             </div>
                             <div className="flex">
@@ -132,6 +141,7 @@ export default function BusinessSignUp() {
                                     onChange={(e) => setPhone(e.target.value)}
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-r-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="0000000000"
+                                    disabled={loading}
                                 />
                             </div>
                             <div>
@@ -144,6 +154,7 @@ export default function BusinessSignUp() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Password"
+                                    disabled={loading}
                                 />
                             </div>
                         </div>
@@ -151,8 +162,9 @@ export default function BusinessSignUp() {
                             <button
                                 type="submit"
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-2xl text-white bg-blue-900 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                disabled={loading}
                             >
-                                SIGN UP
+                                {loading ? 'Signing up...' : 'SIGN UP'}
                             </button>
                         </div>
                         <div className="flex items-center justify-center text-sm">

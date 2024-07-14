@@ -3,6 +3,39 @@ const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
 const CreatorPayments = require('../models/CreatorPayments');
 const Project = require('../models/Project');
+const Creator = require('../models/Creator');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
+
+async function sendPaymentEmail(email, projectName) {
+    try {
+        await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Payment Received for Your Project - RightCliq',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+                    <h2 style="text-align: center; color: #333;">Payment Received for Your Project</h2>
+                    <p style="font-size: 16px; color: #333;">Hi Creator,</p>
+                    <p style="font-size: 16px; color: #333;">We are pleased to inform you that the payment for your project <b>${projectName}</b> has been successfully processed and credited to your bank account.</p>
+                    <p style="font-size: 16px; color: #333;">Please check your profile for more details. If you have any questions or need further assistance, feel free to reach out to our support team.</p>
+                    <p style="font-size: 16px; color: #333;">Thank you,</p>
+                    <p style="font-size: 16px; color: #333;">The RightCliq Team</p>
+                </div>
+            `
+        });
+        console.log(`Payment confirmation email sent to ${email}`);
+    } catch (error) {
+        console.error(`Error sending payment confirmation email: ${error}`);
+    }
+}
 
 router.post('/submit', authMiddleware, async (req, res) => {
     try {
@@ -52,11 +85,21 @@ router.put('/project/:projectId', async (req, res) => {
     try {
         const { transactionId } = req.body;
 
-        const projectId =  req.params.projectId;
+        const projectId = req.params.projectId;
 
         const updatedpayment = await CreatorPayments.findOneAndUpdate({ projectId }, { transactionId: transactionId });
 
-        await Project.findByIdAndUpdate(projectId, { CrePaymentDone: true });
+        const project = await Project.findByIdAndUpdate(projectId, { CrePaymentDone: true });
+
+        const business = await Creator.findById(project.assignedCreator);
+
+        if (!business) {
+            return res.status(404).json({ message: 'Creator not found' });
+        }
+
+        const businessEmail = business.email;
+
+        await sendPaymentEmail(businessEmail, project.projectName, transactionId);
 
         res.status(200).json(updatedpayment);
     } catch (error) {

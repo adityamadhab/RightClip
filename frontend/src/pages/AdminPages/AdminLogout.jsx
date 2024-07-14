@@ -12,9 +12,18 @@ export function AdminLogout() {
         }
     }, []);
 
+    const handleLogout = async () => {
+        await localStorage.removeItem('AdminToken');
+        navigate('/');
+    };
+
+    const handleCancel = () => {
+        navigate('/admin/dashboard');
+    };
+
     return (
         <div className="flex h-screen">
-            <AdminSidebar/>
+            <AdminSidebar />
             <div className="bg-white w-full p-4 flex flex-col justify-center items-center">
                 <div className="border-b-2 border-[#E7CBA3] bg-white w-full mb-2">
                     <div className="bg-white mb-3 flex justify-between items-center">
@@ -33,8 +42,16 @@ export function AdminLogout() {
                             <p className="text-lg text-foreground">Are you sure you want to log out?</p>
                         </div>
                         <div className="flex justify-center gap-12 mt-6 space-x-4">
-                            <button className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">Yes</button>
-                            <button className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">No</button>
+                            <button
+                                onClick={handleLogout}
+                                className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">
+                                Yes
+                            </button>
+                            <button
+                                onClick={handleCancel}
+                                className="bg-white py-2 px-4 rounded-xl hover:bg-gray-50">
+                                No
+                            </button>
                         </div>
                     </div>
                 </div>
