@@ -50,7 +50,7 @@ import { BusinessPayments } from './pages/AdminPages/BusinessPayments';
 import { CrePaymentsPage } from './pages/Creator-Pages/CrePayments';
 import { CreatorPayments } from './pages/AdminPages/CreatorPayments';
 
-axios.defaults.baseURL = "http://localhost:3000/api/v1";
+axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
 
 function App() {
   const navigate = useNavigate();
