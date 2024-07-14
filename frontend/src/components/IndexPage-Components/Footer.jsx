@@ -46,11 +46,14 @@ export default function Footer() {
                     <hr className="border-1 mt-4 border-black" />
 
                     <div className="mt-4 flex flex-wrap justify-start gap-y-4 gap-x-12 px-2">
-                        <Link to={'/admin'} className="text-sm font-md text-black capitalize cursor-pointer">
+                        <div className="text-sm font-md text-black capitalize">
                             Developed By Aditya Madhab (Sane Infotech)
-                        </Link>
+                        </div>
                         <p className="text-sm font-md text-black capitalize">Privacy Policy</p>
                         <p className="text-sm font-md text-black capitalize">Terms and conditions</p>
+                        <Link to={'/admin'} className="text-sm font-md text-black capitalize cursor-pointer">
+                            Admin Panel
+                        </Link>
                     </div>
                 </div>
             </footer>
