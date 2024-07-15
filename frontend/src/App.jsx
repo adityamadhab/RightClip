@@ -49,6 +49,7 @@ import { BusPayments } from './pages/BusinessPages/BusPayments';
 import { BusinessPayments } from './pages/AdminPages/BusinessPayments';
 import { CrePaymentsPage } from './pages/Creator-Pages/CrePayments';
 import { CreatorPayments } from './pages/AdminPages/CreatorPayments';
+import { CreNotification } from './pages/Creator-Pages/CreNotification';
 
 axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
 
@@ -86,6 +87,7 @@ function App() {
       <Route path='/creator/inbox' element={<MessagingPage />} />
       <Route path='/creator/inbox/:businessId' element={<MessageWindow />} />
       <Route path='/creator/payment' element={<CrePaymentsPage />} />
+      <Route path='/creator/notification' element={<CreNotification />} />
       <Route path='/creator/logout' element={<CreLogout />} />
       <Route path='/business/signup' element={<BusinessSignUp />} />
       <Route path='/business/signin' element={<BusinessSignIn />} />

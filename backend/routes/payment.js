@@ -84,24 +84,29 @@ router.get('/project/:projectId', async (req, res) => {
 router.put('/project/:projectId', async (req, res) => {
     try {
         const { transactionId } = req.body;
-
         const projectId = req.params.projectId;
 
-        const updatedpayment = await CreatorPayments.findOneAndUpdate({ projectId }, { transactionId: transactionId });
+        const updatedPayment = await CreatorPayments.findOneAndUpdate({ projectId }, { transactionId: transactionId });
 
         const project = await Project.findByIdAndUpdate(projectId, { CrePaymentDone: true });
 
-        const business = await Creator.findById(project.assignedCreator);
+        const creator = await Creator.findById(project.assignedCreator);
 
-        if (!business) {
+        if (!creator) {
             return res.status(404).json({ message: 'Creator not found' });
         }
 
-        const businessEmail = business.email;
+        const creatorEmail = creator.email;
 
-        await sendPaymentEmail(businessEmail, project.projectName, transactionId);
+        await sendPaymentEmail(creatorEmail, project.projectName, transactionId);
 
-        res.status(200).json(updatedpayment);
+        const notification = new Notification({
+            recieverId: creator._id,
+            message: `Payment for project ${project.projectName} has been updated with transaction ID: ${transactionId}.`
+        });
+        await notification.save();
+
+        res.status(200).json(updatedPayment);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

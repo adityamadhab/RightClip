@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function CreSidebar() {
     const location = useLocation();
+    const [notificationCount, setNotificationCount] = useState(0);
+
+    useEffect(() => {
+        async function fetchUnreadNotificationCount() {
+            try {
+                const response = await axios.get('/notification/unread/count', {
+                    headers: {
+                        Authorization: localStorage.getItem('CreToken')
+                    }
+                });
+                setNotificationCount(response.data.unreadCount);
+            } catch (error) {
+                console.error('Failed to fetch unread notification count:', error);
+                return 0;
+            }
+        }
+        fetchUnreadNotificationCount();
+    }, []);
 
     return (
         <div className="sticky top-0 left-0 bottom-0 h-screen py-0 px-4 text-white bg-[#E7CBA3] transition-all duration-500 w-20 sm:w-[344px]">
@@ -64,6 +82,24 @@ export default function CreSidebar() {
                         </svg>
                         <span className="overflow-hidden text-sm text-black hidden lg:flex">
                             Payments
+                        </span>
+                    </Link>
+                </li>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/notification' ? 'bg-white' : ''} hover:bg-white`}>
+                    <Link to='/business/notification' className="text-white text-base no-underline flex items-center gap-3">
+                        <span className="flex flex-col items-center relative">
+                            {notificationCount > 0 && (
+                                <span className="bg-red-600 text-white rounded-full h-3 w-3 flex items-center justify-center text-xs absolute -top-2 right-0">
+                                    {notificationCount}
+                                </span>
+                            )}
+                            <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" className='h-5 w-5'>
+                                <path d="M7.25382 10.0906C7.60746 6.90786 10.2977 4.5 13.5 4.5V4.5C16.7023 4.5 19.3925 6.90786 19.7462 10.0906L20.0295 12.6401C20.057 12.8884 20.0708 13.0125 20.0883 13.1349C20.2271 14.1091 20.5445 15.0492 21.0244 15.9082C21.0847 16.0162 21.149 16.1233 21.2775 16.3375L21.9278 17.4213C22.6225 18.5792 22.9699 19.1582 22.7891 19.6168C22.7549 19.7035 22.7088 19.7851 22.652 19.859C22.3518 20.25 21.6766 20.25 20.3262 20.25H6.67376C5.32342 20.25 4.64824 20.25 4.34803 19.859C4.29125 19.7851 4.24509 19.7035 4.21089 19.6168C4.03008 19.1582 4.37745 18.5792 5.0722 17.4213L5.72249 16.3375C5.85103 16.1233 5.9153 16.0162 5.9756 15.9082C6.45554 15.0492 6.77289 14.1091 6.91172 13.1349C6.92916 13.0125 6.94296 12.8884 6.97055 12.6401L7.25382 10.0906Z" stroke="#222222" />
+                                <path d="M10.24 20.7066C10.4323 21.5438 10.856 22.2837 11.4454 22.8113C12.0349 23.339 12.757 23.625 13.5 23.625C14.243 23.625 14.9651 23.339 15.5546 22.8113C16.144 22.2837 16.5677 21.5438 16.76 20.7066" stroke="#222222" stroke-linecap="round" />
+                            </svg>
+                        </span>
+                        <span className="overflow-hidden text-sm text-black flex justify-between gap-24 items-center hidden lg:flex">
+                            Notification
                         </span>
                     </Link>
                 </li>

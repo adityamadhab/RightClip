@@ -4,6 +4,7 @@ const Project = require('../models/Project');
 const Creator = require('../models/Creator');
 const Business = require('../models/Business');
 const ProjectCategory = require('../models/ProjectCategory');
+const Notification = require('../models/Notification');
 const authMiddleware = require('../middlewares/projectAuth');
 const creatorMiddleware = require('../middlewares/authMiddleware');
 const nodemailer = require('nodemailer');
@@ -702,6 +703,12 @@ router.put('/creator/accept', creatorMiddleware, async (req, res) => {
 
         await sendProjectAcceptanceEmail(businessEmail, project.projectName);
 
+        const notification = new Notification({
+            recieverId: business._id,
+            message: `Project ${project.projectName} has been accepted by the creator.`
+        });
+        await notification.save();
+
         res.status(200).json({ message: 'Project accepted by creator.', project });
     } catch (error) {
         console.error(error);
@@ -789,6 +796,12 @@ router.put('/admin/approve', async (req, res) => {
         const businessEmail = business.email;
 
         await sendAdminAcceptanceEmail(businessEmail, project.projectName);
+
+        const notification = new Notification({
+            recieverId: business._id,
+            message: `Project ${project.projectName} is availablefor Review. Please visit your dashboard to get details.`
+        });
+        await notification.save();
 
         res.status(200).json({ message: 'Project approved and marked as completed', project });
     } catch (error) {

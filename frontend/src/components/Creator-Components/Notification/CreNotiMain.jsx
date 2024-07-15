@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { BusFooter } from "../BusFooter";
-import BusNotiNav from "./BusNotiNav";
 import axios from 'axios';
+import CreNotiNav from './CreNotiNav';
 
 const NotificationItem = ({ id, time, date, message, readMark, onMarkAsRead }) => (
     <div className={`h-[60px] w-[1100px] rounded-xl flex justify-between ${readMark ? 'bg-gray-200' : 'bg-[#FFEADD]'}`}>
@@ -23,7 +22,7 @@ const NotificationItem = ({ id, time, date, message, readMark, onMarkAsRead }) =
     </div>
 );
 
-export default function BusNotiMain() {
+export default function CreNotiMain() {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
@@ -31,10 +30,9 @@ export default function BusNotiMain() {
             try {
                 const response = await axios.get('/notification/get', {
                     headers: {
-                        Authorization: localStorage.getItem('BusToken')
+                        Authorization: localStorage.getItem('CreToken')
                     }
                 });
-                // Sort notifications by date and time, latest first
                 const sortedNotifications = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setNotifications(sortedNotifications);
             } catch (error) {
@@ -61,7 +59,7 @@ export default function BusNotiMain() {
     return (
         <div className="flex flex-col min-h-screen">
             <div className="bg-white w-full p-4 flex-grow">
-                <BusNotiNav />
+                <CreNotiNav />
                 <div className="p-10 flex flex-col gap-6">
                     {notifications.map((noti) => (
                         <NotificationItem
@@ -76,7 +74,6 @@ export default function BusNotiMain() {
                     ))}
                 </div>
             </div>
-            <BusFooter />
         </div>
     );
 }
