@@ -49,16 +49,16 @@ export default function PendingMain() {
     };
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <AdDashNav />
                 <PenInsideNav />
-                <div className="p-10 flex flex-col gap-6">
+                <div className="p-4 md:p-10 flex flex-col gap-6">
                     {projects.length === 0 ? (
                         <p className="text-center text-gray-500">NO PENDING PROJECTS</p>
                     ) : (
                         projects.map((project) => (
-                            <div key={project._id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex justify-between items-center px-4">
+                            <div key={project._id} className="h-auto w-full md:w-[1100px] bg-[#FFEADD] rounded-xl flex flex-col md:flex-row justify-between items-center px-4 py-2">
                                 <div className="flex gap-4 items-center">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="16" fill="white" />
@@ -66,7 +66,7 @@ export default function PendingMain() {
                                     <p className="text-sm">{project.clientName} requested a project: {project.projectName}</p>
                                 </div>
                                 <button
-                                    className="bg-[#ABCAF8] rounded-lg w-[100px] p-2 text-sm"
+                                    className="bg-[#ABCAF8] rounded-lg w-full md:w-[100px] p-2 text-sm mt-2 md:mt-0"
                                     onClick={() => handleReviewClick(project)}
                                 >
                                     Review
@@ -79,7 +79,7 @@ export default function PendingMain() {
 
             {showApproveCard && selectedProject && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="relative bg-white p-6 rounded-lg shadow-md">
+                    <div className="relative bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-4">
                         <button className="absolute top-2 right-2 text-gray-600" onClick={handleCloseApproveCard}>
                             &times;
                         </button>

@@ -2,7 +2,7 @@ import { BusFooter } from "../BusFooter";
 import BusDashCount from "./BusDashCount";
 import BusDashNav from "./BusDashNav";
 
-export default function BushDashMain({username}) {
+export default function BushDashMain({ username }) {
     return (
         <div className="w-full overflow-x-hidden">
             <div className=" bg-white w-full p-4">

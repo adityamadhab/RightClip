@@ -51,7 +51,7 @@ export default function AdCreatorPaymentsMain() {
     };
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <AdminPaymentsNav />
                 <div className="flex justify-between p-4">

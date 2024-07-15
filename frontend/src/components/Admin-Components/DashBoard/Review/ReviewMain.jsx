@@ -61,7 +61,7 @@ export default function ReviewMain() {
     };
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <AdDashNav />
                 <div className="flex justify-between p-4">
@@ -72,21 +72,21 @@ export default function ReviewMain() {
                         <p className="text-center text-gray-500">NO PROJECTS FOR REVIEW</p>
                     ) : (
                         projects.map((project) => (
-                            <div key={project._id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex justify-between items-center px-4">
-                                <div className="flex gap-4 items-center">
+                            <div key={project._id} className="h-[60px] w-full lg:w-[1100px] bg-[#FFEADD] rounded-xl flex flex-col lg:flex-row justify-between items-center px-4">
+                                <div className="flex gap-4 items-center w-full lg:w-auto">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="16" fill="white" />
                                     </svg>
                                     <p className="text-sm">{project.projectName}</p>
                                 </div>
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 w-full lg:w-auto mt-2 lg:mt-0">
                                     {project.status && (
                                         <span className={`text-sm ${project.status === 'Approved' ? 'text-green-500' : 'text-red-500'}`}>
                                             {project.status}
                                         </span>
                                     )}
                                     <button
-                                        className="bg-[#ABCAF8] rounded-lg w-[100px] p-2 text-sm"
+                                        className="bg-[#ABCAF8] rounded-lg w-full lg:w-[100px] p-2 text-sm"
                                         onClick={() => handleReviewClick(project)}
                                     >
                                         Review
@@ -96,29 +96,28 @@ export default function ReviewMain() {
                         ))
                     )}
                 </div>
-            </div>
-
-            {showApproveCard && selectedProject && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="relative bg-white p-6 rounded-lg shadow-md">
-                        <button className="absolute top-2 right-2 text-gray-600" onClick={handleCloseApproveCard}>
-                            &times;
-                        </button>
-                        <ReviewCard
-                            templateImage={selectedProject.templateImage}
-                            projectName={selectedProject.projectName}
-                            company={selectedProject.company}
-                            creatorName={selectedProject.assignedCreator}
-                            requirements={selectedProject.requirements}
-                            projectLink={selectedProject.projectLink}
-                            projectCategory={selectedProject.projectCategory}
-                            onApprove={() => handleApprove(selectedProject.projectId)}
-                            onDecline={() => handleDecline(selectedProject.projectId)}
-                            message={message}
-                        />
+                {showApproveCard && selectedProject && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="relative bg-white p-6 rounded-lg shadow-md">
+                            <button className="absolute top-2 right-2 text-gray-600" onClick={handleCloseApproveCard}>
+                                &times;
+                            </button>
+                            <ReviewCard
+                                templateImage={selectedProject.templateImage}
+                                projectName={selectedProject.projectName}
+                                company={selectedProject.company}
+                                creatorName={selectedProject.assignedCreator}
+                                requirements={selectedProject.requirements}
+                                projectLink={selectedProject.projectLink}
+                                projectCategory={selectedProject.projectCategory}
+                                onApprove={() => handleApprove(selectedProject.projectId)}
+                                onDecline={() => handleDecline(selectedProject.projectId)}
+                                message={message}
+                            />
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

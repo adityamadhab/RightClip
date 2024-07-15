@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function OSNav() {
     return (
-        <div className="border-b-2 border-[#E7CBA3] bg-white w-[1200px] mb-6">
+        <div className="border-b-2 border-[#E7CBA3] bg-white w-full sm:w-[1200px] mb-6">
             <div className="bg-white mb-3 flex justify-between items-center">
                 <Link to={'/dashboard'} className="header--title cursor-pointer flex gap-4">
                     <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mt-1">
@@ -14,7 +14,8 @@ export default function OSNav() {
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0874 3.39999H4.2499C3.78046 3.39999 3.3999 3.78055 3.3999 4.24999V18.9125C3.3999 19.3819 3.78046 19.7625 4.2499 19.7625H15.0874C15.5568 19.7625 15.9374 19.3819 15.9374 18.9125V4.24999C15.9374 3.78055 15.5568 3.39999 15.0874 3.39999ZM5.5249 5.52499V17.6375H13.8124V5.52499H5.5249Z" fill="black" />
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0874 21.8875H4.2499C3.78046 21.8875 3.3999 22.2681 3.3999 22.7375V29.75C3.3999 30.2194 3.78046 30.6 4.2499 30.6H15.0874C15.5568 30.6 15.9374 30.2194 15.9374 29.75V22.7375C15.9374 22.2681 15.5568 21.8875 15.0874 21.8875ZM5.5249 24.0125V28.475H13.8124V24.0125H5.5249Z" fill="black" />
                     </svg>
-                    <h2 className="text-lg font-extrabold text-black">Order Setup</h2>
+                    <h2 className="text-lg font-extrabold text-black hidden sm:block">Order Setup</h2>
+                    <h2 className="text-sm font-bold text-black sm:hidden mt-1">Order Setup</h2>
                 </Link>
             </div>
         </div>

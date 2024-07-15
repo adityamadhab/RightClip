@@ -44,30 +44,32 @@ export default function OrderSetupMain() {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <OSNav />
-      <div className="text-center mb-8">
-        <p className="text-lg mb-4">Add Project Category and Industries for your clients.</p>
-        <div className="flex justify-center space-x-4">
-          <button onClick={handleToggleIndustryForm} className="bg-[#ABCAF8] text-md text-black font-semibold py-2 px-4 rounded hover:bg-blue-600">
-            Add Industry
-          </button>
-          <button onClick={handleToggleProjectCategoryForm} className="bg-[#ABCAF8] text-md text-black font-semibold py-2 px-4 rounded hover:bg-blue-600">
-            Add Project Category
-          </button>
+    <div className="w-full overflow-x-hidden">
+      <div className="container mx-auto p-4">
+        <OSNav />
+        <div className="text-center mb-8">
+          <p className="text-lg mb-4">Add Project Category and Industries for your clients.</p>
+          <div className="flex justify-center space-x-4">
+            <button onClick={handleToggleIndustryForm} className="bg-[#ABCAF8] text-md text-black font-semibold py-2 px-4 rounded hover:bg-blue-600">
+              Add Industry
+            </button>
+            <button onClick={handleToggleProjectCategoryForm} className="bg-[#ABCAF8] text-md text-black font-semibold py-2 px-4 rounded hover:bg-blue-600">
+              Add Project Category
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-[#FFEADD] p-4 rounded-xl shadow-md">
-          <h3 className="text-md font-bold mb-4 rounded-xl">Industries</h3>
-          {showIndustryForm && <IndustryForm setShowIndustryForm={setShowIndustryForm} fetchIndustries={fetchIndustries} />}
-          <IndustryList industries={industries} fetchIndustries={fetchIndustries} />
-        </div>
-        <div className="bg-[#FFEADD] p-4 rounded-xl shadow-md">
-          <h3 className="text-lg font-bold mb-4">Project Categories</h3>
-          {showProjectCategoryForm && <ProjectCategoryForm setShowProjectCategoryForm={setShowProjectCategoryForm} fetchCategories={fetchCategories} />}
-          <CategoryList categories={categories} fetchCategories={fetchCategories} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-[#FFEADD] p-4 rounded-xl shadow-md">
+            <h3 className="text-md font-bold mb-4 rounded-xl">Industries</h3>
+            {showIndustryForm && <IndustryForm setShowIndustryForm={setShowIndustryForm} fetchIndustries={fetchIndustries} />}
+            <IndustryList industries={industries} fetchIndustries={fetchIndustries} />
+          </div>
+          <div className="bg-[#FFEADD] p-4 rounded-xl shadow-md">
+            <h3 className="text-lg font-bold mb-4">Project Categories</h3>
+            {showProjectCategoryForm && <ProjectCategoryForm setShowProjectCategoryForm={setShowProjectCategoryForm} fetchCategories={fetchCategories} />}
+            <CategoryList categories={categories} fetchCategories={fetchCategories} />
+          </div>
         </div>
       </div>
     </div>

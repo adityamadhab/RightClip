@@ -44,7 +44,7 @@ export default function AdBusinessPaymentsMain() {
     };
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <AdminPaymentsNav />
                 <div className="flex justify-between p-4">
@@ -55,40 +55,38 @@ export default function AdBusinessPaymentsMain() {
                         {successMessage}
                     </div>
                 )}
-                <div className="p-10 flex flex-col gap-6">
+                <div className="p-4 md:p-10 flex flex-col gap-6">
                     {projects.length === 0 ? (
                         <p className="text-center text-gray-500">NO PAID PROJECTS</p>
                     ) : (
                         projects.map((project) => (
-                            <div key={project._id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex items-center px-4">
-                                <div className="flex w-full items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="32" height="32" rx="16" fill="white" />
-                                        </svg>
-                                        <p className="text-sm">Project Name: {project.projectName} by {project.company}</p>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <button
-                                            className="bg-blue-500 text-white rounded-lg w-[100px] p-2 text-sm"
-                                            onClick={() => handleReviewClick(project)}
-                                        >
-                                            Review
-                                        </button>
-                                    </div>
+                            <div key={project._id} className="bg-[#FFEADD] rounded-xl p-4 md:p-6 flex flex-col gap-2 md:flex-row items-center">
+                                <div className="flex items-center mb-2 md:mb-0">
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
+                                        <rect width="32" height="32" rx="16" fill="white" />
+                                    </svg>
+                                    <p className="text-sm">Project Name: {project.projectName} by {project.company}</p>
+                                </div>
+                                <div className="flex items-center md:ml-auto mt-2 md:mt-0">
+                                    <button
+                                        className="bg-blue-500 text-white rounded-lg px-4 py-2 text-sm"
+                                        onClick={() => handleReviewClick(project)}
+                                    >
+                                        Review
+                                    </button>
                                 </div>
                             </div>
                         ))
                     )}
                 </div>
+                {selectedProject && (
+                    <ReviewPaymentCard
+                        project={selectedProject}
+                        onClose={handleCloseReviewCard}
+                        onRejectPayment={handleRejectPayment}
+                    />
+                )}
             </div>
-            {selectedProject && (
-                <ReviewPaymentCard
-                    project={selectedProject}
-                    onClose={handleCloseReviewCard}
-                    onRejectPayment={handleRejectPayment}
-                />
-            )}
         </div>
     );
 }
