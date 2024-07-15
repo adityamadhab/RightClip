@@ -21,8 +21,8 @@ function SubmitCard({ onClose, project, onSubmitSuccess, message }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-1/3">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Submit Project</h2>
           <button onClick={onClose} className="text-black font-bold">X</button>
@@ -45,11 +45,11 @@ function SubmitCard({ onClose, project, onSubmitSuccess, message }) {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="companyName">
               Company
             </label>
             <select
-              id="projectName"
+              id="companyName"
               value={project.company}
               disabled
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -58,11 +58,11 @@ function SubmitCard({ onClose, project, onSubmitSuccess, message }) {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="industry">
               Industry
             </label>
             <select
-              id="projectName"
+              id="industry"
               value={project.industry}
               disabled
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -71,24 +71,24 @@ function SubmitCard({ onClose, project, onSubmitSuccess, message }) {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="requirements">
               Requirements
             </label>
             <select
-              id="projectName"
+              id="requirements"
               value={project.requirements}
               disabled
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option value={project._id}>{project.projectName}</option>
+              <option value={project._id}>{project.requirements}</option>
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectName">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="projectCategory">
               Project Category
             </label>
             <select
-              id="projectName"
+              id="projectCategory"
               value={project.projectCategory}
               disabled
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

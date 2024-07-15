@@ -5,7 +5,7 @@ import WorkingActivity from "./WorkingActivity";
 
 export default function CreAssMain() {
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className=" bg-white w-full p-4">
                 <CreAssNav />
                 <CreDashCount />

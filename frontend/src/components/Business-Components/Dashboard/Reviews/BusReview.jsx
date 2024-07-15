@@ -79,7 +79,7 @@ export default function BusReviewMain() {
     };
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <BusDashNav />
                 <div className="flex flex-col justify-between gap-2 p-4">
@@ -91,21 +91,21 @@ export default function BusReviewMain() {
                         <p className="text-center text-gray-500">NO PROJECTS FOR REVIEW</p>
                     ) : (
                         projects.map((project) => (
-                            <div key={project._id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex justify-between items-center px-4">
-                                <div className="flex gap-4 items-center">
+                            <div key={project._id} className="h-auto sm:h-[60px] w-full sm:w-[1100px] bg-[#FFEADD] rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 sm:px-4 mb-4 sm:mb-0">
+                                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center w-full sm:w-auto mb-2 sm:mb-0">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="16" fill="white" />
                                     </svg>
                                     <p className="text-sm">{project.projectName}</p>
                                 </div>
-                                <div className="flex items-center gap-4">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
                                     {project.status && (
                                         <span className={`text-sm ${project.status === 'Approved' ? 'text-green-500' : 'text-red-500'}`}>
                                             {project.status}
                                         </span>
                                     )}
                                     <button
-                                        className="bg-[#ABCAF8] rounded-lg w-[100px] p-2 text-sm"
+                                        className="bg-[#ABCAF8] rounded-lg w-full sm:w-[100px] p-2 text-sm"
                                         onClick={() => handleReviewClick(project)}
                                     >
                                         Review

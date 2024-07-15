@@ -51,8 +51,8 @@ export function CreForgotPassword() {
     };
 
     return (
-        <div className="min-h-screen flex">
-            <div className="w-2/3 flex items-center justify-center bg-white">
+        <div className="min-h-screen flex flex-col lg:flex-row">
+            <div className="w-full lg:w-2/3 flex items-center justify-center bg-white">
                 <div className="max-w-md w-full space-y-8 p-10">
                     <div className="text-center">
                         <Link to={'/'}>
@@ -134,7 +134,7 @@ export function CreForgotPassword() {
                     )}
                 </div>
             </div>
-            <div className="w-1/3 bg-[#8FD8CF] hidden lg:flex items-center justify-center"></div>
+            <div className="hidden lg:flex w-full lg:w-1/3 bg-[#8FD8CF] items-center justify-center"></div>
         </div>
     );
 }

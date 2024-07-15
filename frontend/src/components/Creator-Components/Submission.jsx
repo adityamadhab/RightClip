@@ -1,11 +1,9 @@
 import React from 'react';
-import CreatorNavbar from './CreatorNav';
 import { Link } from 'react-router-dom';
 
 export default function Submission() {
     return (
         <div className='h-screen overflow-hidden'>
-            <CreatorNavbar/>
             <div className="h-screen flex flex-col items-center justify-center bg-white">
                 <div className="max-w-md w-full space-y-8 text-center">
                     <div className="bg-white p-6 rounded-lg">

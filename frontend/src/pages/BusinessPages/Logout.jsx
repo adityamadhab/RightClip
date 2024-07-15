@@ -18,7 +18,7 @@ export function Logout() {
     return (
         <div className="flex h-screen">
             <BusSidebar />
-            <div className="bg-white w-full p-4 flex flex-col justify-center items-center">
+            <div className="bg-white w-full p-4 flex flex-col justify-center items-center overflow-x-hidden">
                 <div className="border-b-2 border-[#E7CBA3] bg-white w-full mb-2">
                     <div className="bg-white mb-3 flex justify-between items-center">
                         <Link to={'/dashboard'} className="header--title cursor-pointer flex gap-4">

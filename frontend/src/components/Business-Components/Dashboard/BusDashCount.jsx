@@ -50,23 +50,23 @@ export default function BusDashCount() {
                     <div className="text-2xl font-bold">{dashboardCounts.pendingApprovals}</div>
                 </div>
                 <div className="bg-[#E7CBA3] p-4 rounded-lg h-[174px] flex flex-col justify-between">
-                    <div className="text-lg">Cancalled Projects</div>
+                    <div className="text-lg">Cancelled Projects</div>
                     <div className="text-2xl font-bold">{dashboardCounts.cancalled}</div>
                 </div>
             </div>
             <h2 className="text-md font-bold mb-8 bg-[#ABCAF8] p-2 rounded-xl w-full text-center">Important Links</h2>
-            <div class="p-4">
-                <div class="flex justify-between items-center mb-4">
-                    <Link to={'/business/dashboard/active'} class="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-[250px]">
+            <div className="p-4">
+                <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
+                    <Link to="/business/dashboard/active" className="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-full sm:w-auto sm:flex-1 lg:w-[250px]">
                         <p>Active Assignments</p>
                     </Link>
-                    <Link to={'/business/dashboard/pending'} class="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-[250px]">
+                    <Link to="/business/dashboard/pending" className="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-full sm:w-auto sm:flex-1 lg:w-[250px]">
                         <p>Pending Assignments</p>
                     </Link>
-                    <Link class="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-[265px]">
+                    <Link to="/business/dashboard/review" className="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-full sm:w-auto sm:flex-1 lg:w-[265px]">
                         <p>Review Assignments</p>
                     </Link>
-                    <Link class="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-[250px]">
+                    <Link to="/business/dashboard/completed" className="text-black border border-[#E7CBA3] px-4 py-2 rounded-xl flex justify-between w-full sm:w-auto sm:flex-1 lg:w-[250px]">
                         <p>Completed Assignments</p>
                     </Link>
                 </div>

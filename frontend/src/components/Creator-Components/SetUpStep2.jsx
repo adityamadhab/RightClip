@@ -1,5 +1,4 @@
 import React from 'react';
-import CreatorNavbar from './CreatorNav';
 
 export default function SetUpStep2({ nextStep, prevStep, formData, setFormData }) {
     const handleChange = (e) => {
@@ -8,10 +7,9 @@ export default function SetUpStep2({ nextStep, prevStep, formData, setFormData }
     };
 
     return (
-        <div className='h-screen overflow-hidden'>
-            <CreatorNavbar />
-            <div className="h-screen flex">
-                <div className="w-2/3 flex items-center justify-center bg-white">
+        <div className="h-screen overflow-hidden">
+            <div className="h-screen flex flex-col lg:flex-row">
+                <div className="w-full lg:w-2/3 flex items-center justify-center bg-white">
                     <div className="max-w-md w-full space-y-8 p-10">
                         <div className="text-center">
                             <h2 className="mb-12 text-2xl font-semibold text-gray-900">Share your socials</h2>
@@ -76,7 +74,7 @@ export default function SetUpStep2({ nextStep, prevStep, formData, setFormData }
                         </form>
                     </div>
                 </div>
-                <div className="w-1/3 hidden lg:flex items-center justify-center bg-gradient-to-br from-[#0A0266] via-[#080068] to-[#004D95]">
+                <div className="hidden lg:flex lg:w-1/3 items-center justify-center bg-gradient-to-br from-[#0A0266] via-[#080068] to-[#004D95]">
                 </div>
             </div>
         </div>

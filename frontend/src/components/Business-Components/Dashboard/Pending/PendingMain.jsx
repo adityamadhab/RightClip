@@ -23,7 +23,7 @@ export default function PendingAssMain() {
     }, []);
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <BusDashNav />
                 <div className="flex justify-between p-4">
@@ -35,15 +35,15 @@ export default function PendingAssMain() {
                     ) : (
                         projects.map((project) => {
                             return (
-                                <div key={project._id} className="h-[60px] w-[1100px] bg-[#FFEADD] rounded-xl flex items-center px-4">
-                                    <div className="flex w-full items-center justify-between">
-                                        <div className="flex items-center gap-2">
+                                <div key={project._id} className="h-auto sm:h-[60px] w-full sm:w-[1100px] bg-[#FFEADD] rounded-xl flex flex-col sm:flex-row items-start sm:items-center p-4 sm:px-4 mb-4 sm:mb-0">
+                                    <div className="flex w-full items-start sm:items-center justify-between flex-col sm:flex-row gap-2 sm:gap-0">
+                                        <div className="flex items-center gap-2 w-full sm:w-auto mb-2 sm:mb-0">
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect width="32" height="32" rx="16" fill="white" />
                                             </svg>
                                             <p className="text-sm">Project Name: {project.projectName}</p>
                                         </div>
-                                        <div className="flex items-center">
+                                        <div className="flex items-center w-full sm:w-auto">
                                             <div className="text-muted-foreground text-sm">Project not approved by admin yet</div>
                                         </div>
                                     </div>

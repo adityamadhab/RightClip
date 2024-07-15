@@ -42,7 +42,7 @@ export default function CreatorPaymentsMain() {
     };
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <CreatorPaymentsNav />
                 <div className="flex justify-between p-4">

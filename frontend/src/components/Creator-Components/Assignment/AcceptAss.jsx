@@ -7,8 +7,8 @@ import CreAssNav from "./CreAssNav";
 import AcceptCard from './AcceptCard';
 
 const ProjectItem = ({ name, clientName, onSubmit }) => (
-    <div className="h-[60px] w-[1100px] bg-white rounded-xl flex justify-between">
-        <div className="flex gap-4 justify-center items-center ml-4">
+    <div className="w-full md:w-[1100px] bg-white rounded-xl flex flex-col md:flex-row justify-between items-center p-4">
+        <div className="flex gap-4 justify-center items-center">
             <svg width="25" height="22" viewBox="0 0 32 32" fill="gray" xmlns="http://www.w3.org/2000/svg" className="rounded-md">
                 <rect width="32" height="32" rx="16" fill="gray" />
             </svg>
@@ -17,7 +17,7 @@ const ProjectItem = ({ name, clientName, onSubmit }) => (
                 <p className="text-xs text-gray-500">{clientName}</p>
             </div>
         </div>
-        <div className="flex gap-4 justify-center items-center mr-4">
+        <div className="flex gap-4 justify-center items-center mt-4 md:mt-0">
             <button
                 className="bg-[#ABCAF8] text-black text-sm h-[25px] w-[130px] rounded-md transition duration-300"
                 onClick={onSubmit}

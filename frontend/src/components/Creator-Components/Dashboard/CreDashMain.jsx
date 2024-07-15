@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import CreDashCount from "./CreDashCount";
-import CreDashNav from "./CreDashNav";
+import CreDashNav from "./CreDashNav"; 
 
-export default function CreDashMain({username}) {
+export default function CreDashMain({ username }) {
     return (
-        <div>
-            <div className=" bg-white w-full p-4">
+        <div className="w-full overflow-x-hidden">
+            <div className="bg-white w-full p-4">
                 <CreDashNav />
                 <div
                     className="p-6 rounded-lg shadow-md mb-6"
@@ -22,17 +22,17 @@ export default function CreDashMain({username}) {
                     </div>
                 </div>
                 <CreDashCount />
-                <div class="p-4">
+                <div className="p-4">
                     <h2 className="text-md font-bold mb-8 bg-[#ABCAF8] p-2 rounded-xl w-full text-center">Important Links</h2>
-                    <div class="flex justify-center gap-6 items-center mb-4">
-                        <Link to={'/creator/assignment'} class="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
+                    <div className="flex flex-col lg:flex-row justify-center gap-6 items-center mb-4">
+                        <Link to={'/creator/assignment'} className="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-full md:w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
                             <p className="text-sm">Working Activity</p>
                         </Link>
-                        <Link to={'/creator/assignment/accept'} class="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
+                        <Link to={'/creator/assignment/accept'} className="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-full md:w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
                             <p className="text-sm">Accept Assignment</p>
                         </Link>
-                        <Link to={'/creator/assignment/timelines'} class="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
-                            <p className="text-sm">Timelines(deadlines)</p>
+                        <Link to={'/creator/assignment/timelines'} className="text-black border border-[#929292] px-4 py-2 rounded-xl flex justify-start w-full md:w-[300px] hover:bg-[#ABCAF8] cursor-pointer">
+                            <p className="text-sm">Timelines (deadlines)</p>
                         </Link>
                     </div>
                 </div>

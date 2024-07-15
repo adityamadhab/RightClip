@@ -6,7 +6,9 @@ function LandingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col lg:flex-row items-start">
           <div className="lg:w-1/2 mb-8 lg:mb-0">
-            <h1 className=" font-extrabold mb-12 text-6xl underline">Demo Heading</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 underline text-center lg:text-left">
+              Demo Heading
+            </h1>
             <ul className="space-y-4">
               {[...Array(5)].map((_, index) => (
                 <li key={index} className="flex items-center">

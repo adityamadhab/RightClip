@@ -25,7 +25,7 @@ export default function BusRewMain() {
     ];
 
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className="bg-white w-full p-4">
                 <BusRewNav />
                 <div className="flex justify-center items-center h-[550px]">
@@ -38,7 +38,6 @@ export default function BusRewMain() {
                     </div>
                 </div>
             </div>
-            <BusFooter />
         </div>
     );
 }

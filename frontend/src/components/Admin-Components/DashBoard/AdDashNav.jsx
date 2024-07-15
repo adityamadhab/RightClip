@@ -24,13 +24,13 @@ export default function AdDashNav() {
                         </svg>
                         <input type="text" placeholder="Search" className="bg-transparent focus:outline-none" />
                     </div>
-                    <Link to={'/profile'} className="cursor-pointer">
+                    {/* <Link to={'/profile'} className="cursor-pointer">
                         <svg width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-7 w-7">
                             <circle cx="26.5" cy="22.0833" r="6.625" stroke="#222222" stroke-linecap="round" />
                             <circle cx="26.5" cy="26.5" r="19.875" stroke="#222222" stroke-width="2" />
                             <path d="M39.75 41.3089C38.9685 38.961 37.2463 36.8864 34.8506 35.4067C32.455 33.927 29.5197 33.125 26.5 33.125C23.4803 33.125 20.545 33.927 18.1494 35.4067C15.7537 36.8864 14.0315 38.961 13.25 41.3089" stroke="#222222" stroke-linecap="round" />
                         </svg>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </div>

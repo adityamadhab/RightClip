@@ -4,7 +4,7 @@ import BusDashNav from "./BusDashNav";
 
 export default function BushDashMain({username}) {
     return (
-        <div>
+        <div className="w-full overflow-x-hidden">
             <div className=" bg-white w-full p-4">
                 <BusDashNav />
                 <div

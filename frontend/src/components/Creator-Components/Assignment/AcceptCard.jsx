@@ -52,7 +52,7 @@ const AcceptCard = ({ project, onClose, onSubmitSuccess, message }) => {
     };
 
     return (
-        <div className="p-6 w-[550px] mx-auto bg-white text-black rounded-lg relative">
+        <div className="p-6 w-full max-w-[550px] mx-auto bg-white text-black rounded-lg relative">
             {message && (
                 <div className="text-center text-green-500 mb-4">{message}</div>
             )}
@@ -63,27 +63,27 @@ const AcceptCard = ({ project, onClose, onSubmitSuccess, message }) => {
                 &#x2715;
             </button>
             <div>
-                <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-gray-500">Project name</div>
-                    <div className="w-2/3 text-black">{project?.projectName}</div>
+                <div className="mb-4 flex flex-col md:flex-row items-center">
+                    <div className="w-full md:w-1/3 text-gray-500">Project name</div>
+                    <div className="w-full md:w-2/3 text-black">{project?.projectName}</div>
                 </div>
-                <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-gray-500">Company Name</div>
-                    <div className="w-2/3 text-black">{project?.company}</div>
+                <div className="mb-4 flex flex-col md:flex-row items-center">
+                    <div className="w-full md:w-1/3 text-gray-500">Company Name</div>
+                    <div className="w-full md:w-2/3 text-black">{project?.company}</div>
                 </div>
-                <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-gray-500">Industry</div>
-                    <div className="w-2/3 text-black">{project?.industry}</div>
+                <div className="mb-4 flex flex-col md:flex-row items-center">
+                    <div className="w-full md:w-1/3 text-gray-500">Industry</div>
+                    <div className="w-full md:w-2/3 text-black">{project?.industry}</div>
                 </div>
-                <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-gray-500">Project Category</div>
-                    <div className="w-2/3 text-black">{project?.projectCategory}</div>
+                <div className="mb-4 flex flex-col md:flex-row items-center">
+                    <div className="w-full md:w-1/3 text-gray-500">Project Category</div>
+                    <div className="w-full md:w-2/3 text-black">{project?.projectCategory}</div>
                 </div>
-                <div className="mb-4 flex items-center">
-                    <div className="w-1/3 text-gray-500">Requirements</div>
-                    <div className="w-2/3 text-black">{project?.requirements}</div>
+                <div className="mb-4 flex flex-col md:flex-row items-center">
+                    <div className="w-full md:w-1/3 text-gray-500">Requirements</div>
+                    <div className="w-full md:w-2/3 text-black">{project?.requirements}</div>
                 </div>
-                <div className="flex justify-between mt-8">
+                <div className="flex flex-col md:flex-row justify-between mt-8 gap-4">
                     <button
                         className="bg-[#ABCAF8] text-black px-4 py-2 rounded-md"
                         type="submit"

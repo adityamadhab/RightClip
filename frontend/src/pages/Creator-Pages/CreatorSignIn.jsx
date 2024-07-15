@@ -25,8 +25,8 @@ export function CreatorSignIn() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      <div className="w-2/3 flex items-center justify-center bg-white">
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      <div className="w-full lg:w-2/3 flex items-center justify-center bg-white">
         <div className="max-w-md w-full space-y-8 p-10">
           <div className="text-center">
             <img src="/Creator-assests/logo.png" alt="Logo" className="mx-auto mb-4" />
@@ -89,7 +89,7 @@ export function CreatorSignIn() {
           </form>
         </div>
       </div>
-      <div className="w-1/3 bg-gradient-to-br from-[#0A0266] via-[#080068] to-[#004D95] hidden lg:flex items-center justify-center">
+      <div className="hidden lg:flex w-full lg:w-1/3 bg-gradient-to-br from-[#0A0266] via-[#080068] to-[#004D95] items-center justify-center">
       </div>
     </div>
   );
