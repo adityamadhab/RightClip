@@ -63,7 +63,7 @@ export default function CreNotiMain() {
     return (
         <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
             <div className="bg-white w-full p-4 flex-grow">
-                <BusNotiNav />
+                <CreNotiNav />
                 <div className="p-4 sm:p-10 flex flex-col gap-6">
                     {notifications.map((noti) => (
                         <NotificationItem
@@ -78,7 +78,6 @@ export default function CreNotiMain() {
                     ))}
                 </div>
             </div>
-            <BusFooter />
         </div>
     );
 }

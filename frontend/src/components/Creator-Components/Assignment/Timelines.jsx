@@ -18,7 +18,7 @@ const ProjectItem = ({ name, clientName, onSubmit }) => (
                 <p className="text-xs text-gray-500">{clientName}</p>
             </div>
         </div>
-        <div className="flex gap-4 justify-center items-center">
+        <div className="flex gap-4 justify-center items-center mt-2 md:mt-0 md:flex-shrink-0">
             <button
                 className="bg-[#ABCAF8] text-black text-sm h-[25px] w-[130px] rounded-md transition duration-300"
                 onClick={onSubmit}
@@ -27,7 +27,6 @@ const ProjectItem = ({ name, clientName, onSubmit }) => (
             </button>
         </div>
     </div>
-
 );
 
 export default function CreAssTimelines() {
