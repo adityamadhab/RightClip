@@ -85,8 +85,8 @@ export default function CreSidebar() {
                         </span>
                     </Link>
                 </li>
-                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/business/notification' ? 'bg-white' : ''} hover:bg-white`}>
-                    <Link to='/business/notification' className="text-white text-base no-underline flex items-center gap-3">
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/creator/notification' ? 'bg-white' : ''} hover:bg-white`}>
+                    <Link to='/creator/notification' className="text-white text-base no-underline flex items-center gap-3">
                         <span className="flex flex-col items-center relative">
                             {notificationCount > 0 && (
                                 <span className="bg-red-600 text-white rounded-full h-3 w-3 flex items-center justify-center text-xs absolute -top-2 right-0">
