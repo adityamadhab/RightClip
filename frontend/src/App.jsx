@@ -68,6 +68,7 @@ function App() {
     } else if (adminToken) {
       navigate('/admin/dashboard');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
