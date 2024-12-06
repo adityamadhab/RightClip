@@ -51,7 +51,7 @@ import { CrePaymentsPage } from './pages/Creator-Pages/CrePayments';
 import { CreatorPayments } from './pages/AdminPages/CreatorPayments';
 import { CreNotification } from './pages/Creator-Pages/CreNotification';
 
-axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
+axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
 function App() {
   const navigate = useNavigate();
