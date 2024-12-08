@@ -73,7 +73,19 @@ const projectSchema = new mongoose.Schema({
     },
     cancelled: {
         type: Boolean,
-        default: false
+        default: false 
+    },
+    projectFeedback: {
+        type: String,
+        default: ''
+    },
+    qualityScore: {
+        type: Number,
+        default: 0
+    },
+    rating: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true

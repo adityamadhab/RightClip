@@ -32,4 +32,25 @@ router.delete('/industry-types/:id', async (req, res) => {
     }
 });
 
+router.put('/industry-types/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name } = req.body;
+
+        const updatedIndustryType = await IndustryType.findByIdAndUpdate(
+            id,
+            { name },
+            { new: true }
+        );
+
+        if (!updatedIndustryType) {
+            return res.status(404).json({ message: 'Industry type not found' });
+        }
+
+        res.status(200).json(updatedIndustryType);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

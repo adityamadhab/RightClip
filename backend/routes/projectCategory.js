@@ -32,6 +32,26 @@ router.get('/templates/:categoryName', async (req, res) => {
     }
 });
 
+router.put('/project-categories/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, templateImage, price } = req.body;
+
+        const updatedProjectCategory = await ProjectCategory.findByIdAndUpdate(
+            id,
+            { name, templateImage, price },
+            { new: true }
+        );
+
+        if (!updatedProjectCategory) {
+            return res.status(404).json({ message: 'Project category not found' });
+        }
+
+        res.status(200).json(updatedProjectCategory);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 router.delete('/project-categories/:id', async (req, res) => {
     try {

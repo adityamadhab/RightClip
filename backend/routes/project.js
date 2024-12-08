@@ -776,13 +776,16 @@ router.put('/business/decline', authMiddleware, async (req, res) => {
 
 router.put('/admin/approve', async (req, res) => {
     try {
-        const { projectId } = req.body;
+        const { projectId, projectFeedback, rating } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
 
+        project.projectFeedback = projectFeedback || '';
+        project.qualityScore = 0;
+        project.rating = rating;
         project.review = true;
         project.businessApproval = true;
         await project.save();
@@ -811,7 +814,7 @@ router.put('/admin/approve', async (req, res) => {
 
 router.put('/admin/decline', async (req, res) => {
     try {
-        const { projectId } = req.body;
+        const { projectId, projectFeedback, qualityScore } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
@@ -820,9 +823,11 @@ router.put('/admin/decline', async (req, res) => {
 
         project.review = false;
         project.completed = false;
+        project.projectFeedback = projectFeedback;
+        project.qualityScore = qualityScore;
         await project.save();
 
-        res.status(200).json({ message: 'Project declined and ready for re-upload', project });
+        res.status(200).json({ message: 'Project declined with feedback', project });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }
