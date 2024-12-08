@@ -738,7 +738,7 @@ router.put('/creator/decline', creatorMiddleware, async (req, res) => {
 
 router.put('/business/approve', authMiddleware, async (req, res) => {
     try {
-        const { projectId } = req.body;
+        const { projectId, projectFeedback, rating } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
@@ -747,6 +747,8 @@ router.put('/business/approve', authMiddleware, async (req, res) => {
 
         project.businessApproval = true;
         project.completed = true;
+        project.projectFeedback = projectFeedback || '';
+        project.businessRating = rating;
         await project.save();
 
         res.status(200).json({ message: 'Project approved and marked as completed', project });
@@ -757,7 +759,7 @@ router.put('/business/approve', authMiddleware, async (req, res) => {
 
 router.put('/business/decline', authMiddleware, async (req, res) => {
     try {
-        const { projectId } = req.body;
+        const { projectId, projectFeedback, qualityScore } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
@@ -766,6 +768,8 @@ router.put('/business/decline', authMiddleware, async (req, res) => {
 
         project.businessApproval = false;
         project.completed = false;
+        project.projectFeedback = projectFeedback || '';
+        project.qualityScore = qualityScore;
         await project.save();
 
         res.status(200).json({ message: 'Project declined and ready for re-upload', project });
