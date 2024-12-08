@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
 import BusSidebar from "../Sidebar";
 import BusNotiNav from "./BusInboxNav";
@@ -74,8 +74,16 @@ export function ChatWindow() {
                                     <div className="flex flex-col space-y-4">
                                         {messages.map((msg, index) => (
                                             <div key={index} className={`flex ${msg.senderType === 'Business' ? 'justify-end' : 'justify-start'}`}>
-                                                <div className={`${msg.senderType === 'Business' ? 'bg-teal-500 text-white' : 'bg-white text-black'} p-2 rounded max-w-md overflow-x-auto`}>
+                                                <div className={`${
+                                                    msg.senderType === 'Business' 
+                                                        ? 'bg-[#8FD8CF] text-black ml-auto' 
+                                                        : 'bg-white text-black border border-gray-200'
+                                                    } p-3 rounded-lg max-w-md break-words shadow-sm`}
+                                                >
                                                     <p>{msg.message}</p>
+                                                    <div className="text-xs text-gray-500 mt-1">
+                                                        {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}

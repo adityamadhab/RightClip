@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdDashNav from '../AdDashNav';
 import ReviewCard from './ReviewCard';
@@ -8,6 +8,9 @@ export default function ReviewMain() {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
     const [message, setMessage] = useState('');
+    const [decision, setDecision] = useState('');
+    const [projectFeedback, setProjectFeedback] = useState('');
+    const [qualityScore, setQualityScore] = useState(0);
 
     const fetchProjects = async () => {
         try {
@@ -32,9 +35,48 @@ export default function ReviewMain() {
         setSelectedProject(null);
     };
 
+    const handleDecisionChange = (value) => {
+        setDecision(value);
+        if (value === 'approve') {
+            setProjectFeedback('');
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (!decision) {
+            setMessage('Please select a decision');
+            return;
+        }
+
+        if (!qualityScore) {
+            setMessage('Please provide a quality score');
+            return;
+        }
+
+        if (decision === 'decline' && !projectFeedback) {
+            setMessage('Please provide feedback for declining');
+            return;
+        }
+
+        try {
+            if (decision === 'approve') {
+                await handleApprove(selectedProject.projectId);
+            } else {
+                await handleDecline(selectedProject.projectId);
+            }
+        } catch (error) {
+            console.error('Error processing decision:', error);
+            setMessage('Error processing decision');
+        }
+    };
+
     const handleApprove = async (projectId) => {
         try {
-            await axios.put('/project/admin/approve', { projectId });
+            await axios.put('/project/admin/approve', {
+                projectId,
+                projectFeedback: '',
+                rating: qualityScore
+            });
             setMessage('PROJECT APPROVED');
             fetchProjects();
             setTimeout(() => {
@@ -48,7 +90,11 @@ export default function ReviewMain() {
 
     const handleDecline = async (projectId) => {
         try {
-            await axios.put('/project/admin/decline', { projectId });
+            await axios.put('/project/admin/decline', {
+                projectId,
+                projectFeedback,
+                qualityScore
+            });
             setMessage('PROJECT DECLINED');
             fetchProjects();
             setTimeout(() => {
@@ -110,10 +156,56 @@ export default function ReviewMain() {
                                 requirements={selectedProject.requirements}
                                 projectLink={selectedProject.projectLink}
                                 projectCategory={selectedProject.projectCategory}
-                                onApprove={() => handleApprove(selectedProject.projectId)}
-                                onDecline={() => handleDecline(selectedProject.projectId)}
                                 message={message}
                             />
+                            <div className="mt-4">
+                                <div className="flex gap-4 mb-4">
+                                    <button
+                                        className={`px-4 py-2 rounded ${decision === 'approve' ? 'bg-green-500 text-white' : 'bg-gray-200'}`}
+                                        onClick={() => handleDecisionChange('approve')}
+                                    >
+                                        Approve
+                                    </button>
+                                    <button
+                                        className={`px-4 py-2 rounded ${decision === 'decline' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
+                                        onClick={() => handleDecisionChange('decline')}
+                                    >
+                                        Decline
+                                    </button>
+                                </div>
+
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium text-gray-700">Quality Score (0-5)</label>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        max="5"
+                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                        value={qualityScore}
+                                        onChange={(e) => setQualityScore(Number(e.target.value))}
+                                    />
+                                </div>
+
+                                {decision === 'decline' && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">Feedback</label>
+                                        <textarea
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                            rows="3"
+                                            value={projectFeedback}
+                                            onChange={(e) => setProjectFeedback(e.target.value)}
+                                            placeholder="Enter feedback for declining..."
+                                        />
+                                    </div>
+                                )}
+
+                                <button
+                                    className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    onClick={handleSubmit}
+                                >
+                                    Submit Decision
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}
