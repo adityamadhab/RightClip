@@ -1,8 +1,8 @@
 import React from 'react';
 
-const BusReviewCard = ({ templateImage, projectName, company, creatorName, requirements, projectLink, projectCategory, onApprove, onDecline, message }) => {
+const BusReviewCard = ({ templateImage, projectName, company, creatorName, requirements, projectLink, projectCategory, message }) => {
     return (
-        <div className="p-6 w-full max-w-[550px] mx-auto bg-card text-card-foreground rounded-lg">
+        <div className="p-6 w-[550px] mx-auto bg-card text-card-foreground rounded-lg">
             {message && (
                 <div className="text-center text-green-500 mb-4">{message}</div>
             )}
@@ -39,22 +39,6 @@ const BusReviewCard = ({ templateImage, projectName, company, creatorName, requi
                             {projectLink}
                         </a>
                     </div>
-                </div>
-                <div className="flex flex-col sm:flex-row justify-between mt-8 gap-4">
-                    <button
-                        className="bg-[#ABCAF8] text-primary-foreground px-4 py-2 rounded-md w-full sm:w-auto"
-                        type="submit"
-                        onClick={onApprove}
-                    >
-                        Approve
-                    </button>
-                    <button
-                        className="bg-[#ABCAF8] text-destructive-foreground px-4 py-2 rounded-md w-full sm:w-auto"
-                        type="button"
-                        onClick={onDecline}
-                    >
-                        Decline
-                    </button>
                 </div>
             </div>
         </div>

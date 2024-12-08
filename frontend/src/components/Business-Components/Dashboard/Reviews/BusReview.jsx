@@ -8,6 +8,9 @@ export default function BusReviewMain() {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
     const [message, setMessage] = useState('');
+    const [decision, setDecision] = useState('');
+    const [projectFeedback, setProjectFeedback] = useState('');
+    const [qualityScore, setQualityScore] = useState(0);
 
     const fetchProjects = async () => {
         try {
@@ -36,10 +39,49 @@ export default function BusReviewMain() {
         setSelectedProject(null);
     };
 
+    const handleDecisionChange = (value) => {
+        setDecision(value);
+        if (value === 'approve') {
+            setProjectFeedback('');
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (!decision) {
+            setMessage('Please select a decision');
+            return;
+        }
+
+        if (!qualityScore) {
+            setMessage('Please provide a quality score');
+            return;
+        }
+
+        if (decision === 'decline' && !projectFeedback) {
+            setMessage('Please provide feedback for declining');
+            return;
+        }
+
+        try {
+            if (decision === 'approve') {
+                await handleApprove(selectedProject.projectId);
+            } else {
+                await handleDecline(selectedProject.projectId);
+            }
+        } catch (error) {
+            console.error('Error processing decision:', error);
+            setMessage('Error processing decision');
+        }
+    };
+
     const handleApprove = async (projectId) => {
         try {
             await axios.put('/project/business/approve',
-                { projectId },
+                { 
+                    projectId,
+                    projectFeedback: '',
+                    rating: qualityScore 
+                },
                 {
                     headers: {
                         Authorization: localStorage.getItem('BusToken')
@@ -60,7 +102,11 @@ export default function BusReviewMain() {
     const handleDecline = async (projectId) => {
         try {
             await axios.put('/project/business/decline',
-                { projectId },
+                { 
+                    projectId,
+                    projectFeedback,
+                    qualityScore 
+                },
                 {
                     headers: {
                         Authorization: localStorage.getItem('BusToken')
@@ -131,10 +177,52 @@ export default function BusReviewMain() {
                             requirements={selectedProject.requirements}
                             projectLink={selectedProject.projectLink}
                             projectCategory={selectedProject.projectCategory}
-                            onApprove={() => handleApprove(selectedProject.projectId)}
-                            onDecline={() => handleDecline(selectedProject.projectId)}
                             message={message}
                         />
+                        <div className="mt-4">
+                            <div className="flex gap-4 mb-4">
+                                <button
+                                    className={`px-4 py-2 rounded ${decision === 'approve' ? 'bg-green-500 text-white' : 'bg-gray-200'}`}
+                                    onClick={() => handleDecisionChange('approve')}
+                                >
+                                    Approve
+                                </button>
+                                <button
+                                    className={`px-4 py-2 rounded ${decision === 'decline' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
+                                    onClick={() => handleDecisionChange('decline')}
+                                >
+                                    Decline
+                                </button>
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium mb-1">Quality Score (1-5)</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="5"
+                                    value={qualityScore}
+                                    onChange={(e) => setQualityScore(Number(e.target.value))}
+                                    className="w-full p-2 border rounded"
+                                />
+                            </div>
+                            {decision === 'decline' && (
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium mb-1">Feedback</label>
+                                    <textarea
+                                        value={projectFeedback}
+                                        onChange={(e) => setProjectFeedback(e.target.value)}
+                                        className="w-full p-2 border rounded"
+                                        rows="3"
+                                    />
+                                </div>
+                            )}
+                            <button
+                                className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                onClick={handleSubmit}
+                            >
+                                Submit Decision
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
