@@ -90,6 +90,29 @@ router.post('/create', authMiddleware, async (req, res) => {
     }
 });
 
+router.put('/edit', async (req, res) => {
+    try {
+        const { projectId, projectName, industry, requirements, projectCategory } = req.body;
+
+        const project = await Project.findById(projectId);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        // Update project fields
+        if (projectName) project.projectName = projectName;
+        if (industry) project.industry = industry;
+        if (requirements) project.requirements = requirements;
+        if (projectCategory) project.projectCategory = projectCategory;
+
+        await project.save();
+        res.status(200).json({ message: 'Project updated successfully', project });
+    } catch (error) {
+        console.error('Error updating project:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 router.get('/business/assigned-creators', authMiddleware, async (req, res) => {
     try {
         const clientId = req.user.company;

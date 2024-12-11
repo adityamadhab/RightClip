@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaCog } from 'react-icons/fa';
 
 export default function AdminSidebar() {
     const [dashboardDropdown, setDashboardDropdown] = useState(false);
@@ -98,6 +99,14 @@ export default function AdminSidebar() {
                         </svg>
                         <span className="overflow-hidden text-sm text-black flex justify-between gap-24 items-center hidden lg:flex">
                             Order Setup
+                        </span>
+                    </Link>
+                </li>
+                <li className={`p-3 my-2 rounded-lg transition duration-500 ease-in-out ${location.pathname === '/admin/point-settings' ? 'bg-white' : ''} hover:bg-white`}>
+                    <Link to='/admin/point-settings' className="text-white text-base no-underline flex items-center gap-3">
+                        <FaCog />
+                        <span className="overflow-hidden text-sm text-black flex justify-between gap-24 items-center hidden lg:flex">
+                            Point Settings
                         </span>
                     </Link>
                 </li>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function CreDashCount() {
@@ -6,37 +6,40 @@ export default function CreDashCount() {
     const [completedAssignments, setCompletedAssignments] = useState(0);
     const [totalEarnings, setTotalEarnings] = useState(0);
     const [totalQualityScore, setTotalQualityScore] = useState(0);
+    const [pointSettings, setPointSettings] = useState({
+        earningsPerProject: 10,
+        qualityScorePerProject: 5
+    });
 
     useEffect(() => {
-        const fetchProjectCounts = async () => {
+        const fetchData = async () => {
             try {
-                const token = localStorage.getItem('CreToken');
-                if (!token) {
-                    console.error('Authorization token not found');
-                    return;
-                }
+                const [projectsResponse, settingsResponse] = await Promise.all([
+                    axios.get('/project/creator/project-counts', {
+                        headers: {
+                            Authorization: localStorage.getItem('CreToken'),
+                        },
+                    }),
+                    axios.get('/points/settings')
+                ]);
 
-                const response = await axios.get('/project/creator/project-counts', {
-                    headers: {
-                        Authorization: token, // Ensure Bearer prefix if required
-                    },
-                });
+                const { completed, pending } = projectsResponse.data;
+                const settings = settingsResponse.data;
 
-                // Update the state based on the response data
-                const { completed, pending } = response.data;
                 setCompletedAssignments(completed);
                 setOngoingAssignments(pending);
+                setPointSettings(settings);
 
-                // Example calculations for earnings and quality score
-                setTotalEarnings(completed * 10);  // Example: 10 pts per completed project
-                setTotalQualityScore(completed * 5);  // Example: 5 pts per completed project
+                // Calculate points using dynamic settings
+                setTotalEarnings(completed * settings.earningsPerProject);
+                setTotalQualityScore(completed * settings.qualityScorePerProject);
 
             } catch (error) {
-                console.error('Error fetching project counts:', error);
+                console.error('Error fetching data:', error);
             }
         };
 
-        fetchProjectCounts();
+        fetchData();
     }, []);
 
     return (

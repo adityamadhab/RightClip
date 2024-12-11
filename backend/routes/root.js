@@ -9,6 +9,7 @@ const categoryRouter = require('./projectCategory');
 const messageRouter = require('./messages');
 const paymentsRouter = require('./payment');
 const notificationRouter = require('./notification');
+const pointSettingsRouter = require('./pointSettingsRoutes');
 
 router.use('/creator', creatorRouter);
 router.use('/business', businessRouter);
@@ -19,5 +20,6 @@ router.use('/category', categoryRouter);
 router.use('/message', messageRouter);
 router.use('/payment', paymentsRouter);
 router.use('/notification', notificationRouter);
+router.use('/points/settings', pointSettingsRouter);
 
 module.exports = router;

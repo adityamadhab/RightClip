@@ -50,6 +50,7 @@ import { BusinessPayments } from './pages/AdminPages/BusinessPayments';
 import { CrePaymentsPage } from './pages/Creator-Pages/CrePayments';
 import { CreatorPayments } from './pages/AdminPages/CreatorPayments';
 import { CreNotification } from './pages/Creator-Pages/CreNotification';
+import { PointSettings } from './pages/AdminPages/PointSettings';
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
@@ -122,6 +123,7 @@ function App() {
       <Route path='/admin/messaging' element={<Messaging />} />
       <Route path='/admin/notification' element={<AdNotifications />} />
       <Route path='/admin/logout' element={<AdminLogout />} />
+      <Route path='/admin/point-settings' element={<PointSettings />} />
     </Routes>
   )
 }
