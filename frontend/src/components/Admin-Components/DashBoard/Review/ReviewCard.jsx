@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 
-const ReviewCard = ({ templateImage, projectName, company, creatorName, requirements, projectLink, projectCategory, onApprove, onDecline, message }) => {
-    const [isAccepting, setIsAccepting] = useState(false);
+const ReviewCard = ({ templateImage, projectName, company, creatorName, requirements, projectLink, projectCategory, message, onSubmit }) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [decision, setDecision] = useState('');
+    const [feedback, setFeedback] = useState('');
+    const [rating, setRating] = useState(0);
 
-    const handleApprove = async () => {
-        setIsAccepting(true);
+    const handleSubmit = async () => {
+        if (!decision) {
+            return;
+        }
+
+        setIsSubmitting(true);
         try {
-            await onApprove();
+            await onSubmit({
+                decision,
+                feedback,
+                rating
+            });
         } finally {
-            setIsAccepting(false);
+            setIsSubmitting(false);
         }
     };
 
@@ -51,21 +62,54 @@ const ReviewCard = ({ templateImage, projectName, company, creatorName, requirem
                         </a>
                     </div>
                 </div>
-                <div className="flex justify-between mt-8">
+                <div className="mt-6 space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Decision</label>
+                        <div className="flex gap-4">
+                            <button
+                                className={`px-4 py-2 rounded ${decision === 'approve' ? 'bg-green-500 text-white' : 'bg-gray-200'}`}
+                                onClick={() => setDecision('approve')}
+                            >
+                                Approve
+                            </button>
+                            <button
+                                className={`px-4 py-2 rounded ${decision === 'decline' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
+                                onClick={() => setDecision('decline')}
+                            >
+                                Decline
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Rating (1-5)</label>
+                        <input
+                            type="number"
+                            min="1"
+                            max="5"
+                            value={rating}
+                            onChange={(e) => setRating(Number(e.target.value))}
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Feedback</label>
+                        <textarea
+                            value={feedback}
+                            onChange={(e) => setFeedback(e.target.value)}
+                            className="w-full p-2 border rounded"
+                            rows="3"
+                            placeholder="Enter your feedback..."
+                        />
+                    </div>
+
                     <button
-                        className="bg-[#ABCAF8] text-primary-foreground px-4 py-2 rounded-md"
-                        type="submit"
-                        onClick={handleApprove}
-                        disabled={isAccepting}
+                        className="w-full bg-[#ABCAF8] text-primary-foreground px-4 py-2 rounded-md"
+                        onClick={handleSubmit}
+                        disabled={isSubmitting || !decision}
                     >
-                        {isAccepting ? 'Accepting...' : 'Approve'}
-                    </button>
-                    <button
-                        className="bg-[#ABCAF8] text-destructive-foreground px-4 py-2 rounded-md"
-                        type="button"
-                        onClick={onDecline}
-                    >
-                        Decline
+                        {isSubmitting ? 'Submitting...' : 'Submit Review'}
                     </button>
                 </div>
             </div>

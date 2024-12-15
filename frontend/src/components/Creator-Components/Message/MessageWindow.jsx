@@ -4,17 +4,60 @@ import CreSidebar from "../CreSidebar";
 import CreMessageNav from "./CreMessageNav";
 import MessageList from "./MessageList";
 import axios from 'axios';
+import io from 'socket.io-client';
 
 export function MessageWindow() {
     const { businessId } = useParams();
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const messagesEndRef = useRef(null);
+    const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+        // Connect to Socket.IO server
+        const newSocket = io('http://localhost:3000', {
+            auth: {
+                token: localStorage.getItem('CreToken')
+            }
+        });
+        setSocket(newSocket);
+
+        // Initial fetch of messages
+        fetchMessages();
+
+        // Cleanup on unmount
+        return () => {
+            newSocket.close();
+        };
+    }, [businessId]);
+
+    useEffect(() => {
+        if (!socket) return;
+
+        const handleNewMessage = (newMessage) => {
+            console.log('New message received:', newMessage);
+            if (newMessage.senderId === businessId || newMessage.receiverId === businessId) {
+                setMessages(prevMessages => {
+                    const messageExists = prevMessages.some(msg => msg._id === newMessage._id);
+                    if (messageExists) return prevMessages;
+                    return [...prevMessages, newMessage];
+                });
+            }
+        };
+
+        socket.on('newMessage', handleNewMessage);
+
+        return () => {
+            socket.off('newMessage', handleNewMessage);
+        };
+    }, [socket, businessId]);
 
     const handleSendMessage = async () => {
+        if (!message.trim()) return;
+        
         try {
             const token = localStorage.getItem('CreToken');
-            const response = await axios.post(`/message/creator-to-business/${businessId}`,
+            await axios.post(`/message/creator-to-business/${businessId}`,
                 { message },
                 {
                     headers: {
@@ -22,8 +65,7 @@ export function MessageWindow() {
                     },
                 }
             );
-            const newMessage = response.data;
-            setMessages([...messages, newMessage]);
+            // Don't manually update messages - socket will handle it
             setMessage('');
         } catch (error) {
             console.error('Error sending message:', error);
@@ -41,14 +83,15 @@ export function MessageWindow() {
                 }
             );
             setMessages(response.data);
+            
+            // After fetching messages, make sure socket is connected
+            if (socket) {
+                socket.emit('join', { userId: businessId });
+            }
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
     };
-
-    useEffect(() => {
-        fetchMessages();
-    }, [businessId]);
 
     useEffect(() => {
         if (messagesEndRef.current) {

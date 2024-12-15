@@ -1,28 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
 
 export default function MessageList() {
     const [creators, setCreators] = useState([]);
     const location = useLocation();
     const currentChat = location.pathname.split('/').pop();
+    const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const fetchCreators = async () => {
-            try {
-                const response = await axios.get('/project/creator/assigned-businesses', {
-                    headers: {
-                        Authorization: localStorage.getItem('CreToken')
-                    }
-                });
-                setCreators(response.data);
-            } catch (error) {
-                console.error('Error fetching creators:', error);
+        const newSocket = io('http://localhost:3000', {
+            auth: {
+                token: localStorage.getItem('CreToken')
+            }
+        });
+        setSocket(newSocket);
+
+        return () => newSocket.close();
+    }, []);
+
+    const fetchCreators = async () => {
+        try {
+            const response = await axios.get('/project/creator/assigned-businesses', {
+                headers: {
+                    Authorization: localStorage.getItem('CreToken')
+                }
+            });
+            setCreators(response.data);
+        } catch (error) {
+            console.error('Error fetching creators:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchCreators();
+
+        if (socket) {
+            socket.on('newMessage', () => {
+                fetchCreators(); // Refresh list when new message arrives
+            });
+        }
+
+        return () => {
+            if (socket) {
+                socket.off('newMessage');
             }
         };
-
-        fetchCreators();
-    }, []);
+    }, [socket]);
 
     return (
         <div className="border border-[#8FD8CF] rounded-lg h-[600px] w-[300px] p-4">

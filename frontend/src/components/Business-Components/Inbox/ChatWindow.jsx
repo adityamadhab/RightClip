@@ -4,31 +4,14 @@ import BusSidebar from "../Sidebar";
 import BusNotiNav from "./BusInboxNav";
 import ChatList from "./ChatList";
 import axios from 'axios';
+import io from 'socket.io-client';
 
 export function ChatWindow() {
     const { creatorId } = useParams();
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const messagesEndRef = useRef(null);
-
-    const handleSendMessage = async () => {
-        try {
-            const token = localStorage.getItem('BusToken');
-            const response = await axios.post(`/message/business-to-creator/${creatorId}`,
-                { message },
-                {
-                    headers: {
-                        Authorization: token,
-                    },
-                }
-            );
-            const newMessage = response.data;
-            setMessages([...messages, newMessage]);
-            setMessage('');
-        } catch (error) {
-            console.error('Error sending message:', error);
-        }
-    };
+    const [socket, setSocket] = useState(null);
 
     const fetchMessages = async () => {
         try {
@@ -41,14 +24,74 @@ export function ChatWindow() {
                 }
             );
             setMessages(response.data);
+            
+            // After fetching messages, make sure socket is connected
+            if (socket) {
+                socket.emit('join', { userId: creatorId });
+            }
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
     };
 
     useEffect(() => {
+        // Connect to Socket.IO server
+        const newSocket = io('http://localhost:3000', {
+            auth: {
+                token: localStorage.getItem('BusToken')
+            }
+        });
+        setSocket(newSocket);
+
+        // Initial fetch of messages
         fetchMessages();
-    }, [creatorId]);
+
+        // Cleanup on unmount
+        return () => {
+            newSocket.close();
+        };
+    }, [creatorId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        if (!socket) return;
+
+        const handleNewMessage = (newMessage) => {
+            console.log('New message received:', newMessage);
+            if (newMessage.senderId === creatorId || newMessage.receiverId === creatorId) {
+                setMessages(prevMessages => {
+                    const messageExists = prevMessages.some(msg => msg._id === newMessage._id);
+                    if (messageExists) return prevMessages;
+                    return [...prevMessages, newMessage];
+                });
+            }
+        };
+
+        socket.on('newMessage', handleNewMessage);
+
+        return () => {
+            socket.off('newMessage', handleNewMessage);
+        };
+    }, [socket, creatorId]);
+
+    const handleSendMessage = async () => {
+        if (!message.trim()) return;
+        
+        try {
+            const token = localStorage.getItem('BusToken');
+            await axios.post(`/message/business-to-creator/${creatorId}`,
+                { message },
+                {
+                    headers: {
+                        Authorization: token,
+                    },
+                }
+            );
+            // Don't manually update messages - socket will handle it
+            setMessage('');
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
 
     useEffect(() => {
         // Scroll to the bottom of the message list
@@ -98,7 +141,7 @@ export function ChatWindow() {
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
                                     />
-                                    <button className=" text-white rounded" onClick={handleSendMessage}>
+                                    <button className="text-white rounded" onClick={handleSendMessage}>
                                         <svg width="44" height="44" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd" clipRule="evenodd" d="M37.5801 40.5419L30.3779 26.1375C29.2686 23.9189 28.7139 22.8096 29.2236 22.2999C29.7333 21.7903 30.8426 22.3449 33.0612 23.4542L65.6588 39.7531C67.2199 40.5336 68.0005 40.9239 68.0005 41.5419C68.0005 42.16 67.2199 42.5502 65.6588 43.3308L33.0612 59.6296C30.8426 60.7389 29.7333 61.2936 29.2236 60.7839C28.7139 60.2743 29.2686 59.1649 30.3779 56.9463L37.5801 42.5419L51.9274 42.5419C52.4797 42.5419 52.9274 42.0942 52.9274 41.5419C52.9274 40.9896 52.4797 40.5419 51.9274 40.5419L37.5801 40.5419Z" fill="#222222" />
                                         </svg>

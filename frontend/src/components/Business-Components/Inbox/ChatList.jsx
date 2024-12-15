@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
 
 export default function ChatList() {
     const [creators, setCreators] = useState([]);
     const location = useLocation();
     const currentChat = location.pathname.split('/').pop();
+    const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+        // Connect to Socket.IO server
+        const newSocket = io('http://localhost:3000', {
+            auth: {
+                token: localStorage.getItem('BusToken')
+            }
+        });
+        setSocket(newSocket);
+
+        // Cleanup on unmount
+        return () => newSocket.close();
+    }, []);
 
     useEffect(() => {
         const fetchCreators = async () => {
@@ -22,7 +37,21 @@ export default function ChatList() {
         };
 
         fetchCreators();
-    }, []);
+
+        // Listen for new messages
+        if (socket) {
+            socket.on('newMessage', (message) => {
+                // Refresh the creators list when a new message is received
+                fetchCreators();
+            });
+        }
+
+        return () => {
+            if (socket) {
+                socket.off('newMessage');
+            }
+        };
+    }, [socket]);
 
     return (
         <div className="border border-[#8FD8CF] rounded-lg h-[600px] w-[300px] p-4">

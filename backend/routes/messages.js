@@ -55,12 +55,22 @@ router.post('/business-to-creator/:receiverId', authMiddleware, async (req, res)
 
         await Promise.all([conversation.save(), newMessage.save()]);
 
-        // Emit the new message event
-        req.io.emit('newMessage', newMessage);
+        // Emit to both sender and receiver rooms
+        const messageWithDetails = await Message.findById(newMessage._id)
+            .lean() // Convert to plain JavaScript object
+            .exec();
 
-        res.status(201).json(newMessage);
+        // Broadcast to all connected clients in the conversation
+        const roomId = conversation._id.toString();
+        req.io.to(roomId).emit('newMessage', messageWithDetails);
+
+        // Also emit to individual user rooms
+        req.io.to(senderId.toString()).emit('newMessage', messageWithDetails);
+        req.io.to(receiverId.toString()).emit('newMessage', messageWithDetails);
+
+        res.status(201).json(messageWithDetails);
     } catch (error) {
-        console.error('Error in business-to-creator route: ', error.message);
+        console.error('Error in business-to-creator route: ', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -115,12 +125,22 @@ router.post('/creator-to-business/:receiverId', authMiddleware, async (req, res)
 
         await Promise.all([conversation.save(), newMessage.save()]);
 
-        // Emit the new message event
-        req.io.emit('newMessage', newMessage);
+        // Emit to both sender and receiver rooms
+        const messageWithDetails = await Message.findById(newMessage._id)
+            .lean() // Convert to plain JavaScript object
+            .exec();
 
-        res.status(201).json(newMessage);
+        // Broadcast to all connected clients in the conversation
+        const roomId = conversation._id.toString();
+        req.io.to(roomId).emit('newMessage', messageWithDetails);
+
+        // Also emit to individual user rooms
+        req.io.to(senderId.toString()).emit('newMessage', messageWithDetails);
+        req.io.to(receiverId.toString()).emit('newMessage', messageWithDetails);
+
+        res.status(201).json(messageWithDetails);
     } catch (error) {
-        console.error('Error in creator-to-business route: ', error.message);
+        console.error('Error in creator-to-business route: ', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

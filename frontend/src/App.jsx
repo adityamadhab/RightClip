@@ -51,8 +51,10 @@ import { CrePaymentsPage } from './pages/Creator-Pages/CrePayments';
 import { CreatorPayments } from './pages/AdminPages/CreatorPayments';
 import { CreNotification } from './pages/Creator-Pages/CreNotification';
 import { PointSettings } from './pages/AdminPages/PointSettings';
+import FeedbackView from './components/Creator-Components/Assignment/FeedbackView';
+import { FeedbackPage } from './pages/Creator-Pages/FeedbackPage';
 
-axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
+axios.defaults.baseURL = "http://localhost:3000/api/v1";
 
 function App() {
   const navigate = useNavigate();
@@ -86,6 +88,7 @@ function App() {
       <Route path='/creator/assignment' element={<CreAssigment />} />
       <Route path='/creator/assignment/accept' element={<AcceptAss />} />
       <Route path='/creator/assignment/timelines' element={<CreAssTimelines />} />
+      <Route path='/creator/assignment/timelines/feedback' element={<FeedbackPage />} />
       <Route path='/creator/inbox' element={<MessagingPage />} />
       <Route path='/creator/inbox/:businessId' element={<MessageWindow />} />
       <Route path='/creator/payment' element={<CrePaymentsPage />} />

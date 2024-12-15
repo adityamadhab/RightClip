@@ -761,20 +761,22 @@ router.put('/creator/decline', creatorMiddleware, async (req, res) => {
 
 router.put('/business/approve', authMiddleware, async (req, res) => {
     try {
-        const { projectId, projectFeedback, rating } = req.body;
+        const { projectId, feedback, rating } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
 
+        project.projectFeedback.business = {
+            feedback,
+            rating
+        };
         project.businessApproval = true;
         project.completed = true;
-        project.projectFeedback = projectFeedback || '';
-        project.businessRating = rating;
         await project.save();
 
-        res.status(200).json({ message: 'Project approved and marked as completed', project });
+        res.status(200).json({ message: 'Project approved with feedback', project });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }
@@ -782,20 +784,22 @@ router.put('/business/approve', authMiddleware, async (req, res) => {
 
 router.put('/business/decline', authMiddleware, async (req, res) => {
     try {
-        const { projectId, projectFeedback, qualityScore } = req.body;
+        const { projectId, feedback, rating } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
 
+        project.projectFeedback.business = {
+            feedback,
+            rating
+        };
         project.businessApproval = false;
         project.completed = false;
-        project.projectFeedback = projectFeedback || '';
-        project.qualityScore = qualityScore;
         await project.save();
 
-        res.status(200).json({ message: 'Project declined and ready for re-upload', project });
+        res.status(200).json({ message: 'Project declined with feedback', project });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }
@@ -803,37 +807,35 @@ router.put('/business/decline', authMiddleware, async (req, res) => {
 
 router.put('/admin/approve', async (req, res) => {
     try {
-        const { projectId, projectFeedback, rating } = req.body;
+        const { projectId, feedback, rating } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
 
-        project.projectFeedback = projectFeedback || '';
-        project.qualityScore = 0;
-        project.rating = rating;
+        project.projectFeedback.admin = {
+            feedback,
+            rating
+        };
         project.review = true;
         project.businessApproval = true;
         await project.save();
 
         const business = await Business.findById(project.companyId);
-
         if (!business) {
             return res.status(404).json({ message: 'Business not found' });
         }
 
-        const businessEmail = business.email;
-
-        await sendAdminAcceptanceEmail(businessEmail, project.projectName);
+        await sendAdminAcceptanceEmail(business.email, project.projectName);
 
         const notification = new Notification({
             recieverId: business._id,
-            message: `Project ${project.projectName} is availablefor Review. Please visit your dashboard to get details.`
+            message: `Project ${project.projectName} is available for Review. Please visit your dashboard to get details.`
         });
         await notification.save();
 
-        res.status(200).json({ message: 'Project approved and marked as completed', project });
+        res.status(200).json({ message: 'Project approved with feedback', project });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }
@@ -841,22 +843,52 @@ router.put('/admin/approve', async (req, res) => {
 
 router.put('/admin/decline', async (req, res) => {
     try {
-        const { projectId, projectFeedback, qualityScore } = req.body;
+        const { projectId, feedback, rating } = req.body;
 
         const project = await Project.findById(projectId);
         if (!project) {
             return res.status(404).json({ message: 'Project not found' });
         }
 
+        project.projectFeedback.admin = {
+            feedback,
+            rating
+        };
         project.review = false;
         project.completed = false;
-        project.projectFeedback = projectFeedback;
-        project.qualityScore = qualityScore;
         await project.save();
 
         res.status(200).json({ message: 'Project declined with feedback', project });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+router.get('/creator/project-feedbacks', creatorMiddleware, async (req, res) => {
+    try {
+        const creatorId = req.user;
+
+        const projects = await Project.find({
+            assignedCreator: creatorId,
+            'projectFeedback.admin': { $exists: true },
+            $or: [
+                { 'projectFeedback.admin': { $ne: null } },
+                { 'projectFeedback.business': { $ne: null } }
+            ]
+        });
+
+        const feedbacks = projects.map(project => ({
+            projectId: project._id,
+            projectName: project.projectName,
+            adminFeedback: project.projectFeedback.admin || null,
+            businessFeedback: project.projectFeedback.business || null,
+            completed: project.completed
+        }));
+
+        res.status(200).json(feedbacks);
+    } catch (error) {
+        console.error('Error fetching project feedbacks:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 

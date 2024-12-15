@@ -46,27 +46,27 @@ export default function BusReviewMain() {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async ({ decision, feedback, rating }) => {
         if (!decision) {
             setMessage('Please select a decision');
             return;
         }
 
-        if (!qualityScore) {
-            setMessage('Please provide a quality score');
+        if (!rating) {
+            setMessage('Please provide a rating');
             return;
         }
 
-        if (decision === 'decline' && !projectFeedback) {
+        if (decision === 'decline' && !feedback) {
             setMessage('Please provide feedback for declining');
             return;
         }
 
         try {
             if (decision === 'approve') {
-                await handleApprove(selectedProject.projectId);
+                await handleApprove(selectedProject.projectId, feedback, rating);
             } else {
-                await handleDecline(selectedProject.projectId);
+                await handleDecline(selectedProject.projectId, feedback, rating);
             }
         } catch (error) {
             console.error('Error processing decision:', error);
@@ -74,13 +74,13 @@ export default function BusReviewMain() {
         }
     };
 
-    const handleApprove = async (projectId) => {
+    const handleApprove = async (projectId, feedback, rating) => {
         try {
             await axios.put('/project/business/approve',
                 { 
                     projectId,
-                    projectFeedback: '',
-                    rating: qualityScore 
+                    feedback,
+                    rating
                 },
                 {
                     headers: {
@@ -99,13 +99,13 @@ export default function BusReviewMain() {
         }
     };
 
-    const handleDecline = async (projectId) => {
+    const handleDecline = async (projectId, feedback, rating) => {
         try {
             await axios.put('/project/business/decline',
                 { 
                     projectId,
-                    projectFeedback,
-                    qualityScore 
+                    feedback,
+                    rating
                 },
                 {
                     headers: {
@@ -178,51 +178,8 @@ export default function BusReviewMain() {
                             projectLink={selectedProject.projectLink}
                             projectCategory={selectedProject.projectCategory}
                             message={message}
+                            onSubmit={handleSubmit}
                         />
-                        <div className="mt-4">
-                            <div className="flex gap-4 mb-4">
-                                <button
-                                    className={`px-4 py-2 rounded ${decision === 'approve' ? 'bg-green-500 text-white' : 'bg-gray-200'}`}
-                                    onClick={() => handleDecisionChange('approve')}
-                                >
-                                    Approve
-                                </button>
-                                <button
-                                    className={`px-4 py-2 rounded ${decision === 'decline' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
-                                    onClick={() => handleDecisionChange('decline')}
-                                >
-                                    Decline
-                                </button>
-                            </div>
-                            <div className="mb-4">
-                                <label className="block text-sm font-medium mb-1">Quality Score (1-5)</label>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    max="5"
-                                    value={qualityScore}
-                                    onChange={(e) => setQualityScore(Number(e.target.value))}
-                                    className="w-full p-2 border rounded"
-                                />
-                            </div>
-                            {decision === 'decline' && (
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium mb-1">Feedback</label>
-                                    <textarea
-                                        value={projectFeedback}
-                                        onChange={(e) => setProjectFeedback(e.target.value)}
-                                        className="w-full p-2 border rounded"
-                                        rows="3"
-                                    />
-                                </div>
-                            )}
-                            <button
-                                className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                                onClick={handleSubmit}
-                            >
-                                Submit Decision
-                            </button>
-                        </div>
                     </div>
                 </div>
             )}

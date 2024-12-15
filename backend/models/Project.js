@@ -76,21 +76,27 @@ const projectSchema = new mongoose.Schema({
         default: false 
     },
     projectFeedback: {
-        type: String,
-        default: ''
+        admin: {
+            feedback: {
+                type: String,
+                default: ''
+            },
+            rating: {
+                type: Number,
+                default: 0
+            }
+        },
+        business: {
+            feedback: {
+                type: String,
+                default: ''
+            },
+            rating: {
+                type: Number,
+                default: 0
+            }
+        }
     },
-    qualityScore: {
-        type: Number,
-        default: 0
-    },
-    rating: {
-        type: Number,
-        default: 0
-    },
-    businessRating: {
-        type: Number,
-        default: 0
-    }
 }, {
     timestamps: true
 });
