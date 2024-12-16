@@ -54,7 +54,7 @@ import { PointSettings } from './pages/AdminPages/PointSettings';
 import FeedbackView from './components/Creator-Components/Assignment/FeedbackView';
 import { FeedbackPage } from './pages/Creator-Pages/FeedbackPage';
 
-axios.defaults.baseURL = "http://localhost:3000/api/v1";
+axios.defaults.baseURL = "https://rightclip.onrender.com/api/v1";
 
 function App() {
   const navigate = useNavigate();
